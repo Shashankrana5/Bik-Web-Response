@@ -2,6 +2,7 @@ const dotevn = require("dotenv").config();
 const express = require("express");
 const {errorHandler} = require("./middleware/errorMiddleware")
 const port = process.env.PORT;
+const mongoose = require("mongoose");
 
 const app = express();
 
@@ -12,5 +13,13 @@ app.use(errorHandler);
 
 app.use("/api/", require("./routes/tickets"))
 
-app.listen(port, () => console.log(`My server is running in port ${port}`));
+
+mongoose.connect(process.env.MONGO_URI)
+    .then(()=>{
+        app.listen(port, () => console.log(`Connected to the database and my server is running in port ${port}`));
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+
 

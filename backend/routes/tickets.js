@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getTicket } = require("../controller/ticketController")
+const { getTicket, createTicket } = require("../controller/ticketController")
 
 // router.get("/", (req, res) => {
 //     res.json({mesg: "Get ticket"});
@@ -8,16 +8,18 @@ const { getTicket } = require("../controller/ticketController")
 
 router.get('/', getTicket);
 
-router.post("/", (req, res) => {
+// router.post("/", (req, res) => {
 
-    // console.log(req.body)
-    if (!req.body){
-        res.status(400)
-        throw new Error("Please add a text field");
-    }
+//     // console.log(req.body)
+//     if (!req.body){
+//         res.status(400)
+//         throw new Error("Please add a text field");
+//     }
     
-    res.json({mesg: "Adding ticket"});
-})
+//     res.json({mesg: "Adding ticket"});
+// })
+
+router.post("/", createTicket)
 
 router.put("/:id", (req, res) => {
     res.json({mesg: `Update ticket ${req.params.id}`});
