@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(errorHandler);
 
 app.use("/api/", require("./routes/tickets"))
+app.use("/user", require("./routes/users"))
 
 
 mongoose.connect(process.env.MONGO_URI)
