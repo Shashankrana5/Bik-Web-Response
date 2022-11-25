@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
 import TicketCreationForm from "../components/TicketCreationForm";
 import TicketDetails from "../components/TicketDetails";
 import { useTicketContext } from "../hooks/useTicketContext";
@@ -21,6 +22,7 @@ const Home = () => {
 
   return (
     <div className="home">
+      <Navbar></Navbar>
       <h2>holllo</h2>
       {tickets && tickets.map((ticket) => (<TicketDetails key={ticket._id} ticket={ticket}/> ))}
       <div className="create-ticket">
