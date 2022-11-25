@@ -28,10 +28,10 @@ const getAllUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
 
-    const { email, password } = req.body;
+    const { fullName, email, password } = req.body;
 
     try{
-    const user = await User.create({email, password});
+    const user = await User.create({ fullName, email, password });
 
     return res.status(200).json(user);
     }

@@ -18,7 +18,8 @@ const TicketDetails = ({ticket}) => {
 
     return(
         <div className="ticket-details">
-            <h2>{ticket.clientName}</h2>
+            <h2>{ticket.clientName} email: {ticket.email}</h2>
+
             <h3>{ticket.subject}</h3>
             <h4>{ticket.body}</h4>
             <p>{formatDistanceToNow(new Date(ticket.createdAt), {addSuffix: true}) }</p>
