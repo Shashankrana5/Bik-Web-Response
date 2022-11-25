@@ -4,16 +4,19 @@ import './index.css';
 import App from './App';
 import { TicketContextProvider } from './context/TicketContext';
 import { UserContextProvider } from './context/UserContext';
+import { AuthContextProvider } from './context/AuthContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <AuthContextProvider>
     <UserContextProvider>
     <TicketContextProvider>
     <App />
     </TicketContextProvider>
     </UserContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );
 

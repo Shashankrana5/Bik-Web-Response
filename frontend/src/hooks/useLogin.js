@@ -1,4 +1,4 @@
-import { useAuthContext } from "../hooks/UseAuthContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 
 export const useLogin = () => {
@@ -20,5 +20,5 @@ export const useLogin = () => {
             dispatch({type: "LOGIN", payload: json})
         }
     }
-    return {login}
+    return { login }
 }
