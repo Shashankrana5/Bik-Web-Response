@@ -29,21 +29,23 @@ const getAllTickets = async (req, res) => {
 
 const createTicket = async (req, res) => {
 
-    const {clientName, resolved} = req.body;
+    const {clientName, email, subject, category, body, resolved, assignedTo} = req.body;
     
     
     try{
-        const ticket = await Ticket.create({clientName, resolved} )
+        const ticket = await Ticket.create({clientName, email, subject, category, body, resolved, assignedTo})
         res.status(200).json(ticket);
     }
     catch(error){
+
         res.status(400).json({error: error.message});
     }
 }
 
 const deleteTicket = async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.params;
 
+    console.log(id)
     try{
     const ticket = await Ticket.findOneAndDelete({_id: id})
         res.status(200).json(ticket)

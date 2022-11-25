@@ -9,6 +9,8 @@ export const ticketReducer = (state, action) => {
             return {tickets: action.payload}
         case("CREATE_TICKET"):
             return {tickets: [action.payload, ...state.tickets]}
+        case("DELETE_TICKET"):
+            return {tickets: state.tickets.filter(ticket => ticket._id !== action.payload._id)}
         default:
             return state;
     }
