@@ -1,16 +1,17 @@
 const Message = require("../models/Message");
 
 const sendMessage = async (req, res) => {
-  const { senderId, receiverId, groupId, content } = req.body;
+  const { senderEmail, receiverEmail, groupId, content } = req.body;
 
   if (groupId) {
-    const response = await Message.create({ senderId, receiverId, content });
+    const response = await Message.create({ senderEmail, groupId, content });
     return res.status(200).json(response);
-  } else if (receiverId) {
-    const response = await Message.create({ senderId, receiverId, content });
+  } else if (receiverEmail) {
+    const response = await Message.create({ senderEmail, receiverEmail, content });
     return res.status(200).json(response);
   } else {
     return res.status(400).json({ error: "Input provided are invalid" });
+    // return res.status(400).json({error: error.message})
   }
 };
 
@@ -25,7 +26,21 @@ const getMessage = async (req, res) => {
   }
 };
 
+const getMessagesByEmails = async (req, res) => {
+
+    const { senderEmail, receiverEmail } = req.body;
+// 
+    try{
+      const response = await Message.find({$or:[{senderEmail: senderEmail, receiverEmail: receiverEmail}, {senderEmail: receiverEmail, receiverEmail: senderEmail}]}).sort({createdAt: -1});
+      return res.status(200).json(response);
+    } 
+    catch(error){
+      return res.status(400).json({error: error.message})
+    }
+}
+
 module.exports = {
   sendMessage,
   getMessage,
+  getMessagesByEmails,
 };

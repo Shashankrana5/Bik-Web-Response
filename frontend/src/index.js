@@ -5,6 +5,8 @@ import App from './App';
 import { TicketContextProvider } from './context/TicketContext';
 import { UserContextProvider } from './context/UserContext';
 import { AuthContextProvider } from './context/AuthContext';
+import { MessageContextProvider } from './context/MessageContext';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,10 +14,13 @@ root.render(
   <React.StrictMode>
     <AuthContextProvider>
     <UserContextProvider>
+      <MessageContextProvider>
     <TicketContextProvider>
     <App />
-    </TicketContextProvider>
+    </TicketContextProvider> 
+    </MessageContextProvider>
     </UserContextProvider>
+   
     </AuthContextProvider>
   </React.StrictMode>
 );

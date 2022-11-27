@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import User from "./pages/User"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
+import Chat from "./pages/Chat";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path = "/users" element = { <User />} />
         <Route path = "/login" element = { <Login/>}/>
         <Route path = "/signup" element = { <Signup/>}/>
+        <Route path = "/chat" element = {<Chat/>}/>
       </Routes>
       </div>
     </BrowserRouter>
