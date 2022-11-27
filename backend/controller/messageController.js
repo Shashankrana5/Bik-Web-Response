@@ -39,8 +39,27 @@ const getMessagesByEmails = async (req, res) => {
     }
 }
 
+const getChatsByEmail = async(req, res) =>{
+
+    const { email } = req.body;
+
+    try{
+      const response = await Message.find({$or:[{senderEmail: email}, {receiverEmail: email}]})
+      const users = new Set();
+      for (const i in response){
+        users.add(response[i]["senderEmail"])
+        users.add(response[i]["receiverEmail"])
+      }
+      return res.status(200).json(JSON.stringify([...users]))
+    }
+    catch(err){
+      return res.status(400).json({message: err.message})
+    }
+}
+
 module.exports = {
   sendMessage,
   getMessage,
   getMessagesByEmails,
+  getChatsByEmail,
 };
