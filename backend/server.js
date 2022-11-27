@@ -13,6 +13,7 @@ app.use(errorHandler);
 
 app.use("/api/", require("./routes/tickets"))
 app.use("/api/users", require("./routes/users"))
+app.use("/api/message", require("./routes/message"))
 
 
 mongoose.connect(process.env.MONGO_URI)
