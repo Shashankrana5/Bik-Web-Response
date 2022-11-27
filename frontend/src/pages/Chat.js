@@ -1,29 +1,31 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import useMessageContext from "../hooks/useMessageContext"
+import useChatContext from "../hooks/useChatContext"
 
 
 
 const Chat = () => {
 
 
-    const { messages, dispatch } = useMessageContext();
+    const { chats, chatDispatch } = useChatContext();
 
 
     useEffect(() => {
         const fetchMessage = async () =>{
             
             const loggedinUser = await localStorage.getItem("user");
-            console.log(JSON.parse(loggedinUser).email)
+            const loggedinUserEmail = JSON.parse(loggedinUser).email
+            
         }
 
         fetchMessage();
-    }, [dispatch])
+    }, [chatDispatch])
     return (
         <div className="chat">
             <Navbar />
             <div className="message-display">
-                {messages && messages.map((message) => { })}
+                {chats && chats.map((message) => { })}
             </div>
         </div>
     )
