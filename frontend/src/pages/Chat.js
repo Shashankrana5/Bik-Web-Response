@@ -9,7 +9,7 @@ const Chat = () => {
 
 
     const { chats, chatDispatch } = useChatContext();
-
+    var index = 0
 
     useEffect(() => {
         const fetchMessage = async () =>{
@@ -37,7 +37,7 @@ const Chat = () => {
             <Navbar />
             <div className="message-display">
                 {/* {console.log(chats)} */}
-                {chats && Object.keys(chats).map(chat => (<ChatDetails chat = {chat}/>))}
+                {chats && Object.keys(chats).map(chat =>  (<ChatDetails key = {index++} chat = {chat}/>))}
                 {/* {chats && Object.keys(Object.values(chats)).map((chat) => (<ChatDetails key = "chatings" chat = {chat}/>))} */}
                 
                 {/* {chats && chats.map((message) => { })} */}
