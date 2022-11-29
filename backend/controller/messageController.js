@@ -46,11 +46,18 @@ const getChatsByEmail = async(req, res) =>{
     try{
       const response = await Message.find({$or:[{senderEmail: email}, {receiverEmail: email}]})
       const users = new Set();
+      const chats = new Object();
       for (const i in response){
-        users.add(response[i]["senderEmail"])
-        users.add(response[i]["receiverEmail"])
+        chats[response[i]["senderEmail"]] = email;
+        chats[response[i]["receiverEmail"]] = email;
+
+        // users.add(response[i]["senderEmail"])
+        // users.add(response[i]["receiverEmail"])
       }
-      return res.status(200).json(JSON.stringify([...users]))
+      
+      return res.status(200).json({chats})
+      // res.setHeader('Content-Type', 'application/json');
+      // res.end(JSON.stringify(chats));
     }
     catch(err){
       return res.status(400).json({message: err.message})

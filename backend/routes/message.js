@@ -5,6 +5,6 @@ const { sendMessage, getMessage, getMessagesByEmails, getChatsByEmail } = requir
 router.post("/sendmessage", sendMessage);
 router.get("/getamessage", getMessage)
 router.get("/messagesbyemail", getMessagesByEmails)
-router.get("/chatsemail", getChatsByEmail)
+router.post("/chatsemail", getChatsByEmail)
 
 module.exports = router;

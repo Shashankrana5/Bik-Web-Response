@@ -1,14 +1,8 @@
-import useMessageContext from "../hooks/useMessageContext"
-
-
-const ChatDetails = ({chat}) => {
-
-    const { dispatch } = useMessageContext();
-
-
+export const ChatDetails = ({chat}) => {
     return(
         <div className="chat-details">
-            <h3>Chat with:</h3>
+            <h3>chat</h3>
+            {chat}
         </div>
     )
 }

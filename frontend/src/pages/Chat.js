@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import useMessageContext from "../hooks/useMessageContext"
+import { ChatDetails } from "../components/ChatDetails";
 import useChatContext from "../hooks/useChatContext"
 
 
@@ -15,9 +15,20 @@ const Chat = () => {
         const fetchMessage = async () =>{
             
             const loggedinUser = await localStorage.getItem("user");
-            const loggedinUserEmail = JSON.parse(loggedinUser).email
-            
-        }
+            const loggedinUserEmail = await JSON.parse(loggedinUser).email
+            const usersChatted = await fetch("/api/message/chatsemail", {
+                method: "POST",
+                body: JSON.stringify({email: loggedinUserEmail}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+        const json = await usersChatted.json();
+        console.log(json)
+        // console.log(Object.values(json)[0])
+        console.log(json["chats"])
+        chatDispatch({type: "SET_CHAT", payload: json["chats"]})
+    }
 
         fetchMessage();
     }, [chatDispatch])
@@ -25,7 +36,11 @@ const Chat = () => {
         <div className="chat">
             <Navbar />
             <div className="message-display">
-                {chats && chats.map((message) => { })}
+                {/* {console.log(chats)} */}
+                {chats && Object.keys(chats).map(chat => (<ChatDetails chat = {chat}/>))}
+                {/* {chats && Object.keys(Object.values(chats)).map((chat) => (<ChatDetails key = "chatings" chat = {chat}/>))} */}
+                
+                {/* {chats && chats.map((message) => { })} */}
             </div>
         </div>
     )
