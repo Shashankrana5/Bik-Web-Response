@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import TicketCreationForm from "../components/TicketCreationForm";
 import TicketDetails from "../components/TicketDetails";
@@ -16,13 +16,15 @@ const Home = () => {
       if (response.ok) {
         dispatch({ type: "SET_TICKET", payload: json });
       }
+      console.log(json)
+
     };
     fetchTickets();
   }, [dispatch]);
 
   return (
     <div className="home">
-      <Navbar></Navbar>
+      <Navbar />
       <h2>holllo</h2>
       {tickets && tickets.map((ticket) => (<TicketDetails key={ticket._id} ticket={ticket}/> ))}
       <div className="create-ticket">
