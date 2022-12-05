@@ -43,8 +43,7 @@ const Chat = () => {
             </div>
             <div className="message-display">
                 {chats && Object.keys(chats).map(chat =>  (<ChatDetails key = {index++} chat = {chat}/>))}
-
-            </div>
+            </div>  
         </div>
     )
 }

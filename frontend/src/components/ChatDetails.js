@@ -1,8 +1,13 @@
 export const ChatDetails = ({chat}) => {
+
+    const handleClick = () => {
+        console.log("clicked!")
+    }
+
     return(
         <div className="chat-details">
-            <h3>chat</h3>
-            {chat}
+
+            <button onClick = {handleClick}>{chat}</button>
         </div>
     )
 }
