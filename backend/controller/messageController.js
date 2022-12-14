@@ -29,7 +29,7 @@ const getMessage = async (req, res) => {
 const getMessagesByEmails = async (req, res) => {
 
     const { senderEmail, receiverEmail } = req.body;
-// 
+
     try{
       const response = await Message.find({$or:[{senderEmail: senderEmail, receiverEmail: receiverEmail}, {senderEmail: receiverEmail, receiverEmail: senderEmail}]}).sort({createdAt: -1});
       return res.status(200).json(response);
@@ -42,7 +42,6 @@ const getMessagesByEmails = async (req, res) => {
 const getChatsByEmail = async(req, res) =>{
 
     const { email } = req.body;
-
     try{
       const response = await Message.find({$or:[{senderEmail: email}, {receiverEmail: email}]})
       const users = new Set();

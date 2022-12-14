@@ -1,14 +1,26 @@
-import { ChatDetails } from "./ChatDetails";
+import { useDisplayMessageContext } from "../hooks/useDisplayMessageContext"
 
 const ChatNavigation = ({chats}) => {
     var index = 0;
+    const {displayMessages, displayMessagesDispatch} = useDisplayMessageContext();
 
-    const handleOpen = (e) => {
+    const handleOpen = async(e) => {
         e.preventDefault();
-        console.log(e.target.textContent);
-        
+        const receiver = e.target.textContent
+        const loggedinUser = await localStorage.getItem("user");
+        const loggedinUserEmail = await JSON.parse(loggedinUser).email
+        const response = await fetch("api/message/messagesbyemail",
+        {
+            method: "POST",
+            body: JSON.stringify({senderEmail: loggedinUserEmail,receiverEmail:receiver}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+       const json = await response.json();
+       console.log(json);
+       displayMessagesDispatch({type: 'SET_MESSAGES', payload: json})
     }
-
     return(                
         <div className="display-chats">
             <div className="list-chats">

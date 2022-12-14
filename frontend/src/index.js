@@ -7,6 +7,7 @@ import { UserContextProvider } from "./context/UserContext";
 import { AuthContextProvider } from "./context/AuthContext";
 import { MessageContextProvider } from "./context/MessageContext";
 import { ChatContextProvider } from "./context/ChatContext";
+import { DisplayMessagesContextProvider } from "./context/DisplayMessagesContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,11 +15,13 @@ root.render(
     <AuthContextProvider>
       <UserContextProvider>
         <ChatContextProvider>
+          <DisplayMessagesContextProvider>
           <MessageContextProvider>
             <TicketContextProvider>
               <App />
             </TicketContextProvider>
           </MessageContextProvider>
+          </DisplayMessagesContextProvider>
         </ChatContextProvider>
       </UserContextProvider>
     </AuthContextProvider>

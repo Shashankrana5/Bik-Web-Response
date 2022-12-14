@@ -4,6 +4,9 @@ import { ChatDetails } from "../components/ChatDetails";
 import useChatContext from "../hooks/useChatContext"
 import { ChatCreation } from "../components/ChatCreation";
 import ChatNavigation from "../components/ChatNavigation";
+import useMessageDisplayContext from "../hooks/useDisplayMessageContext";
+import DisplayMessages from "../components/DisplayMessages";
+import SendMessage from "../components/SendMessage";
 
 
 
@@ -12,7 +15,6 @@ const Chat = () => {
 
 
     const { chats, chatDispatch } = useChatContext();
-
     var index = 0
 
     useEffect(() => {
@@ -44,6 +46,8 @@ const Chat = () => {
             </div>
             <div className="message-display">
                 <ChatNavigation chats = {chats}/>
+                <DisplayMessages />
+                <SendMessage/>
             </div>  
         </div>
     )

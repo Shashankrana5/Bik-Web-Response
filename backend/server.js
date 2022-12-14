@@ -5,6 +5,7 @@ const port = process.env.PORT;
 const mongoose = require("mongoose");
 const http = require("http")
 const socketio = require("socket.io")
+const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
@@ -15,7 +16,7 @@ const io = socketio(server, {
         methods: ["GET", "POST"]
     }
 })
-
+app.options("*",cors())
 //Middleware:
 app.use(express.json());
 
