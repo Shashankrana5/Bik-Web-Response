@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { ChatDetails } from "../components/ChatDetails";
 import useChatContext from "../hooks/useChatContext"
 import { ChatCreation } from "../components/ChatCreation";
+import ChatNavigation from "../components/ChatNavigation";
 
 
 
@@ -42,7 +43,7 @@ const Chat = () => {
                 <ChatCreation/>
             </div>
             <div className="message-display">
-                {chats && Object.keys(chats).map(chat =>  (<ChatDetails key = {index++} chat = {chat}/>))}
+                <ChatNavigation chats = {chats}/>
             </div>  
         </div>
     )

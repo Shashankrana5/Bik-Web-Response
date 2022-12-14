@@ -3,7 +3,9 @@ import io from "socket.io-client"
 
 export const TestingChat = () => {
 
-    const socket = io.connect("http://localhost:9000")
+    // var userId = null;
+    const socket = io.connect("http://localhost:9000", {query: `name=${JSON.parse(localStorage.getItem("user")).email}`})
+ 
 
     const [name, setName] = useState("")
     const [currentMessage, setCurrentMessage] = useState('')
@@ -11,18 +13,18 @@ export const TestingChat = () => {
 
     const handleSubmit = (e)=>{
         e.preventDefault()
-        socket.emit("send-message", {name: name, reciever: receiver, message: currentMessage})
+
+        socket.emit("send-message", {name: name, receiver: receiver, message: currentMessage})
 
     }
 
     useEffect(() => {
-        // socket.on("coneection-successful", data => {
-        //     console.log(data)
-        // })
+
         socket.on("receive-message", data => {
             console.log("here")
-            console.log(data)
+            console.log(data.message)
         })
+
     }, [socket])
 
     return (

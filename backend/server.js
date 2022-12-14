@@ -25,7 +25,7 @@ app.use("/api/", require("./routes/tickets"))
 app.use("/api/users", require("./routes/users"))
 app.use("/api/message", require("./routes/message"))
 
-
+var activeUserChats = new Object();
 
 mongoose.connect(process.env.MONGO_URI)
     .then(()=>{
@@ -36,13 +36,23 @@ mongoose.connect(process.env.MONGO_URI)
     })
 
 io.on("connection", socket => {
-    console.log(`User has joined: ${socket.id}`)
 
-    // io.emit("connection-successful", socket.id)
+    console.log(`User has joined: ${socket.id} with email: ${socket.handshake.query.name}`)
+    const userId = socket.id;
+    const userEmail = socket.handshake.query.name;
+    activeUserChats[userEmail] = userId;
+    socket.on("info-transfer", data => {
+
+    })
     
     socket.on("send-message", data => {
+        console.log(data.receiver)
+        console.log(activeUserChats[`${data.receiver}`])
+        socket.to(activeUserChats[data.receiver]).emit("receive-message", data)
+    })
 
-        socket.broadcast.emit("receive-message", data)
+    socket.on("disconnect", () => {
+        console.log(`A user has disconnected ${userId}`)
     })
 })
 
