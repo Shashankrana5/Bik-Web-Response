@@ -25,19 +25,17 @@ export const ChatCreation  = () => {
         // const json = await messageCreated.json();
 
         chatDispatch({type: "CREATE_CHAT", payload: [senderEmail, receiverEmail]})
-
+        
 
     }
 
     return (
         <div className="creation-form">
             <form>
-            <input onChange={ e => setReceiverEmail(e.target.value)} />
             <label>User you would like to chat:</label>
-            <input onChange={e => setContent(e.target.value)}/>
-
+            <input onChange={ e => setReceiverEmail(e.target.value)} />
             <label>Enter the message you'd like to send</label>
-
+            <input onChange={e => setContent(e.target.value)}/>
             <button onClick={handleSubmit}> submit the chat </button>
             </form>
         </div>
