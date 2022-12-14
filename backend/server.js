@@ -37,25 +37,41 @@ mongoose.connect(process.env.MONGO_URI)
     })
 
 io.on("connection", socket => {
-
-    console.log(`User has joined: ${socket.id} with email: ${socket.handshake.query.name}`)
-    const userId = socket.id;
+    console.log(`A user has joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
+    const userSocketId = socket.id;
     const userEmail = socket.handshake.query.name;
-    activeUserChats[userEmail] = userId;
-    socket.on("info-transfer", data => {
+    activeUserChats[userEmail] = userSocketId;
 
-    })
-    
     socket.on("send-message", data => {
-        console.log(data.receiver)
-        console.log(activeUserChats[`${data.receiver}`])
-        socket.to(activeUserChats[data.receiver]).emit("receive-message", data)
+        socket.to(activeUserChats[data.receiverEmail]).emit("receive-message", data)
     })
 
     socket.on("disconnect", () => {
-        console.log(`A user has disconnected ${userId}`)
+        console.log(`User with Id; ${userSocketId} has just disconnected.`);
     })
 })
+
+
+// io.on("connection", socket => {
+
+//     console.log(`User has joined: ${socket.id} with email: ${socket.handshake.query.name}`)
+//     const userId = socket.id;
+//     const userEmail = socket.handshake.query.name;
+//     activeUserChats[userEmail] = userId;
+//     socket.on("info-transfer", data => {
+
+//     })
+    
+//     socket.on("send-message", data => {
+//         console.log(data.receiver)
+//         console.log(activeUserChats[`${data.receiver}`])
+//         socket.to(activeUserChats[data.receiver]).emit("receive-message", data)
+//     })
+
+//     socket.on("disconnect", () => {
+//         console.log(`A user has disconnected ${userId}`)
+//     })
+// })
 
 
 server.listen(9000, () => console.log("Chat server is up and running"))

@@ -15,7 +15,7 @@ export const TestingChat = () => {
         e.preventDefault()
 
         socket.emit("send-message", {name: name, receiver: receiver, message: currentMessage})
-
+        
     }
 
     useEffect(() => {
