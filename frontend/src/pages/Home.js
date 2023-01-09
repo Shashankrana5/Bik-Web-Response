@@ -25,10 +25,10 @@ const Home = () => {
   return (
     <div className="home">
       <Navbar />
+      <TicketCreationForm/>
       <h2>holllo</h2>
       {tickets && tickets.map((ticket) => (<TicketDetails key={ticket._id} ticket={ticket}/> ))}
       <div className="create-ticket">
-        <TicketCreationForm/>
       </div>
     </div>
   );

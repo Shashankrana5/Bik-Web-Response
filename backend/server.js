@@ -20,7 +20,7 @@ app.options("*",cors())
 //Middleware:
 app.use(express.json());
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 app.use("/api/", require("./routes/tickets"))
 app.use("/api/users", require("./routes/users"))

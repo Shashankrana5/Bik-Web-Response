@@ -5,6 +5,10 @@ const validator = require("validator")
 
 const userSchema = new Schema({
 
+    // _id: {
+    //     type:String,
+    //     require: true
+    // },
     fullName: {
         type: String,
         require: true,

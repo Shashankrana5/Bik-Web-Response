@@ -27,6 +27,31 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const getUserFromParams = async (req, res) => {
+
+    passingObj = {}
+
+    if (req.body.email){
+        const email  = req.body.email;
+
+        //just leaving $regex: email will match all the emails which contains the passed email values.
+        passingObj.email = {$regex: '^'+email, $options: 'i'};//options i ignores the case.
+
+    }
+    if (req.body.fullName){
+        const fullName = req.body.fullName;
+        passingObj.fullName = {$regex: '^'+fullName, $options: 'i'};
+    }
+    
+    try{
+        const user = await User.find(passingObj);
+
+        return res.status(200).json(user)
+    }catch(error){
+        return res.status(400).json({message: error});
+    }
+}
+
 const createUser = async (req, res) => {
 
     const { fullName, email, password } = req.body;
@@ -79,9 +104,10 @@ const signupUser  = async (req, res) => {
 
 
 module.exports = {
+    getUserFromParams,
     getUser,
     getAllUsers,
     createUser,
     signupUser,
-    loginUser
+    loginUser,
 }
