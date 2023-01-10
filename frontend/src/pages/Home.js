@@ -16,7 +16,7 @@ const Home = () => {
       if (response.ok) {
         dispatch({ type: "SET_TICKET", payload: json });
       }
-      console.log(json)
+      // console.log(json)
 
     };
     fetchTickets();

@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.get("/getall", getAllUsers)
-router.get("/getuser", getUserFromParams)
+router.post("/getuser", getUserFromParams)
 
 router.get("/:id", getUser)
 
