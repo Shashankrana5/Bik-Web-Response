@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const http = require("http")
 const socketio = require("socket.io")
 const cors = require("cors");
+const nodemailer = require("nodemailer")
 
 const app = express();
 const server = http.createServer(app);
@@ -26,6 +27,9 @@ app.use("/api/", require("./routes/tickets"))
 app.use("/api/users", require("./routes/users"))
 app.use("/api/message", require("./routes/message"))
 
+const email = process.env.EMAIL;
+const passwrd = pcoess.env.PASS;
+
 var activeUserChats = new Object();
 
 mongoose.connect(process.env.MONGO_URI)
@@ -37,7 +41,7 @@ mongoose.connect(process.env.MONGO_URI)
     })
 
 io.on("connection", socket => {
-    console.log(`A user has joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
+    // console.log(`A user has joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
     const userSocketId = socket.id;
     const userEmail = socket.handshake.query.name;
     activeUserChats[userEmail] = userSocketId;
@@ -51,27 +55,35 @@ io.on("connection", socket => {
     })
 })
 
+function sendEmail(){
 
-// io.on("connection", socket => {
+    return new Promise((resolve, reject) => {
+        let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                
+            }
+        })
 
-//     console.log(`User has joined: ${socket.id} with email: ${socket.handshake.query.name}`)
-//     const userId = socket.id;
-//     const userEmail = socket.handshake.query.name;
-//     activeUserChats[userEmail] = userId;
-//     socket.on("info-transfer", data => {
-
-//     })
-    
-//     socket.on("send-message", data => {
-//         console.log(data.receiver)
-//         console.log(activeUserChats[`${data.receiver}`])
-//         socket.to(activeUserChats[data.receiver]).emit("receive-message", data)
-//     })
-
-//     socket.on("disconnect", () => {
-//         console.log(`A user has disconnected ${userId}`)
-//     })
-// })
+        const mail_configs= {
+            from:"bikwebhelper@gmail.com",
+            to: "shashankrana316@gmail.com",
+            subject: "testing email",
+            text: "testing if this email is sent or noth"
+        }
+        transporter.sendMail(mail_configs, function(error, info){
+            if (error){
+                return reject({message: `An erro has occured`})
+            }
+            return resolve({message: "email sent successfully"})
+        });
+    })
+}
+app.get("/sendemail", (req, res) => {
+    sendEmail()
+    .then(response => res.send(response.message))
+    .catch(error => res.status(500).send(error.message))
+})
 
 
 server.listen(9000, () => console.log("Chat server is up and running"))
