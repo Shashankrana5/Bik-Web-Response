@@ -1,7 +1,15 @@
+import { useEffect } from "react";
 
 const Ticket = () => {
+
+    useEffect(() => {
+        console.log(encodeURI("abc%20xyz 123"))
+    }, [])
     return (
-        <h1>this is going to be indivisual tickets page.</h1>
+        <div className="ticket-page">
+            <h2>Ticket navigation</h2>
+            <h4></h4>
+        </div>
     )
 }
 

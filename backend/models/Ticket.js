@@ -6,6 +6,11 @@ const ticketSchema = new Schema({
     //     type:String, 
     //     require: true
     // },
+    ticketNumber: {
+        type: String,
+        require: true,
+        unique: true
+    },
     clientName: {
         type: String,
         require: true
@@ -13,7 +18,6 @@ const ticketSchema = new Schema({
     email: {
         type: String,
         require: true,
-        unique: true
     },
     subject: {
         type: String,

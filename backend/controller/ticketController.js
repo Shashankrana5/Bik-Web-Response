@@ -31,9 +31,9 @@ const createTicket = async (req, res) => {
 
     const {clientName, email, subject, category, body, resolved, assignedTo} = req.body;
     
-    
+    const ticketNumber = "TKN" + (new Date()).getTime();
     try{
-        const ticket = await Ticket.create({clientName, email, subject, category, body, resolved, assignedTo})
+        const ticket = await Ticket.create({ticketNumber, clientName, email, subject, category, body, resolved, assignedTo})
         res.status(200).json(ticket);
     }
     catch(error){

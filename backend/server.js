@@ -21,14 +21,13 @@ app.options("*",cors())
 //Middleware:
 app.use(express.json());
 
-// app.use(errorHandler);
+app.use(errorHandler);
 
 app.use("/api/", require("./routes/tickets"))
 app.use("/api/users", require("./routes/users"))
 app.use("/api/message", require("./routes/message"))
+app.use("/a", require("./routes/email"))
 
-const email = process.env.EMAIL;
-const passwrd = pcoess.env.PASS;
 
 var activeUserChats = new Object();
 
@@ -55,35 +54,37 @@ io.on("connection", socket => {
     })
 })
 
-function sendEmail(){
+// function sendEmail(){
 
-    return new Promise((resolve, reject) => {
-        let transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                
-            }
-        })
+//     return new Promise((resolve, reject) => {
+//         let transporter = nodemailer.createTransport({
+//             service: "gmail",
+//             auth: {
+//                 user: email,
+//                 pass: passwrd
+//             }
+//         })
 
-        const mail_configs= {
-            from:"bikwebhelper@gmail.com",
-            to: "shashankrana316@gmail.com",
-            subject: "testing email",
-            text: "testing if this email is sent or noth"
-        }
-        transporter.sendMail(mail_configs, function(error, info){
-            if (error){
-                return reject({message: `An erro has occured`})
-            }
-            return resolve({message: "email sent successfully"})
-        });
-    })
-}
-app.get("/sendemail", (req, res) => {
-    sendEmail()
-    .then(response => res.send(response.message))
-    .catch(error => res.status(500).send(error.message))
-})
+//         const mail_configs= {
+//             from: email,
+//             to: "shashankrana316@gmail.com",
+//             subject: "testing email",
+//             text: "This is another test to see if this email is also going to be sent."
+//         }
+//         transporter.sendMail(mail_configs, function(error, info){
+//             if (error){
+//                 return reject({message: `An erro has occured`})
+//             }
+//             return resolve({message: "email sent successfully"})
+//         });
+//     })
+// }
+
+// app.get("/sendemail", (req, res) => {
+//     sendEmail()
+//     .then(response => res.send(response.message))
+//     .catch(error => res.status(500).send(error.message))
+// })
 
 
 server.listen(9000, () => console.log("Chat server is up and running"))
