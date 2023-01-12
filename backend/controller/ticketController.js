@@ -56,6 +56,19 @@ const createTicket = async (req, res) => {
     }
 }
 
+const findEmailFromTicketNumber = async (req, res) => {
+
+    const {ticketNumber} = req.body;
+    
+
+    try{
+        const ticket = await Ticket.findOne({ticketNumber: ticketNumber})
+        return res.status(200).json(ticket)
+    }catch(error){
+        return res.status(400).json({messages: error.message})
+    }
+}
+
 const deleteTicket = async (req, res) => {
     const { id } = req.params;
 
@@ -90,5 +103,6 @@ module.exports = {
     getAllTickets,
     deleteTicket,
     updateTicket,
-    getTicketByAssignedTo
+    getTicketByAssignedTo,
+    findEmailFromTicketNumber
 }

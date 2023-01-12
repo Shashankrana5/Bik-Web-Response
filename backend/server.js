@@ -26,7 +26,7 @@ app.use(errorHandler);
 app.use("/api/", require("./routes/tickets"))
 app.use("/api/users", require("./routes/users"))
 app.use("/api/message", require("./routes/message"))
-app.use("/a", require("./routes/email"))
+app.use("/api/email/", require("./routes/email"))
 
 
 var activeUserChats = new Object();

@@ -6,6 +6,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import Chat from "./pages/Chat";
 import Ticket from "./pages/Ticket"
+import TicketHome from "./pages/TicketHome";
 import { TestingChat } from "./context/TestingChat";
 
 
@@ -20,7 +21,8 @@ function App() {
         <Route path = "/signup" element = { <Signup/>}/>
         <Route path = "/chat" element = {<Chat/>}/>
         <Route path = "/testing" element = {<TestingChat/>} />
-        <Route path = "/ticket" element = {<Ticket />}/>
+        <Route path = "/ticket" element = {<TicketHome />}/>
+        <Route path = "/ticket/:ticketNumber" element = {<Ticket/>} />
       </Routes>
       </div>
     </BrowserRouter>

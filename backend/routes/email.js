@@ -6,5 +6,5 @@ const { getAllEmails, createEmail, getEmailFromTicketNumber } = require("../cont
 router.get("/getall", getAllEmails)
 router.post("/", createEmail)
 
-router.get("/email/:ticketNumber", getEmailFromTicketNumber)
+router.get("/:ticketNumber", getEmailFromTicketNumber)
 module.exports = router
