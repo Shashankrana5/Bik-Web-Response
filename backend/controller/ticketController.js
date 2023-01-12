@@ -27,6 +27,19 @@ const getAllTickets = async (req, res) => {
 
 }
 
+const getTicketByAssignedTo = async (req, res) => {
+
+    const { assignedTo } = req.body;
+
+    try{
+        const tickets = await Ticket.find({assignedTo});
+        return res.status(200).json(tickets);
+
+    }catch(error){
+        return res.status(400).json({error: error.message})
+    }
+}
+
 const createTicket = async (req, res) => {
 
     const {clientName, email, subject, category, body, resolved, assignedTo} = req.body;
@@ -75,5 +88,6 @@ module.exports = {
     createTicket,
     getAllTickets,
     deleteTicket,
-    updateTicket
+    updateTicket,
+    getTicketByAssignedTo
 }

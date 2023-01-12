@@ -12,7 +12,6 @@ const getAllEmails = async(req, res) => {
     }
 }
 
-// const 
 
 const createEmail = async(req, res) => {
 
@@ -31,16 +30,6 @@ const createEmail = async(req, res) => {
         return res.status(400).json({error: error.message})
     }
 }
-
-// const createEmail = async(senderEmail, receiverEmail, ticketNumber, subject, body)=> {
-
-//     try{
-//         const email = await Email.create({senderEmail, receiverEmail, ticketNumber, subject, body});
-//         return json(email)
-//     }catch(error){
-//         return {error: error.message}
-//     }
-// }
 
 async function sendEmail(receiverEmail, subject, body){
     const email = process.env.EMAIL;
@@ -70,9 +59,21 @@ async function sendEmail(receiverEmail, subject, body){
     })
 }
 
+async function getEmailFromTicketNumber(req, res) {
+    const {ticketNumber} = req.params;
+    console.log(ticketNumber);
+    try{
+        const emails = await Email.find({ticketNumber: ticketNumber})
+        return res.status(200).json(emails)
+    }catch(error){
+        return res.status(400).json({message: error.message})
+    }
+}
+
 
 module.exports = {
     getAllEmails,
-    createEmail
+    createEmail,
+    getEmailFromTicketNumber
 
 }

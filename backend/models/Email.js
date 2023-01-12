@@ -23,6 +23,6 @@ const emailSchema = new Schema({
         type: String,
         require: true
     }
-}, {timeStamps: true})
+}, { timestamps: true })
 
 module.exports = mongoose.model("Email", emailSchema)

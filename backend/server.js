@@ -54,38 +54,5 @@ io.on("connection", socket => {
     })
 })
 
-// function sendEmail(){
-
-//     return new Promise((resolve, reject) => {
-//         let transporter = nodemailer.createTransport({
-//             service: "gmail",
-//             auth: {
-//                 user: email,
-//                 pass: passwrd
-//             }
-//         })
-
-//         const mail_configs= {
-//             from: email,
-//             to: "shashankrana316@gmail.com",
-//             subject: "testing email",
-//             text: "This is another test to see if this email is also going to be sent."
-//         }
-//         transporter.sendMail(mail_configs, function(error, info){
-//             if (error){
-//                 return reject({message: `An erro has occured`})
-//             }
-//             return resolve({message: "email sent successfully"})
-//         });
-//     })
-// }
-
-// app.get("/sendemail", (req, res) => {
-//     sendEmail()
-//     .then(response => res.send(response.message))
-//     .catch(error => res.status(500).send(error.message))
-// })
-
-
 server.listen(9000, () => console.log("Chat server is up and running"))
 

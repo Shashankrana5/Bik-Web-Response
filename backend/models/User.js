@@ -28,7 +28,7 @@ const userSchema = new Schema({
 userSchema.statics.login = async function(email, password){
 
     if (!email || !password){
-        throw Error("Fields must now be empty")
+        throw Error("Fields must not be empty")
     }
     const user = await this.findOne({email})
 
