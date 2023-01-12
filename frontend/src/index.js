@@ -8,12 +8,14 @@ import { AuthContextProvider } from "./context/AuthContext";
 import { MessageContextProvider } from "./context/MessageContext";
 import { ChatContextProvider } from "./context/ChatContext";
 import { DisplayMessagesContextProvider } from "./context/DisplayMessagesContext";
+import { AssignedTicketsContextProvider } from "./context/AssignedTicketsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
     <AuthContextProvider>
       <UserContextProvider>
+        <AssignedTicketsContextProvider>
         <ChatContextProvider>
           <DisplayMessagesContextProvider>
           <MessageContextProvider>
@@ -23,6 +25,7 @@ root.render(
           </MessageContextProvider>
           </DisplayMessagesContextProvider>
         </ChatContextProvider>
+        </AssignedTicketsContextProvider>
       </UserContextProvider>
     </AuthContextProvider>
   /* </React.StrictMode> */

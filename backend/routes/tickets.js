@@ -5,7 +5,7 @@ const { getTicket, createTicket, getAllTickets, deleteTicket, updateTicket, getT
 
 
 router.get("/getall", getAllTickets)
-router.get('/getassigned', getTicketByAssignedTo)
+router.post('/getassigned', getTicketByAssignedTo)
 router.get("/:id", getTicket);
 router.post("/", createTicket)
 router.put("/:id", updateTicket);
