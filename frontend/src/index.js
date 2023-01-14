@@ -10,6 +10,7 @@ import { ChatContextProvider } from "./context/ChatContext";
 import { DisplayMessagesContextProvider } from "./context/DisplayMessagesContext";
 import { AssignedTicketsContextProvider } from "./context/AssignedTicketsContext";
 import { EmailContextProvider } from "./context/EmailContext";
+import {TicketMessageProvider } from "./context/TicketMessageContext"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,6 +19,7 @@ root.render(
       <UserContextProvider>
       <EmailContextProvider>
         <AssignedTicketsContextProvider>
+          <TicketContextProvider>
         <ChatContextProvider>
           <DisplayMessagesContextProvider>
           <MessageContextProvider>
@@ -27,6 +29,7 @@ root.render(
           </MessageContextProvider>
           </DisplayMessagesContextProvider>
         </ChatContextProvider>
+        </TicketContextProvider>
         </AssignedTicketsContextProvider>
         </EmailContextProvider>
       </UserContextProvider>

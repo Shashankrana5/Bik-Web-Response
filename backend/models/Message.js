@@ -16,6 +16,14 @@ const messageSchema = new Schema({
         type: String, 
         require: false
     },
+    messageType:{
+        type: String,
+        require: true
+    },
+    ticketNumber: {
+        type:String,
+        require: false
+    },
     content: {
         type: String,
     }

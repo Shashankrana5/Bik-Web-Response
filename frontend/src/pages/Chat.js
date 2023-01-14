@@ -7,7 +7,7 @@ import ChatNavigation from "../components/ChatNavigation";
 import useMessageDisplayContext from "../hooks/useDisplayMessageContext";
 import DisplayMessages from "../components/DisplayMessages";
 import SendMessage from "../components/SendMessage";
-
+import io from "socket.io-client";
 
 
 
@@ -38,6 +38,7 @@ const Chat = () => {
         fetchMessage();
     }, [chatDispatch])
 
+
     return (
         <div className="chat">
             <Navbar />
@@ -47,7 +48,7 @@ const Chat = () => {
             <div className="message-display">
                 <ChatNavigation chats = {chats}/>
                 <DisplayMessages />
-                <SendMessage/>
+                <SendMessage type = {"personal"}/>
             </div>  
         </div>
     )

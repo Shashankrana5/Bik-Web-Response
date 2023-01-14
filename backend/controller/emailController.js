@@ -70,10 +70,9 @@ async function getEmailFromTicketNumber(req, res) {
     }
 }
 
-
 module.exports = {
     getAllEmails,
     createEmail,
-    getEmailFromTicketNumber
+    getEmailFromTicketNumber,
 
 }

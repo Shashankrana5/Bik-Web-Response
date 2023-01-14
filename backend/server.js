@@ -30,6 +30,7 @@ app.use("/api/email/", require("./routes/email"))
 
 
 var activeUserChats = new Object();
+var activeTicketChats = new Object();
 
 mongoose.connect(process.env.MONGO_URI)
     .then(()=>{
@@ -43,7 +44,14 @@ io.on("connection", socket => {
     // console.log(`A user has joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
     const userSocketId = socket.id;
     const userEmail = socket.handshake.query.name;
-    activeUserChats[userEmail] = userSocketId;
+    const typeOfMessage = socket.handshake.query.type;
+    // if (typeOfMessage === "personal"){  
+    //     console.log(true);  
+        activeUserChats[userEmail] = userSocketId;
+    // }
+    // else if (typeOfMessage == "ticket"){
+    //     console.log(false)
+    // }
 
     socket.on("send-message", data => {
         socket.to(activeUserChats[data.receiverEmail]).emit("receive-message", data)

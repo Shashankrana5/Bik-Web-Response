@@ -6,6 +6,7 @@ import DisplayMessages from "./DisplayMessages";
 const SendMessage = () => {
   const socket = io.connect("http://localhost:9000", {
     query: `name=${JSON.parse(localStorage.getItem("user")).email}`,
+    // query: `type=personal`
   });
 
   const [content, setContent] = useState("");

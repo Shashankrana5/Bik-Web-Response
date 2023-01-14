@@ -1,13 +1,13 @@
 const Message = require("../models/Message");
 
 const sendMessage = async (req, res) => {
-  const { senderEmail, receiverEmail, groupId, content } = req.body;
+  const { senderEmail, receiverEmail, messageType, ticketNumber, groupId, content } = req.body;
 
   if (groupId) {
-    const response = await Message.create({ senderEmail, groupId, content });
+    const response = await Message.create({ senderEmail, messageType, groupId, content });
     return res.status(200).json(response);
   } else if (receiverEmail) {
-    const response = await Message.create({ senderEmail, receiverEmail, content });
+    const response = await Message.create({ senderEmail, messageType, ticketNumber, receiverEmail, content });
     return res.status(200).json(response);
   } else {
     return res.status(400).json({ error: "Input provided are invalid" });
@@ -62,10 +62,22 @@ const getChatsByEmail = async(req, res) =>{
       return res.status(400).json({message: err.message})
     }
 }
+    const getMessagesByTicketNumber = async(req, res) => {
 
+      const { ticketNumber } = req.body;
+
+      try{
+        const response = await Message.find({ticketNumber});
+        return res.status(200).json(response);
+        
+      }catch(error){
+        return res.status(400).json({message: error.message})
+      }
+    }
 module.exports = {
   sendMessage,
   getMessage,
   getMessagesByEmails,
   getChatsByEmail,
+  getMessagesByTicketNumber
 };
