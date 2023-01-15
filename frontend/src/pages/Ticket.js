@@ -11,16 +11,15 @@ const Ticket = () => {
     const {ticketNumber} = useParams();
     const { chats, chatDispatch } = useChatContext();
     const {displayMessages, displayMessagesDispatch} = useDisplayMessagesContext();
-    let initalTicket;
-    const [initialTicket, setInitialTicket] = useState({})
-    let receiverEmail;
+
+    const [initialRequest, setInitialRequest] = useState();
+
     useEffect(() => {
 
         const fetchTicket = async() => {
             const response = await fetch("/api/"+ ticketNumber, {method:"GET"});
             const json = await response.json()
-            setInitialTicket(json[0]);
-            console.log(json)
+            setInitialRequest(json[0].initialRequest);
         }
 
         const fetchMessages = async()=> {
@@ -42,7 +41,7 @@ const Ticket = () => {
     return (
         <>
         <div className ="inital">
-            {/* {console.log(initalTicket)} */}
+            {initialRequest}
         </div>
             {displayMessages && displayMessages.map(message => {
                 return <div>

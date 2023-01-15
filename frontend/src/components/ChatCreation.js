@@ -17,7 +17,7 @@ export const ChatCreation  = () => {
         console.log(valuesToPass)
         const messageCreated = await fetch("/api/message/sendmessage", {
             method: "POST", 
-            body: JSON.stringify({ receiverEmail, senderEmail, content }),
+            body: JSON.stringify({ receiverEmail, senderEmail, content, messageType: "personal" }),
             headers: {
                 "Content-Type": "application/json"
             }

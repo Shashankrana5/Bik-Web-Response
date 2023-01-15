@@ -8,7 +8,7 @@ export const displayMessagesReducer = (state, action) =>{
         case "SET_MESSAGES":
             return {displayMessages: action.payload}
         case "CREATE_MESSAGES":
-            return {displayMessages: [action.payload, ...state.displayMessages]}
+            return {displayMessages: [...state.displayMessages, action.payload]}
         default:
             return state;
     }

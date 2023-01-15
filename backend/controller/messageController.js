@@ -3,14 +3,19 @@ const Message = require("../models/Message");
 const sendMessage = async (req, res) => {
   const { senderEmail, receiverEmail, messageType, ticketNumber, groupId, content } = req.body;
 
-  
+    console.log(req.body)
   if (groupId) {
     const response = await Message.create({ senderEmail, messageType, groupId, content });
     return res.status(200).json(response);
   } else if (ticketNumber) {
     const response = await Message.create({ ticketNumber, senderEmail, content, messageType});
     return res.status(200).json(response);
-  } else {
+  } 
+  else if (messageType == "personal"){
+    const response = await Message.create({senderEmail, receiverEmail, messageType, content})
+    return res.status(200).json(response);
+  }
+  else {
     return res.status(400).json({ error: "Input provided are invalid" });
     // return res.status(400).json({error: error.message})
   }

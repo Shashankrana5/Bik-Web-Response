@@ -42,6 +42,7 @@ const SendMessage = () => {
           receiverEmail: receiverEmail,
           senderEmail: senderEmail,
           content: content,
+          messageType: "personal"
         }),
         headers: {
           "Content-Type": "application/json",
