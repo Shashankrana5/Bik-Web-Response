@@ -13,6 +13,18 @@ const getTicket = (req, res) => {
         })
 }
 
+const getTicketByTicketNumber = async(req, res) => {
+
+    const {ticketNumber} = req.params;
+    try{
+        const ticket = await Ticket.find({ticketNumber});
+        return res.status(200).json(ticket);
+    }
+    catch(error){
+        return res.status(500).json({message: error.mesasge})
+    }
+}
+
 const getAllTickets = async (req, res) => {
 
     try{
@@ -43,11 +55,11 @@ const getTicketByAssignedTo = async (req, res) => {
 
 const createTicket = async (req, res) => {
 
-    const {clientName, email, subject, category, body, resolved, assignedTo} = req.body;
+    const {clientName, email, subject, category, initialRequest, resolved, assignedTo} = req.body;
     
     const ticketNumber = "TKN" + (new Date()).getTime();
     try{
-        const ticket = await Ticket.create({ticketNumber, clientName, email, subject, category, body, resolved, assignedTo})
+        const ticket = await Ticket.create({ticketNumber, clientName, email, subject, category, initialRequest, resolved, assignedTo})
         res.status(200).json(ticket);
     }
     catch(error){
@@ -104,5 +116,6 @@ module.exports = {
     deleteTicket,
     updateTicket,
     getTicketByAssignedTo,
-    findEmailFromTicketNumber
+    findEmailFromTicketNumber,
+    getTicketByTicketNumber
 }

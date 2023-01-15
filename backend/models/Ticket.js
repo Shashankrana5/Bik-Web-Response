@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ticketSchema = new Schema({
-    // _id: {
-    //     type:String, 
-    //     require: true
-    // },
+
     ticketNumber: {
         type: String,
         require: true,
@@ -27,7 +24,7 @@ const ticketSchema = new Schema({
         type: String,
         require: true
     },
-    body: {
+    initialRequest: {
         type: String,
         require: true
     },

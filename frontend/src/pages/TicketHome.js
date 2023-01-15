@@ -45,7 +45,11 @@ const TicketHome = () => {
          assignedTickets && assignedTickets.map((ticket) => {
 
             return <div className="list-container" key = {ticket._id}>
+
                  <p>{ticket.clientName}</p>
+                 <p>{ticket.createdAt}</p>
+                 <p>{ticket.initialRequest}</p>
+                 
                 </div>
                
           })
