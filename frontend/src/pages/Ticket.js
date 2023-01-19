@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import useChatContext from "../hooks/useChatContext"
 import useDisplayMessagesContext from "../hooks/useDisplayMessageContext"
 import {SendTicketMessage} from "../components/SendTicketMessage"
+import SubmitTicketMessage from "../components/SubmitTicketMessage"
 
 
 const Ticket = () => {
@@ -11,6 +12,8 @@ const Ticket = () => {
     const {ticketNumber} = useParams();
     const { chats, chatDispatch } = useChatContext();
     const {displayMessages, displayMessagesDispatch} = useDisplayMessagesContext();
+    const loggedinUser = localStorage.getItem("user");
+    const senderEmail =  JSON.parse(loggedinUser).email
 
     const [initialRequest, setInitialRequest] = useState();
 
@@ -40,7 +43,7 @@ const Ticket = () => {
     }, [])
     return (
         <>
-        <div className ="inital">
+        <div className ="inital-request">
             {initialRequest}
         </div>
             {displayMessages && displayMessages.map(message => {
@@ -49,7 +52,8 @@ const Ticket = () => {
                     <h5>{message.content}</h5>
                 </div>
             })}
-            <SendTicketMessage ticketNumber={ticketNumber} displayMessages = {displayMessages} displayMessagesDispatch ={displayMessagesDispatch}/>
+            <SubmitTicketMessage ticketNumber = {ticketNumber} senderEmail = {senderEmail} />
+            {/* <SendTicketMessage ticketNumber={ticketNumber} displayMessages = {displayMessages} displayMessagesDispatch ={displayMessagesDispatch}/> */}
         </>
     )
 }

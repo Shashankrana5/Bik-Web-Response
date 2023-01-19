@@ -7,7 +7,7 @@ const ChatNavigation = ({chats}) => {
     const handleOpen = async(e) => {
         e.preventDefault();
         const receiver = e.target.textContent
-        const loggedinUser = await localStorage.getItem("user");
+        const loggedinUser = localStorage.getItem("user");
         const loggedinUserEmail = await JSON.parse(loggedinUser).email
         const response = await fetch("api/message/messagesbyemail",
         {
@@ -18,7 +18,6 @@ const ChatNavigation = ({chats}) => {
             }
         })
        const json = await response.json();
-       console.log(json);
        displayMessagesDispatch({type: 'SET_MESSAGES', payload: json})
     }
     return(                

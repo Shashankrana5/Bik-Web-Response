@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
+import ChatNavigation from "../components/ChatNavigation";
 import Navbar from "../components/Navbar";
 import TicketCreationForm from "../components/TicketCreationForm";
 import TicketDetails from "../components/TicketDetails";
 import { useTicketContext } from "../hooks/useTicketContext";
-// import axios from "axios"
+import useChatContext from "../hooks/useChatContext";
+import DisplayMessages from "../components/DisplayMessages";
+import SendMessage from "../components/SendMessage";
+
 
 const Home = () => {
   const { tickets, dispatch } = useTicketContext();
@@ -39,6 +43,33 @@ const Home = () => {
   }
   fetchUser()
   }, [])
+
+
+  const { chats, chatDispatch } = useChatContext();
+  var index = 0
+
+  useEffect(() => {
+      const fetchMessage = async () =>{
+          
+          const loggedinUser = await localStorage.getItem("user");
+          const loggedinUserEmail = await JSON.parse(loggedinUser).email
+          const usersChatted = await fetch("/api/message/chatsemail", {
+              method: "POST",
+              body: JSON.stringify({email: loggedinUserEmail}),
+              headers: {
+                  "Content-Type": "application/json"
+              }
+          })
+      const json = await usersChatted.json();
+
+
+      chatDispatch({type: "SET_CHAT", payload: json["chats"]})
+  }
+
+      fetchMessage();
+  }, [chatDispatch])
+
+
   
   if (user && user[0]["role"] === "USER")
   console.log(user[0].role)
@@ -47,12 +78,14 @@ const Home = () => {
   return (
     <div className="home">
       <Navbar />
-      {console.log(user)}
       <TicketCreationForm/>
-      <h2>holllo</h2>
+
       {tickets && tickets.map((ticket) => (<TicketDetails key={ticket._id} ticket={ticket}/> ))}
       <div className="create-ticket">
       </div>
+    <ChatNavigation chats = {chats}/>
+    <DisplayMessages />
+    <SendMessage type = {"personal"}/>
     </div>
   );
   }

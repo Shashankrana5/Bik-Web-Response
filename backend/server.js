@@ -7,6 +7,7 @@ const http = require("http")
 const socketio = require("socket.io")
 const cors = require("cors");
 const nodemailer = require("nodemailer")
+const Server = require("socket.io")
 
 const app = express();
 const server = http.createServer(app);
@@ -15,8 +16,11 @@ const io = socketio(server, {
     cors:{
         origin: "http://localhost:3000", 
         methods: ["GET", "POST"]
-    }
+    },
 })
+
+
+
 app.options("*",cors())
 //Middleware:
 app.use(express.json());
@@ -40,27 +44,68 @@ mongoose.connect(process.env.MONGO_URI)
         console.log(error)
     })
 
-io.on("connection", socket => {
-    // console.log(`A user has joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
+io.of("/games").on('connection', socket => {
+    console.log("connection is made to the new thing.");
+    
+    socket.emit("welcome", "hellow and welcome")
+})
+
+io.of("/personalchat").on('connection', socket => {
+
+    console.log(`A user has personal chat joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
     const userSocketId = socket.id;
     const userEmail = socket.handshake.query.name;
-    const typeOfMessage = socket.handshake.query.type;
-    // if (typeOfMessage === "personal"){  
-    //     console.log(true);  
-        activeUserChats[userEmail] = userSocketId;
-    // }
-    // else if (typeOfMessage == "ticket"){
-    //     console.log(false)
-    // }
+    activeUserChats[userEmail] = userSocketId;
 
-    socket.on("send-message", data => {
-        socket.to(activeUserChats[data.receiverEmail]).emit("receive-message", data)
-    })
-
-    socket.on("disconnect", () => {
-        console.log(`User with Id; ${userSocketId} has just disconnected.`);
+    socket.on("send-personal-message", data => {
+        console.log(data)
+        socket.to(activeUserChats[data.receiverEmail]).emit("receive-personal-message", data);
     })
 })
+io.of("/ticketchat").on("connection", socket => {
+    console.log(`A user has joined ticket chat with id: ${socket.id} and email: ${socket.handshake.query.name}`)
+    
+    const userSocketId = socket.id;
+    const userEmail = socket.handshake.query.name;
+    activeTicketChats[userEmail] = userSocketId;
+
+    socket.on("join-ticket", data => {
+        console.log("user awant to joing " + data)
+        socket.join(data);
+        // socket.to(data).emit("test", "heello from backedn")
+    })
+
+
+    socket.on("send-ticket-message", data =>{
+        console.log(data.ticketNumber)
+        socket.to(data.ticketNumber).emit("receive-ticket-message", "something has been received.")
+        // socket.to(activeTicketChats[data.senderEmail]).emit('receive-ticket-message', data);
+    })
+})
+
+
+
+// io.on("connection", socket => {
+//     // console.log(`A user has joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
+//     const userSocketId = socket.id;
+//     const userEmail = socket.handshake.query.name;
+//     const typeOfMessage = socket.handshake.query.type;
+//     // if (typeOfMessage === "personal"){  
+//     //     console.log(true);  
+//         activeUserChats[userEmail] = userSocketId;
+//     // }
+//     // else if (typeOfMessage == "ticket"){
+//     //     console.log(false)
+//     // }
+
+//     socket.on("send-message", data => {
+//         socket.to(activeUserChats[data.receiverEmail]).emit("receive-message", data)
+//     })
+
+//     socket.on("disconnect", () => {
+//         // console.log(`User with Id; ${userSocketId} has just disconnected.`);
+//     })
+// })
 
 server.listen(9000, () => console.log("Chat server is up and running"))
 

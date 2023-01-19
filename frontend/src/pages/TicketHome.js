@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import axios, { HttpStatusCode } from "axios";
 import AssignedTicketDetails from "../components/AssignedTicketDetails";
 import useAssignedTicketsContext from "../hooks/useAssignedTicketsContext";
+import TestingChat from "../components/TestingChat";
 
 const TicketHome = () => {
   const { assignedTickets, dispatch } = useAssignedTicketsContext();
@@ -54,6 +55,10 @@ const TicketHome = () => {
                
           })
     }
+
+    <TestingChat>
+      
+    </TestingChat>
     </>
 
   );

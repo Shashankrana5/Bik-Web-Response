@@ -13,9 +13,6 @@ const TicketCreationForm = () => {
     const [body, setBody] = useState("")
     const [assignedTo, setAssignedTo] = useState("N/a")
     const [resolved, setResolved] = useState(false);
-
-
-
     
 
     const handleSubmit = async (e) =>{

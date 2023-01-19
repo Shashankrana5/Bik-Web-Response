@@ -17,7 +17,6 @@ const SendMessage = () => {
 
   useEffect(() => {
     socket.on("receive-message", (data) => {
-      console.log(data);
       displayMessagesDispatch({ type: "CREATE_MESSAGES", payload: data });
     });
   }, [socket]);
@@ -26,6 +25,7 @@ const SendMessage = () => {
     e.preventDefault();
     if (displayMessages) {
       const receiverEmail =
+
         displayMessages[0].senderEmail === senderEmail
           ? displayMessages[0].receiverEmail
           : displayMessages[0].senderEmail;
@@ -49,7 +49,6 @@ const SendMessage = () => {
         },
       });
       const json = await response.json();
-      console.log(json);
     }
   };
 
