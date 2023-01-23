@@ -29,7 +29,7 @@ app.use(errorHandler);
 
 app.use("/api/", require("./routes/tickets"))
 app.use("/api/users", require("./routes/users"))
-app.use("/api/message", require("./routes/message"))
+app.use("/api/message/", require("./routes/message"))
 app.use("/api/email/", require("./routes/email"))
 
 
@@ -55,15 +55,33 @@ io.of("/personalchat").on('connection', socket => {
     console.log(`A user has personal chat joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
     const userSocketId = socket.id;
     const userEmail = socket.handshake.query.name;
-    activeUserChats[userEmail] = userSocketId;
+    // activeUserChats[userEmail] = userSocketId;
+
+    if (userEmail in activeUserChats){
+        (activeUserChats[userEmail]).add(userSocketId);
+    }
+    else{
+        activeUserChats[userEmail] = new Set([userSocketId]);
+    }
 
     socket.on("send-personal-message", data => {
-        console.log(data)
-        socket.to(activeUserChats[data.receiverEmail]).emit("receive-personal-message", data);
+        
+        if (activeUserChats[data.receiverEmail]){
+            for (let socketAddress of activeUserChats[data.receiverEmail]){
+
+                socket.to(socketAddress).emit("receive-personal-message", data);
+            }
+        }
     })
+
+    socket.on("disconnect", event =>{
+        // console.log(`A user has personal chat left with id: ${userSocketId} and email: ${userEmail}`)
+        activeUserChats[userEmail].delete(userSocketId);
+    })
+
 })
 io.of("/ticketchat").on("connection", socket => {
-    console.log(`A user has joined ticket chat with id: ${socket.id} and email: ${socket.handshake.query.name}`)
+    // console.log(`A user has joined ticket chat with id: ${socket.id} and email: ${socket.handshake.query.name}`)
     
     const userSocketId = socket.id;
     const userEmail = socket.handshake.query.name;
@@ -72,9 +90,8 @@ io.of("/ticketchat").on("connection", socket => {
     socket.on("join-ticket", data => {
         console.log("user awant to joing " + data)
         socket.join(data);
-        // socket.to(data).emit("test", "heello from backedn")
-    })
 
+    })
 
     socket.on("send-ticket-message", data =>{
         console.log(data.ticketNumber)

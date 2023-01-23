@@ -3,7 +3,6 @@ const Message = require("../models/Message");
 const sendMessage = async (req, res) => {
   const { senderEmail, receiverEmail, messageType, ticketNumber, groupId, content } = req.body;
 
-    console.log(req.body)
   if (groupId) {
     const response = await Message.create({ senderEmail, messageType, groupId, content });
     return res.status(200).json(response);
@@ -37,7 +36,7 @@ const getMessagesByEmails = async (req, res) => {
     const { senderEmail, receiverEmail } = req.body;
 
     try{
-      const response = await Message.find({$or:[{senderEmail: senderEmail, receiverEmail: receiverEmail}, {senderEmail: receiverEmail, receiverEmail: senderEmail}]}).sort({createdAt: -1});
+      const response = await Message.find({$or:[{senderEmail: senderEmail, receiverEmail: receiverEmail}, {senderEmail: receiverEmail, receiverEmail: senderEmail}]}).sort({createdAt: 1});
       return res.status(200).json(response);
     } 
     catch(error){

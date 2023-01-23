@@ -18,12 +18,12 @@ const SubmitMessage = () => {
         if (personalChatSocket){
         personalChatSocket.on("receive-personal-message", data => {
             console.log(data);
+            displayMessagesDispatch({type: "CREATE_MESSAGES", payload: data})
         })}
     }, [personalChatSocket])
 
 
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         if (displayMessages) {
             const receiverEmail =
@@ -37,6 +37,18 @@ const SubmitMessage = () => {
               type: "CREATE_MESSAGES",
               payload: messageData,
             });
+            const response = await fetch("/api/message/sendmessage", {
+                method: "POST",
+                body: JSON.stringify({
+                  receiverEmail: receiverEmail,
+                  senderEmail: senderEmail,
+                  content: content,
+                  messageType: "personal"
+                }),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
         }
     }
 

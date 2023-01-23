@@ -42,8 +42,6 @@ const getAllTickets = async (req, res) => {
 const getTicketByAssignedTo = async (req, res) => {
 
     const { assignedTo } = req.body;
-    console.log(req.body);
-    console.log(assignedTo)
     try{
         const tickets = await Ticket.find({assignedTo});
         return res.status(200).json(tickets);

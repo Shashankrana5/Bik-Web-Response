@@ -47,7 +47,7 @@ const Ticket = () => {
             {initialRequest}
         </div>
             {displayMessages && displayMessages.map(message => {
-                return <div>
+                return <div key = {message._id}>
                     <h4>{message.senderEmail}</h4>
                     <h5>{message.content}</h5>
                 </div>

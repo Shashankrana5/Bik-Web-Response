@@ -44,7 +44,7 @@ const PersonalChat = () => {
         const receiver = e.target.textContent
         const loggedinUser = localStorage.getItem("user");
         const loggedinUserEmail = await JSON.parse(loggedinUser).email
-        const response = await fetch("api/message/messagesbyemail",
+        const response = await fetch("/api/message/messagesbyemail",
         {
             method: "POST",
             body: JSON.stringify({senderEmail: loggedinUserEmail,receiverEmail:receiver}),
@@ -61,7 +61,6 @@ const PersonalChat = () => {
 
     return (
         <>
-            <Navbar />
             <ChatCreation />
             {/* <ChatNavigation chats = {chats}/> */}
             <div className="list-chats">

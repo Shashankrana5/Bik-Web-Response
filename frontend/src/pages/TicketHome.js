@@ -3,6 +3,8 @@ import axios, { HttpStatusCode } from "axios";
 import AssignedTicketDetails from "../components/AssignedTicketDetails";
 import useAssignedTicketsContext from "../hooks/useAssignedTicketsContext";
 import TestingChat from "../components/TestingChat";
+import PersonalChat from "../components/PersonalChat";
+import { Link } from "react-router-dom";
 
 const TicketHome = () => {
   const { assignedTickets, dispatch } = useAssignedTicketsContext();
@@ -47,21 +49,17 @@ const TicketHome = () => {
 
             return <div className="list-container" key = {ticket._id}>
 
-                 <p>{ticket.clientName}</p>
-                 <p>{ticket.createdAt}</p>
-                 <p>{ticket.initialRequest}</p>
+               <Link to= {`/ticket/${ticket.ticketNumber}`}><p> {ticket.clientName} <span> {ticket.createdAt}</span></p></Link> 
+                <p>{ticket.initialRequest}</p>
                  
                 </div>
                
           })
     }
-
-    <TestingChat>
-      
-    </TestingChat>
+    <PersonalChat/>
     </>
 
   );
 };
-
+ 
 export default TicketHome;
