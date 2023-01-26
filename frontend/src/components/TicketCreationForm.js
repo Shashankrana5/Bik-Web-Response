@@ -19,7 +19,7 @@ const TicketCreationForm = () => {
 
         e.preventDefault();
 
-        const ticket = {clientName, email, subject, category, body , resolved, assignedTo};
+        const ticket = {clientName, email, subject, category, initialRequest: body , resolved, assignedTo};
         console.log(ticket)
         const response = await fetch("/api/", {
             method: "POST",
@@ -74,7 +74,6 @@ const TicketCreationForm = () => {
         for (let key of Object.keys(fieldMap)){
             changeField(key, fieldMap[key]);
         }
-        console.log(fieldMap);
 
     }
     const changeField = (fieldName, fieldValue) => {
@@ -98,6 +97,9 @@ const TicketCreationForm = () => {
             <label>Client name</label>
             
             <input id = "fullName-field" type ="text" onChange={(e) => {
+                if (e.nativeEvent.data === null){
+                    e.target.value  = (e.target.value).substring(0, e.target.value.length-1);
+                }
                 setClientName(e.target.value)
                 fetchSearch("fullName", e.target.value)
             }}
@@ -105,6 +107,9 @@ const TicketCreationForm = () => {
 
             <label>email address</label>
             <input id = "email-field" type ="text" onChange={(e) => {
+                if (e.nativeEvent.data === null){
+                    e.target.value  = (e.target.value).substring(0, e.target.value.length-1);
+                }
                 setEmail(e.target.value)
                 fetchSearch("email", e.target.value);
                 }}></input>

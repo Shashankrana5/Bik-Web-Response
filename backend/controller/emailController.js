@@ -17,6 +17,7 @@ const createEmail = async(req, res) => {
 
     const {senderEmail, receiverEmail, ticketNumber, subject, body} = req.body
 
+    console.log({senderEmail, receiverEmail, ticketNumber, subject, body})
     try{
         const email = await Email.create({senderEmail, receiverEmail, ticketNumber, subject, body})
         try{

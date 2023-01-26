@@ -7,6 +7,7 @@ import { useTicketContext } from "../hooks/useTicketContext";
 import useChatContext from "../hooks/useChatContext";
 import DisplayMessages from "../components/DisplayMessages";
 import SendMessage from "../components/SendMessage";
+import PersonalChat from "../components/PersonalChat";
 
 
 const Home = () => {
@@ -83,9 +84,7 @@ const Home = () => {
       {tickets && tickets.map((ticket) => (<TicketDetails key={ticket._id} ticket={ticket}/> ))}
       <div className="create-ticket">
       </div>
-    <ChatNavigation chats = {chats}/>
-    <DisplayMessages />
-    <SendMessage type = {"personal"}/>
+    <PersonalChat />
     </div>
   );
   }

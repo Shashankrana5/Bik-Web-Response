@@ -8,6 +8,7 @@ import useMessageDisplayContext from "../hooks/useDisplayMessageContext";
 import DisplayMessages from "../components/DisplayMessages";
 import SendMessage from "../components/SendMessage";
 import io from "socket.io-client";
+import PersonalChat from "../components/PersonalChat";
 
 
 
@@ -42,14 +43,7 @@ const Chat = () => {
     return (
         <div className="chat">
             <Navbar />
-            <div className="create-new-chat">
-                <ChatCreation/>
-            </div>
-            <div className="message-display">
-                <ChatNavigation chats = {chats}/>
-                <DisplayMessages />
-                <SendMessage type = {"personal"}/>
-            </div>  
+            <PersonalChat />
         </div>
     )
 }

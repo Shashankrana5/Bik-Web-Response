@@ -94,35 +94,10 @@ io.of("/ticketchat").on("connection", socket => {
     })
 
     socket.on("send-ticket-message", data =>{
-        console.log(data.ticketNumber)
-        socket.to(data.ticketNumber).emit("receive-ticket-message", "something has been received.")
+        socket.to(data.ticketNumber).emit("receive-ticket-message", data)
         // socket.to(activeTicketChats[data.senderEmail]).emit('receive-ticket-message', data);
     })
 })
-
-
-
-// io.on("connection", socket => {
-//     // console.log(`A user has joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
-//     const userSocketId = socket.id;
-//     const userEmail = socket.handshake.query.name;
-//     const typeOfMessage = socket.handshake.query.type;
-//     // if (typeOfMessage === "personal"){  
-//     //     console.log(true);  
-//         activeUserChats[userEmail] = userSocketId;
-//     // }
-//     // else if (typeOfMessage == "ticket"){
-//     //     console.log(false)
-//     // }
-
-//     socket.on("send-message", data => {
-//         socket.to(activeUserChats[data.receiverEmail]).emit("receive-message", data)
-//     })
-
-//     socket.on("disconnect", () => {
-//         // console.log(`User with Id; ${userSocketId} has just disconnected.`);
-//     })
-// })
 
 server.listen(9000, () => console.log("Chat server is up and running"))
 

@@ -15,6 +15,7 @@ const ticketSchema = new Schema({
     email: {
         type: String,
         require: true,
+        unique: false,
     },
     subject: {
         type: String,
