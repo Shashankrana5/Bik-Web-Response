@@ -22,7 +22,7 @@ const PersonalChat = () => {
             
             const loggedinUser = localStorage.getItem("user");
             const loggedinUserEmail = await JSON.parse(loggedinUser).email
-            const usersChatted = await fetch("/api/message/chatsemail", {
+            const usersChatted = await fetch("http://localhost:4000/api/message/chatsemail", {
                 method: "POST",
                 body: JSON.stringify({email: loggedinUserEmail}),
                 headers: {
@@ -44,7 +44,7 @@ const PersonalChat = () => {
         const receiver = e.target.textContent
         const loggedinUser = localStorage.getItem("user");
         const loggedinUserEmail = await JSON.parse(loggedinUser).email
-        const response = await fetch("/api/message/messagesbyemail",
+        const response = await fetch("http://localhost:4000/api/message/messagesbyemail",
         {
             method: "POST",
             body: JSON.stringify({senderEmail: loggedinUserEmail,receiverEmail:receiver}),

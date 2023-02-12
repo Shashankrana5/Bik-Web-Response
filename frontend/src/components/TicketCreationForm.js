@@ -63,17 +63,25 @@ const TicketCreationForm = () => {
         })
         const json = await response.json();
 
+        if (json.length > 0){
         const result = json[0];
         // let fieldsSet = new Set(["email", "clientName"]);
         let fieldMap = new Object({"email": result.email, "fullName": result.fullName});
 
+        // console.log(fieldMap[k]);
+        setEmail(fieldMap["email"]);
+        setClientName(fieldMap["fullName"])
         updateCurrentField(k, fieldMap[k], v);
 
+        console.log("email: " + fieldMap["email"])
+        console.log("clientName " + fieldMap["fullName"]);
         delete fieldMap[k];
 
         for (let key of Object.keys(fieldMap)){
             changeField(key, fieldMap[key]);
         }
+        
+    }
 
     }
     const changeField = (fieldName, fieldValue) => {
@@ -83,10 +91,10 @@ const TicketCreationForm = () => {
         
     }
 
-    const updateCurrentField = (fieldName, fieldValue, typed) =>{
+    const updateCurrentField = (fieldName, feildValue, typed) =>{
         let field = document.querySelector(`#${fieldName}-field`);
-        field.value = fieldValue;
-        field.setSelectionRange(typed.length, fieldValue.length)
+        field.value = feildValue;
+        field.setSelectionRange(typed.length, feildValue.length)
 
     }
         
@@ -100,8 +108,10 @@ const TicketCreationForm = () => {
                 if (e.nativeEvent.data === null){
                     e.target.value  = (e.target.value).substring(0, e.target.value.length-1);
                 }
-                setClientName(e.target.value)
+                // console.log(e.target.value);
+                // setClientName(e.target.value)
                 fetchSearch("fullName", e.target.value)
+                console.log("fullname: " + clientName + " email: " + email);
             }}
             ></input>
 
@@ -110,8 +120,9 @@ const TicketCreationForm = () => {
                 if (e.nativeEvent.data === null){
                     e.target.value  = (e.target.value).substring(0, e.target.value.length-1);
                 }
-                setEmail(e.target.value)
+                // setEmail(e.target.value)
                 fetchSearch("email", e.target.value);
+                console.log(email);
                 }}></input>
             
             <label>subject</label>

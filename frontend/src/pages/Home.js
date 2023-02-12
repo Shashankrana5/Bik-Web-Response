@@ -18,7 +18,7 @@ const Home = () => {
   
   useEffect(() => {
     const fetchTickets = async () => {
-      const response = await fetch("/api/getall");
+      const response = await fetch("http://localhost:4000/api/getall");
       const json = await response.json();
 
       if (response.ok) {
@@ -30,7 +30,7 @@ const Home = () => {
 
   useEffect( () => {
     const fetchUser = async () => {
-      const response = await fetch("/api/users/getuser", {
+      const response = await fetch("http://localhost:4000/api/users/getuser", {
       method: "POST",
       body: JSON.stringify({email: loggedinUserEmail}),
       headers: {
@@ -54,7 +54,7 @@ const Home = () => {
           
           const loggedinUser = await localStorage.getItem("user");
           const loggedinUserEmail = await JSON.parse(loggedinUser).email
-          const usersChatted = await fetch("/api/message/chatsemail", {
+          const usersChatted = await fetch("http://localhost:4000/api/message/chatsemail", {
               method: "POST",
               body: JSON.stringify({email: loggedinUserEmail}),
               headers: {
@@ -72,8 +72,16 @@ const Home = () => {
 
 
   
-  if (user && user[0]["role"] === "USER")
-  console.log(user[0].role)
+  if (user && user[0]["role"] === "USER"){
+    return (
+      <div className="home-user">
+
+        this is the user home
+        
+      </div>
+    )
+  }
+  // console.log(user[0].role)
 
   else if (user && user[0]["role"] === "ADMIN"){
   return (

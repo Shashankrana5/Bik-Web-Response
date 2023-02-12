@@ -21,9 +21,9 @@ const Chat = () => {
     useEffect(() => {
         const fetchMessage = async () =>{
             
-            const loggedinUser = await localStorage.getItem("user");
+            const loggedinUser = localStorage.getItem("user");
             const loggedinUserEmail = await JSON.parse(loggedinUser).email
-            const usersChatted = await fetch("/api/message/chatsemail", {
+            const usersChatted = await fetch("http://localhost:4000/api/message/chatsemail", {
                 method: "POST",
                 body: JSON.stringify({email: loggedinUserEmail}),
                 headers: {

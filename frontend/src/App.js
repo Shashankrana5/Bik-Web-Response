@@ -8,10 +8,10 @@ import Chat from "./pages/Chat";
 import Ticket from "./pages/Ticket"
 import TicketHome from "./pages/TicketHome";
 import { TestingChat } from "./context/TestingChat";
-import ChattingPage from "./pages/ChattinPage";
 
 
-function App() {
+
+function App() { 
   return <div className="App">
     <BrowserRouter>
     <div className="pages">
@@ -24,7 +24,7 @@ function App() {
         <Route path = "/testing" element = {<TestingChat/>} />
         <Route path = "/ticket" element = {<TicketHome />}/>
         <Route path = "/ticket/:ticketNumber" element = {<Ticket/>} />
-        <Route path = "/testingchat" element = {<ChattingPage/>} />
+        {/* <Route path = "/testingchat" element = {<ArchivedTicket/>} /> */}
       </Routes>
       </div>
     </BrowserRouter>

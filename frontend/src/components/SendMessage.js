@@ -6,7 +6,6 @@ import DisplayMessages from "./DisplayMessages";
 const SendMessage = () => {
   const socket = io.connect("http://localhost:9000", {
     query: `name=${JSON.parse(localStorage.getItem("user")).email}`,
-    // query: `type=personal`
   });
 
   const [content, setContent] = useState("");
@@ -36,7 +35,7 @@ const SendMessage = () => {
         payload: messageData,
       });
 
-      const response = await fetch("/api/message/sendmessage", {
+      const response = await fetch("http://localhost:4000/api/message/sendmessage", {
         method: "POST",
         body: JSON.stringify({
           receiverEmail: receiverEmail,

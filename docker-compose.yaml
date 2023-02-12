@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  mongodb:
+    image: "mongo"
+    volumes: 
+      - data:/data/db
+  backend:
+    build: ./backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - app-network
+    depends_on:
+      - mongodb
+  chat:
+    build: ./backend
+    ports:
+      - "9000:9000"
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    networks:
+      - app-network
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+networks:
+      app-network:
+        driver: bridge
+
+volumes:
+  data:
+  logs:

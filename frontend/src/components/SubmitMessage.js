@@ -37,7 +37,7 @@ const SubmitMessage = () => {
               type: "CREATE_MESSAGES",
               payload: messageData,
             });
-            const response = await fetch("/api/message/sendmessage", {
+            const response = await fetch("http://localhost:4000/api/message/sendmessage", {
                 method: "POST",
                 body: JSON.stringify({
                   receiverEmail: receiverEmail,
