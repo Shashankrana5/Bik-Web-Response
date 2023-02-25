@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken")
 const getUser = async (req,res) => {
 
     const {id} = req.params;
-    console.log(id);
 
     try{
         const user = await User.findById(id)
@@ -30,7 +29,7 @@ const getAllUsers = async (req, res) => {
 const getUserFromParams = async (req, res) => {
 
     passingObj = {}
-    console.log(req.body)
+
     if (req.body.email){
         const email  = req.body.email;
 
@@ -39,7 +38,6 @@ const getUserFromParams = async (req, res) => {
 
     }
     if (req.body.fullName){
-        console.log("there is a fullname")
         const fullName = req.body.fullName;
         passingObj.fullName = {$regex: '^'+fullName, $options: 'i'};
     }

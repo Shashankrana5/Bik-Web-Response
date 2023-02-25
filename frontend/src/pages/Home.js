@@ -8,7 +8,7 @@ import useChatContext from "../hooks/useChatContext";
 import DisplayMessages from "../components/DisplayMessages";
 import SendMessage from "../components/SendMessage";
 import PersonalChat from "../components/PersonalChat";
-
+import UserSearchBar from "../components/UserSearchBar"
 
 const Home = () => {
   const { tickets, dispatch } = useTicketContext();
@@ -88,7 +88,7 @@ const Home = () => {
     <div className="home">
       <Navbar />
       <TicketCreationForm/>
-
+      <UserSearchBar />
       {tickets && tickets.map((ticket) => (<TicketDetails key={ticket._id} ticket={ticket}/> ))}
       <div className="create-ticket">
       </div>
