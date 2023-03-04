@@ -1,5 +1,5 @@
-"use strict";
 const mongoose = require("mongoose");
+
 const groupSchema = new mongoose.Schema({
     users: {
         type: Object,
@@ -9,9 +9,13 @@ const groupSchema = new mongoose.Schema({
         type: Object,
         require: true
     },
-    name: {
+
+    name:{
         type: String,
         require: false
     }
-});
+
+})
+
+
 module.exports = mongoose.model("Group", groupSchema);

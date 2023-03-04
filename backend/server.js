@@ -36,7 +36,7 @@ app.use("/api/", require("./routes/tickets"))
 app.use("/api/users", require("./routes/users"))
 app.use("/api/message/", require("./routes/message"))
 app.use("/api/email/", require("./routes/email"))
-
+app.use("/api/group", require("./routes/group"))
 
 var activeUserChats = new Object();
 var activeTicketChats = new Object();
