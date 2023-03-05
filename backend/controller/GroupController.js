@@ -21,17 +21,22 @@ const getGroupById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 const createGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
+    // console.log(req.body);
     const { user_id, requestSender, groupName } = req.body;
-    const sender = { user_id, email: requestSender };
+    const users = req.body.users;
+    const sender = { user_id, requestSender };
     const admins = { user_id, email: requestSender };
-    try {
-        const response = yield Group.create({ users: sender, admins, groupName });
-        return res.status(200).json(response);
-    }
-    catch (err) {
-        return res.status(400).json({ error_message: err });
-    }
+    const senderId = user_id;
+    const senderEmail = requestSender;
+    // const usersWithAccess = {...users, ...{user_id: requestSender}};
+    // console.log({users: usersWithAccess, admins, groupName})
+    console.log(senderId, senderEmail);
+    // try{
+    //     const response: {[key: string]: string} = await Group.create({users: usersWithAccess, admins, groupName})
+    //     return res.status(200).json(response);
+    // }catch(err){
+    //     return res.status(400).json({error_message: err});
+    // }
 });
 module.exports = {
     createGroup,

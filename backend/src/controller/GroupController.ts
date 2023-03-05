@@ -16,19 +16,28 @@ const getGroupById: Function = async (req: Request, res: Response) => {
 
 const createGroup: Function = async(req: Request, res: Response) =>{
 
-    console.log(req.body);
+    // console.log(req.body);
 
     const {user_id, requestSender, groupName}: {[key: string]: string} = req.body;
-    const sender: {[key:string]: string} = {user_id, email: requestSender}
+    const users: {[key:string]: string} = req.body.users;
+    const sender: {[key:string]: string} = {user_id, requestSender}
     const admins = {user_id, email: requestSender};
-    try{
 
-        const response: {[key: string]: string} = await Group.create({users: sender, admins, groupName})
-        return res.status(200).json(response);
+    const senderId: string = user_id;
+    const senderEmail: string = requestSender;
 
-    }catch(err){
-        return res.status(400).json({error_message: err});
-    }
+    // const usersWithAccess = {...users, ...{user_id: requestSender}};
+    // console.log({users: usersWithAccess, admins, groupName})
+    console.log(senderId, senderEmail);
+
+    // try{
+
+    //     const response: {[key: string]: string} = await Group.create({users: usersWithAccess, admins, groupName})
+    //     return res.status(200).json(response);
+
+    // }catch(err){
+    //     return res.status(400).json({error_message: err});
+    // }
 }
 
 
