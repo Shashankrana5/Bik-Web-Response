@@ -16,25 +16,27 @@ const GroupChatCreationgForm = ({ loggedInUserEmail, user_id }) => {
         groupName: "",
         requestSender: loggedInUserEmail,
         user_id: user_id,
-        users: {}
+        users: { "63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com" }
     });
-    console.log("this is: ", user_id);
-    // setGroupCreationParams({groupName: "", requestSender: loggedInUserEmail, user_id: user_id})
-    const handleSubmit = (e) => __awaiter(void 0, void 0, void 0, function* () {
-        e.preventDefault();
-        const group = yield fetch("http://localhost:4000/api/group", {
-            method: "POST",
-            body: JSON.stringify(groupCreationParams),
-            headers: {
-                "Content-Type": "application/json"
-            }
+    if (user_id != "") {
+        groupCreationParams.user_id = user_id;
+        // setGroupCreationParams({groupName: "", requestSender: loggedInUserEmail, user_id: user_id})
+        const handleSubmit = (e) => __awaiter(void 0, void 0, void 0, function* () {
+            e.preventDefault();
+            const group = yield fetch("http://localhost:4000/api/group", {
+                method: "POST",
+                body: JSON.stringify(groupCreationParams),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
         });
-    });
-    return ((0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsxs)("form", Object.assign({ onSubmit: handleSubmit }, { children: [(0, jsx_runtime_1.jsx)("label", { children: " Group Name" }), (0, jsx_runtime_1.jsx)("input", { placeholder: "Enter a group name", onChange: e => setGroupCreationParams({
-                        groupName: e.target.value,
-                        requestSender: loggedInUserEmail,
-                        user_id: user_id,
-                        users: { "63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com" }
-                    }) }), (0, jsx_runtime_1.jsx)("button", Object.assign({ type: "submit" }, { children: "Create Group" }))] })) }));
+        return ((0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsxs)("form", Object.assign({ onSubmit: handleSubmit }, { children: [(0, jsx_runtime_1.jsx)("label", { children: " Group Name" }), (0, jsx_runtime_1.jsx)("input", { placeholder: "Enter a group name", onChange: e => setGroupCreationParams({
+                            groupName: e.target.value,
+                            requestSender: loggedInUserEmail,
+                            user_id: user_id,
+                            users: { "63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com" }
+                        }) }), (0, jsx_runtime_1.jsx)("button", Object.assign({ type: "submit" }, { children: "Create Group" }))] })) }));
+    }
 };
 exports.default = GroupChatCreationgForm;

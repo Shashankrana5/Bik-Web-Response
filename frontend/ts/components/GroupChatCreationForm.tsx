@@ -19,11 +19,12 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
         groupName: "",
         requestSender: loggedInUserEmail,
         user_id: user_id,
-        users: {}
+        users: {"63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com"}
     })
-    console.log("this is: ", user_id)
 
-
+    if (user_id != ""){
+        groupCreationParams.user_id = user_id;
+    
     // setGroupCreationParams({groupName: "", requestSender: loggedInUserEmail, user_id: user_id})
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.FormEvent<HTMLFormElement>) =>{
         
@@ -53,6 +54,7 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
             </form>
         </div>
     )
+    }
 }
 
 export default GroupChatCreationgForm;

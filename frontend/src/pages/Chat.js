@@ -11,37 +11,30 @@ import GroupChatCreationForm from "../components/GroupChatCreationForm.js"
 import io from "socket.io-client";
 import PersonalChat from "../components/PersonalChat";
 
-const test_id = "";
+
 
 const Chat = () => {
 
 
-    const [user_id, setUser_id] = useState("");
+    const [userId, setUserId] = useState("");
     const { chats, chatDispatch } = useChatContext();
     var index = 0
     const loggedinUser = localStorage.getItem("user");
     const loggedinUserEmail = JSON.parse(loggedinUser).email
-    
-    // const fetchUserId = async(email) => {
 
-    //     const response = await fetch("http://localhost:4000/api/users/fetchid/" + email);
+    const fetchUserIdFromEmail = async(email) => {
         
-    //     return response.then(res => res.json()).then(res => res)
-    
-    // }
+        const response = await fetch("http://localhost:4000/api/users/fetchid/" + email);
+        const json = await response.json();
 
-    // useEffect(() => {
-    //     const a = fetchUserId(loggedinUserEmail)
-    //     console.log(a.then(e => {console.log(e)}))
-        
-    // }, [])
+        const returnedId = json._id;
+        if (returnedId){
+            setUserId(returnedId);
+        }
+    }
 
-    const a = fetch("http://localhost:4000/api/users/fetchid/" + loggedinUserEmail).then(
-        data => data.json()
-    ).then(x => x._id)
-    console.log(a.then(data => data))
+    fetchUserIdFromEmail(loggedinUserEmail);
 
-    
     useEffect(() => {
         const fetchMessage = async () =>{
             
@@ -66,7 +59,7 @@ const Chat = () => {
         <div className="chat">
             <Navbar />
 
-            <GroupChatCreationForm user_id = {"las;kjdflasjdf"} loggedInUserEmail={loggedinUserEmail}/>
+            <GroupChatCreationForm user_id = {userId} loggedInUserEmail={loggedinUserEmail}/>
 
             <PersonalChat />
             
