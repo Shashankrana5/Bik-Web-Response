@@ -9,7 +9,7 @@ const groupSchema = new mongoose.Schema({
         type: Object,
         require: true
     },
-    name: {
+    groupName: {
         type: String,
         require: false
     }

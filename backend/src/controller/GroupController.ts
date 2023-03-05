@@ -16,15 +16,17 @@ const getGroupById: Function = async (req: Request, res: Response) => {
 
 const createGroup: Function = async(req: Request, res: Response) =>{
 
-    const { requestSender }: {[key: string]: string} = req.body;
-    const {users}: {[key: string]: any} = req.body;
+    console.log(req.body);
 
+    const {user_id, requestSender, groupName}: {[key: string]: string} = req.body;
+    const sender: {[key:string]: string} = {user_id, email: requestSender}
+    const admins = {user_id, email: requestSender};
     try{
 
-    const response: {[key: string]: any} = await Group.create({users: users, admins: requestSender});
-    return res.status(200).json({message: response})
+        const response: {[key: string]: string} = await Group.create({users: sender, admins, groupName})
+        return res.status(200).json(response);
 
-}catch(err){
+    }catch(err){
         return res.status(400).json({error_message: err});
     }
 }

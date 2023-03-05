@@ -14,6 +14,18 @@ const getUser = async (req,res) => {
     }
 }
 
+const getIdFromEmail = async(req, res) => {
+
+    const {email} = req.params;
+
+    try {
+        const user = await User.findOne({email: email});
+        return res.status(200).json(user);
+    }catch(err){
+        return res.status(400).json({message: err.message})
+    }
+}
+
 const getAllUsers = async (req, res) => {
 
     try{
@@ -109,4 +121,5 @@ module.exports = {
     createUser,
     signupUser,
     loginUser,
+    getIdFromEmail
 }

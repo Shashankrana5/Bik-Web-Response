@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { ChatDetails } from "../components/ChatDetails";
 import useChatContext from "../hooks/useChatContext"
@@ -7,6 +7,7 @@ import ChatNavigation from "../components/ChatNavigation";
 import useMessageDisplayContext from "../hooks/useDisplayMessageContext";
 import DisplayMessages from "../components/DisplayMessages";
 import SendMessage from "../components/SendMessage";
+import GroupChatCreationForm from "../components/GroupChatCreationForm.js"
 import io from "socket.io-client";
 import PersonalChat from "../components/PersonalChat";
 
@@ -14,15 +15,26 @@ import PersonalChat from "../components/PersonalChat";
 
 const Chat = () => {
 
-
+    const [user_id, setUser_id] = useState("");
     const { chats, chatDispatch } = useChatContext();
     var index = 0
+    const loggedinUser = localStorage.getItem("user");
+    const loggedinUserEmail = JSON.parse(loggedinUser).email
+    
+    const fetchUserId = async(email) => {
+
+        const response = await fetch("http://localhost:4000/api/users/fetchid/" + email);
+        const json = await response.json();
+        
+        setUser_id(json._id);
+    
+    }
+    fetchUserId(loggedinUserEmail)
+
 
     useEffect(() => {
         const fetchMessage = async () =>{
             
-            const loggedinUser = localStorage.getItem("user");
-            const loggedinUserEmail = await JSON.parse(loggedinUser).email
             const usersChatted = await fetch("http://localhost:4000/api/message/chatsemail", {
                 method: "POST",
                 body: JSON.stringify({email: loggedinUserEmail}),
@@ -43,7 +55,10 @@ const Chat = () => {
     return (
         <div className="chat">
             <Navbar />
+            <GroupChatCreationForm user_id= {user_id} loggedInUserEmail={loggedinUserEmail}/>
+
             <PersonalChat />
+            
         </div>
     )
 }

@@ -21,11 +21,13 @@ const getGroupById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 const createGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { requestSender } = req.body;
-    const { users } = req.body;
+    console.log(req.body);
+    const { user_id, requestSender, groupName } = req.body;
+    const sender = { user_id, email: requestSender };
+    const admins = { user_id, email: requestSender };
     try {
-        const response = yield Group.create({ users: users, admins: requestSender });
-        return res.status(200).json({ message: response });
+        const response = yield Group.create({ users: sender, admins, groupName });
+        return res.status(200).json(response);
     }
     catch (err) {
         return res.status(400).json({ error_message: err });

@@ -1,5 +1,5 @@
 const express = require("express");
-const { getUser, createUser, getAllUsers, signupUser, loginUser, getUserFromParams } = require("../controller/userController");
+const { getUser, createUser, getAllUsers, signupUser, loginUser, getUserFromParams, getIdFromEmail } = require("../controller/userController");
 const { SearchUsers } = require("../controller/SearchUserController");
 const router = express.Router();
 
@@ -7,6 +7,7 @@ const router = express.Router();
 router.get("/getall", getAllUsers)
 router.post("/getuser", getUserFromParams)
 router.post("/search", SearchUsers)
+router.get("/fetchid/:email", getIdFromEmail);
 router.get("/:id", getUser)
 
 router.post("/", createUser)
