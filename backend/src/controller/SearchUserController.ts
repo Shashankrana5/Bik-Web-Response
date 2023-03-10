@@ -1,5 +1,6 @@
 const User = require("../models/User");
 
+
 import {Request, Response} from 'express';
 
 const SearchUsers: Function = async(req: Request, res: Response) => {
@@ -10,7 +11,7 @@ const SearchUsers: Function = async(req: Request, res: Response) => {
         passedValues.email = {$regex: '^'+email, $options: 'i'};
     }
 
-    if (req.body.fullName){
+    else if (req.body.fullName){
         const fullName = req.body.fullName;
 
         passedValues.fullName = {$regex: '^'+fullName, $options: 'i'};
@@ -23,8 +24,37 @@ const SearchUsers: Function = async(req: Request, res: Response) => {
         res.status(400).json({message: error});
     }
 
-} 
+}
+interface UserModel{
+    _id: string;
+    fullName:string;
+    email:string;
+}
+
+const genericUserSearch = async(req: Request, res: Response) => {
+
+    const searchParam:string = req.params.searchparam;
+    console.log(searchParam);
+    try{
+        let user:UserModel[] = await User.find({email: searchParam});
+
+        if (user.length > 0){
+            return res.status(200).json(user[0]);
+        }
+
+        user = await User.find({fullName: searchParam});
+
+        if (user.length > 0){
+            return res.status(200).json(user[0]);
+        }
+        
+        return res.status(200).json({message: "No users found!"})
+    }catch(err){
+        return res.status(400).json({error: err});
+    }
+};
 
 module.exports = {
-    SearchUsers
+    SearchUsers,
+    genericUserSearch
 }

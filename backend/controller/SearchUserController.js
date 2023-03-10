@@ -16,7 +16,7 @@ const SearchUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const email = req.body.email;
         passedValues.email = { $regex: '^' + email, $options: 'i' };
     }
-    if (req.body.fullName) {
+    else if (req.body.fullName) {
         const fullName = req.body.fullName;
         passedValues.fullName = { $regex: '^' + fullName, $options: 'i' };
     }
@@ -28,6 +28,25 @@ const SearchUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(400).json({ message: error });
     }
 });
+const genericUserSearch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const searchParam = req.params.searchparam;
+    console.log(searchParam);
+    try {
+        let user = yield User.find({ email: searchParam });
+        if (user.length > 0) {
+            return res.status(200).json(user[0]);
+        }
+        user = yield User.find({ fullName: searchParam });
+        if (user.length > 0) {
+            return res.status(200).json(user[0]);
+        }
+        return res.status(200).json({ message: "No users found!" });
+    }
+    catch (err) {
+        return res.status(400).json({ error: err });
+    }
+});
 module.exports = {
-    SearchUsers
+    SearchUsers,
+    genericUserSearch
 };
