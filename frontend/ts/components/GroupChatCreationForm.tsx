@@ -39,6 +39,21 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
         })
     }
 
+    const fetchSearch  = async(searchParam: string) =>{
+        
+        if (searchParam){
+        const response = await fetch("http://localhost:4000/api/users/searchquery/" + searchParam);
+        const json = await response.json();
+
+    if (!json["UserNotFoundError"]){
+        console.log(json)
+        for(const index in json){
+            console.log(json[index])
+        }
+    }
+            }
+    }
+
     return (
         <div>
             
@@ -50,6 +65,10 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
                 user_id: user_id,
                 users: {"63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com"}
             })}></input>
+            <label>Add Users</label>
+            <input placeholder = "Search Users to add" onChange = {(e) => 
+                fetchSearch(e.target.value)}></input>
+
             <button type= "submit">Create Group</button>
             </form>
         </div>

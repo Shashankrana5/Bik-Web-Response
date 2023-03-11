@@ -49,11 +49,11 @@ mongoose.connect(process.env.MONGO_URI)
         console.log(error)
     })
 
-io.of("/games").on('connection', socket => {
-    console.log("connection is made to the new thing.");
+// io.of("/games").on('connection', socket => {
+//     console.log("connection is made to the new thing.");
     
-    socket.emit("welcome", "hellow and welcome")
-})
+//     socket.emit("welcome", "hellow and welcome")
+// })
 
 io.of("/personalchat").on('connection', socket => {
 
@@ -95,13 +95,16 @@ io.of("/ticketchat").on("connection", socket => {
     socket.on("join-ticket", data => {
         console.log("user awant to joing " + data)
         socket.join(data);
-
     })
 
     socket.on("send-ticket-message", data =>{
         socket.to(data.ticketNumber).emit("receive-ticket-message", data)
-        // socket.to(activeTicketChats[data.senderEmail]).emit('receive-ticket-message', data);
     })
+})
+
+io.of("/groupchat").on("connection", socket => {
+
+    
 })
 
 server.listen(9000, () => console.log("Chat server is up and running"))

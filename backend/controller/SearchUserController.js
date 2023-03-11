@@ -30,23 +30,22 @@ const SearchUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const genericUserSearch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const searchParam = req.params.searchparam;
-    console.log(searchParam);
     try {
-        let user = yield User.find({ email: searchParam });
+        let user = yield User.find({ email: { $regex: '^' + searchParam, $options: 'i' } });
         if (user.length > 0) {
-            return res.status(200).json(user[0]);
+            return res.status(200).json(user);
         }
-        user = yield User.find({ fullName: searchParam });
+        user = yield User.find({ fullName: { $regex: '^' + searchParam, $options: 'i' } });
         if (user.length > 0) {
-            return res.status(200).json(user[0]);
+            return res.status(200).json(user);
         }
-        return res.status(200).json({ message: "No users found!" });
+        return res.status(200).json({ UserNotFoundError: "No users found!" });
     }
     catch (err) {
         return res.status(400).json({ error: err });
     }
 });
-module.exports = {
+const updateGroup = module.exports = {
     SearchUsers,
     genericUserSearch
 };

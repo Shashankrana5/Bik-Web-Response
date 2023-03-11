@@ -31,12 +31,24 @@ const GroupChatCreationgForm = ({ loggedInUserEmail, user_id }) => {
                 }
             });
         });
+        const fetchSearch = (searchParam) => __awaiter(void 0, void 0, void 0, function* () {
+            if (searchParam) {
+                const response = yield fetch("http://localhost:4000/api/users/searchquery/" + searchParam);
+                const json = yield response.json();
+                if (!json["UserNotFoundError"]) {
+                    console.log(json);
+                    for (const index in json) {
+                        console.log(json[index]);
+                    }
+                }
+            }
+        });
         return ((0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsxs)("form", Object.assign({ onSubmit: handleSubmit }, { children: [(0, jsx_runtime_1.jsx)("label", { children: " Group Name" }), (0, jsx_runtime_1.jsx)("input", { placeholder: "Enter a group name", onChange: e => setGroupCreationParams({
                             groupName: e.target.value,
                             requestSender: loggedInUserEmail,
                             user_id: user_id,
                             users: { "63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com" }
-                        }) }), (0, jsx_runtime_1.jsx)("button", Object.assign({ type: "submit" }, { children: "Create Group" }))] })) }));
+                        }) }), (0, jsx_runtime_1.jsx)("label", { children: "Add Users" }), (0, jsx_runtime_1.jsx)("input", { placeholder: "Search Users to add", onChange: (e) => fetchSearch(e.target.value) }), (0, jsx_runtime_1.jsx)("button", Object.assign({ type: "submit" }, { children: "Create Group" }))] })) }));
     }
 };
 exports.default = GroupChatCreationgForm;

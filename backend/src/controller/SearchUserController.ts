@@ -26,7 +26,6 @@ const SearchUsers: Function = async(req: Request, res: Response) => {
 
 }
 interface UserModel{
-    _id: string;
     fullName:string;
     email:string;
 }
@@ -34,25 +33,29 @@ interface UserModel{
 const genericUserSearch = async(req: Request, res: Response) => {
 
     const searchParam:string = req.params.searchparam;
-    console.log(searchParam);
+
     try{
-        let user:UserModel[] = await User.find({email: searchParam});
+
+        let user:UserModel[] = await User.find({email: {$regex: '^'+searchParam, $options: 'i'}});
 
         if (user.length > 0){
-            return res.status(200).json(user[0]);
+            return res.status(200).json(user);
         }
 
-        user = await User.find({fullName: searchParam});
-
+        user = await User.find({fullName: {$regex: '^'+searchParam, $options: 'i'}});
         if (user.length > 0){
-            return res.status(200).json(user[0]);
+            return res.status(200).json(user);
         }
         
-        return res.status(200).json({message: "No users found!"})
+        return res.status(200).json({UserNotFoundError: "No users found!"})
     }catch(err){
         return res.status(400).json({error: err});
     }
 };
+
+const updateGroup:Function = async(req: Request, res: Response) => {
+    
+}
 
 module.exports = {
     SearchUsers,
