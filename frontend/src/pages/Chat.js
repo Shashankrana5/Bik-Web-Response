@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { ChatDetails } from "../components/ChatDetails";
 import useChatContext from "../hooks/useChatContext"
 import { ChatCreation } from "../components/ChatCreation";
 import ChatNavigation from "../components/ChatNavigation";
@@ -10,6 +9,7 @@ import SendMessage from "../components/SendMessage";
 import GroupChatCreationForm from "../components/GroupChatCreationForm.js"
 import io from "socket.io-client";
 import PersonalChat from "../components/PersonalChat";
+
 
 
 
@@ -36,7 +36,7 @@ const Chat = () => {
     fetchUserIdFromEmail(loggedinUserEmail);
 
     useEffect(() => {
-        const fetchMessage = async () =>{
+        const fetchPersonalChats = async () =>{
             
             const usersChatted = await fetch("http://localhost:4000/api/message/chatsemail", {
                 method: "POST",
@@ -45,13 +45,22 @@ const Chat = () => {
                     "Content-Type": "application/json"
                 }
             })
-        const json = await usersChatted.json();
+        const userJson = await usersChatted.json();
+    
+        chatDispatch({type: "SET_CHAT", payload: userJson["chats"]})
 
+    }
+        const fetchGroupChats = async() => {
 
-        chatDispatch({type: "SET_CHAT", payload: json["chats"]})
+        const groupChats = await fetch("http://localhost:4000/api/group/usergroup/" + loggedinUserEmail);
+        const groupJson = await groupChats.json();
+
+        // chatDispatch({type: "CREATE_CHAT", payload: groupJson["users"]})
+
     }
 
-        fetchMessage();
+        fetchPersonalChats();
+        fetchGroupChats();
     }, [chatDispatch])
 
 
@@ -60,7 +69,8 @@ const Chat = () => {
             <Navbar />
 
             <GroupChatCreationForm user_id = {userId} loggedInUserEmail={loggedinUserEmail}/>
-        
+
+            {/* <GroupChat /> */}
             <PersonalChat />
             
         </div>

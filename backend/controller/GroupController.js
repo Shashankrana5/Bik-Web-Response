@@ -43,8 +43,7 @@ const findGroupchatFromEmail = (req, res) => __awaiter(void 0, void 0, void 0, f
     const { email } = req.params;
     console.log(email);
     try {
-        // const response =  await Group.find({users: {"firstid": "jaylen@xyz.com", "63c2a594b1d5914df517bb42": "shashank@xyz.com"}});
-        const response = yield Group.find({ $match: { "users.firstid": "jaylen@xyz.com" } });
+        const response = yield Group.find({ "users.email": email });
         return res.status(200).json(response);
     }
     catch (error) {
