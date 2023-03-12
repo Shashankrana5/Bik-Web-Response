@@ -16,7 +16,7 @@ const GroupChatCreationgForm = ({ loggedInUserEmail, user_id }) => {
         groupName: "",
         requestSender: loggedInUserEmail,
         user_id: user_id,
-        users: { "63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com" }
+        users: { "firstid": "jaylen@xyz.com", "secondid": "another jaylen" }
     });
     if (user_id != "") {
         groupCreationParams.user_id = user_id;
@@ -47,7 +47,7 @@ const GroupChatCreationgForm = ({ loggedInUserEmail, user_id }) => {
                             groupName: e.target.value,
                             requestSender: loggedInUserEmail,
                             user_id: user_id,
-                            users: { "63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com" }
+                            users: { "firstid": "jaylen@xyz.com", "secondid": "another jaylen" }
                         }) }), (0, jsx_runtime_1.jsx)("label", { children: "Add Users" }), (0, jsx_runtime_1.jsx)("input", { placeholder: "Search Users to add", onChange: (e) => fetchSearch(e.target.value) }), (0, jsx_runtime_1.jsx)("button", Object.assign({ type: "submit" }, { children: "Create Group" }))] })) }));
     }
 };

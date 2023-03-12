@@ -60,7 +60,7 @@ const Chat = () => {
             <Navbar />
 
             <GroupChatCreationForm user_id = {userId} loggedInUserEmail={loggedinUserEmail}/>
-
+        
             <PersonalChat />
             
         </div>

@@ -53,9 +53,7 @@ const genericUserSearch = async(req: Request, res: Response) => {
     }
 };
 
-const updateGroup:Function = async(req: Request, res: Response) => {
-    
-}
+
 
 module.exports = {
     SearchUsers,

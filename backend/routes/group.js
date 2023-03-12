@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { createGroup, getGroupById } = require("../controller/GroupController");
+const { createGroup, getGroupById, findGroupchatFromEmail } = require("../controller/GroupController");
 
 router.get("/get/:id", getGroupById)
+router.get("/usergroup/:email", findGroupchatFromEmail)
 router.post('/', createGroup)
 
 

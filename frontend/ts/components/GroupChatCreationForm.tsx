@@ -19,7 +19,7 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
         groupName: "",
         requestSender: loggedInUserEmail,
         user_id: user_id,
-        users: {"63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com"}
+        users: {"firstid": "jaylen@xyz.com", "secondid": "another jaylen"}
     })
 
     if (user_id != ""){
@@ -63,7 +63,7 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
                 groupName: e.target.value,
                 requestSender: loggedInUserEmail,
                 user_id: user_id,
-                users: {"63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com"}
+                users: {"firstid": "jaylen@xyz.com", "secondid": "another jaylen"}
             })}></input>
             <label>Add Users</label>
             <input placeholder = "Search Users to add" onChange = {(e) => 

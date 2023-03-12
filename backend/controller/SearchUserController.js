@@ -45,7 +45,7 @@ const genericUserSearch = (req, res) => __awaiter(void 0, void 0, void 0, functi
         return res.status(400).json({ error: err });
     }
 });
-const updateGroup = module.exports = {
+module.exports = {
     SearchUsers,
     genericUserSearch
 };
