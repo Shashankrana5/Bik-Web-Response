@@ -10,7 +10,7 @@ import GroupChatCreationForm from "../components/GroupChatCreationForm.js"
 import io from "socket.io-client";
 import PersonalChat from "../components/PersonalChat";
 import useGroupChatContext from "../hooks/useGroupChatContext"
-
+import GroupChat from "../components/GroupChat"
 
 
 const Chat = () => {
@@ -74,10 +74,7 @@ const Chat = () => {
         <div className="chat">
             <Navbar />
 
-            <GroupChatCreationForm user_id = {userId} loggedInUserEmail={loggedinUserEmail}/>
-            {groupChats && Object.keys(groupChats).map(e => {
-                console.log(groupChats[e]);
-                console.log(e)})}
+            <GroupChat user_id = {userId} loggedInUserEmail = {loggedinUserEmail } />
 
             <PersonalChat />
             
