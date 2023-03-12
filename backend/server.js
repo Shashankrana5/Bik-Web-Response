@@ -20,7 +20,6 @@ const io = socketio(server, {
 })
 
 
- 
 app.options("*",cors())
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -49,18 +48,11 @@ mongoose.connect(process.env.MONGO_URI)
         console.log(error)
     })
 
-// io.of("/games").on('connection', socket => {
-//     console.log("connection is made to the new thing.");
-    
-//     socket.emit("welcome", "hellow and welcome")
-// })
-
 io.of("/personalchat").on('connection', socket => {
 
     console.log(`A user has personal chat joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
     const userSocketId = socket.id;
     const userEmail = socket.handshake.query.name;
-    // activeUserChats[userEmail] = userSocketId;
 
     if (userEmail in activeUserChats){
         (activeUserChats[userEmail]).add(userSocketId);

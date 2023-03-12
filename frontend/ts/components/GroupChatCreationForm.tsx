@@ -6,30 +6,37 @@ interface Props {
     user_id: string
 }
 
+interface UserModel {
+
+    _id: string;
+    email: string;
+}
+
 interface GroupCreationParameter {
     groupName?: string,
     requestSender: string,
     user_id: string,
-    users: {[_id: string]: string}
+    users: UserModel[];
 }
 
 const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: Props) => {
 
     const [groupCreationParams, setGroupCreationParams] = React.useState<GroupCreationParameter>({
-        groupName: "",
         requestSender: loggedInUserEmail,
         user_id: user_id,
-        users: {"firstid": "jaylen@xyz.com", "secondid": "another jaylen"}
+        users: [{_id: "kevin id", email: "kevin@xyz.com"}, {_id: "steph id", email: "steph@xyz.com"}]
+        // users: []
+        // users: {"firstid": "jaylen@xyz.com", "secondid": "another jaylen"}
     })
 
-    if (user_id != ""){
-        groupCreationParams.user_id = user_id;
+    // if (user_id != ""){
+    //     groupCreationParams.user_id = user_id;
     
     // setGroupCreationParams({groupName: "", requestSender: loggedInUserEmail, user_id: user_id})
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.FormEvent<HTMLFormElement>) =>{
         
         e.preventDefault();
-
+        console.log(groupCreationParams)
         const group = await fetch("http://localhost:4000/api/group", {
             method: "POST",
             body: JSON.stringify(groupCreationParams),
@@ -51,7 +58,7 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
             console.log(json[index])
         }
     }
-            }
+    }
     }
 
     return (
@@ -59,12 +66,13 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
             
             <form onSubmit = {handleSubmit}>
             <label> Group Name</label>
-            <input placeholder="Enter a group name" onChange={e => setGroupCreationParams({
+            <input placeholder="Enter a group name" onChange={e => {
+            setGroupCreationParams({
                 groupName: e.target.value,
                 requestSender: loggedInUserEmail,
                 user_id: user_id,
-                users: {"firstid": "jaylen@xyz.com", "secondid": "another jaylen"}
-            })}></input>
+                users: [{_id: "kevin id", email: "kevin@xyz.com"}, {_id: "steph id", email: "steph@xyz.com"}]
+            })}}></input>
             <label>Add Users</label>
             <input placeholder = "Search Users to add" onChange = {(e) => 
                 fetchSearch(e.target.value)}></input>
@@ -74,7 +82,7 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
         </div>
     )
     }
-}
+
 
 export default GroupChatCreationgForm;
 

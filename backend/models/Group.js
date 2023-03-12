@@ -2,14 +2,14 @@
 const mongoose = require("mongoose");
 const groupSchema = new mongoose.Schema({
     users: {
-        type: Array,
+        type: Object,
         require: true
     },
     admins: {
-        type: Array,
+        type: Object,
         require: true
     },
-    name: {
+    groupName: {
         type: String,
         require: false
     }
