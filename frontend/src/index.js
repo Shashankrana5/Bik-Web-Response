@@ -10,31 +10,33 @@ import { ChatContextProvider } from "./context/ChatContext";
 import { DisplayMessagesContextProvider } from "./context/DisplayMessagesContext";
 import { AssignedTicketsContextProvider } from "./context/AssignedTicketsContext";
 import { EmailContextProvider } from "./context/EmailContext";
-import {TicketMessageProvider } from "./context/TicketMessageContext"
+import { TicketMessageProvider } from "./context/TicketMessageContext";
+import { GroupChatContextProvider } from "./context/GroupChatContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-    <AuthContextProvider>
-      <UserContextProvider>
+  <AuthContextProvider>
+    <UserContextProvider>
       <EmailContextProvider>
         <AssignedTicketsContextProvider>
           <TicketContextProvider>
-        <ChatContextProvider>
-          <DisplayMessagesContextProvider>
-          <MessageContextProvider>
-            <TicketContextProvider>
-              <App />
-            </TicketContextProvider>
-          </MessageContextProvider>
-          </DisplayMessagesContextProvider>
-        </ChatContextProvider>
-        </TicketContextProvider>
+            <ChatContextProvider>
+              <GroupChatContextProvider>
+                <DisplayMessagesContextProvider>
+                  <MessageContextProvider>
+                    <TicketContextProvider>
+                      <App />
+                    </TicketContextProvider>
+                  </MessageContextProvider>
+                </DisplayMessagesContextProvider>
+              </GroupChatContextProvider>
+            </ChatContextProvider>
+          </TicketContextProvider>
         </AssignedTicketsContextProvider>
-        </EmailContextProvider>
-      </UserContextProvider>
-
-    </AuthContextProvider>
+      </EmailContextProvider>
+    </UserContextProvider>
+  </AuthContextProvider>
   /* </React.StrictMode> */
 );
 

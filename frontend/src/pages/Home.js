@@ -90,6 +90,7 @@ const Home = () => {
       <TicketCreationForm/>
       <UserSearchBar />
       {tickets && tickets.map((ticket) => (<TicketDetails key={ticket._id} ticket={ticket}/> ))}
+      {console.log(tickets)}
       <div className="create-ticket">
       </div>
     <PersonalChat />

@@ -9,7 +9,7 @@ import SendMessage from "../components/SendMessage";
 import GroupChatCreationForm from "../components/GroupChatCreationForm.js"
 import io from "socket.io-client";
 import PersonalChat from "../components/PersonalChat";
-
+import useGroupChatContext from "../hooks/useGroupChatContext"
 
 
 
@@ -18,6 +18,9 @@ const Chat = () => {
 
     const [userId, setUserId] = useState("");
     const { chats, chatDispatch } = useChatContext();
+
+    const { groupChats, groupChatDispatch} = useGroupChatContext();
+
     var index = 0
     const loggedinUser = localStorage.getItem("user");
     const loggedinUserEmail = JSON.parse(loggedinUser).email
@@ -46,31 +49,36 @@ const Chat = () => {
                 }
             })
         const userJson = await usersChatted.json();
-    
         chatDispatch({type: "SET_CHAT", payload: userJson["chats"]})
-
-    }
-        const fetchGroupChats = async() => {
-
-        const groupChats = await fetch("http://localhost:4000/api/group/usergroup/" + loggedinUserEmail);
-        const groupJson = await groupChats.json();
-
-        // chatDispatch({type: "CREATE_CHAT", payload: groupJson["users"]})
 
     }
 
         fetchPersonalChats();
-        fetchGroupChats();
     }, [chatDispatch])
 
+    useEffect(() => {
 
+        const fetchGroupChats = async() => {
+        
+            const groupChats = await fetch("http://localhost:4000/api/group/usergroup/" + loggedinUserEmail);
+            const groupJson = await groupChats.json();
+    
+            groupChatDispatch({type: "SET_CHAT", payload: groupJson})
+            
+    
+        }
+        fetchGroupChats();
+
+    }, [groupChatDispatch])
     return (
         <div className="chat">
             <Navbar />
 
             <GroupChatCreationForm user_id = {userId} loggedInUserEmail={loggedinUserEmail}/>
+            {groupChats && Object.keys(groupChats).map(e => {
+                console.log(groupChats[e]);
+                console.log(e)})}
 
-            {/* <GroupChat /> */}
             <PersonalChat />
             
         </div>
