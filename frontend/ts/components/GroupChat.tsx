@@ -1,5 +1,6 @@
 import useGroupChatContext from "../hooks/useGroupChatContext";
 import GroupChatCreationgForm from "./GroupChatCreationForm"
+import SubmitGroupChatMessage from "./SubmitGroupChatMessage";
 
 interface GroupChatProps {
 
@@ -13,6 +14,13 @@ const GroupChat: React.FC = (props: GroupChatProps) => {
     const chats = useGroupChatContext()["groupChats"];
     let index:number = 0;
 
+    const handleOpen = (e: React.FormEvent) => {
+
+        e.preventDefault();
+        
+    }
+
+
    return (
     <div className = "groupchat-component-container">
 
@@ -20,9 +28,11 @@ const GroupChat: React.FC = (props: GroupChatProps) => {
         {chats && Object.keys(chats).map(e => {
 
             return (<div className = "indivisual-group-chat" key = {index++}>
-                {chats[e].groupName}
+                <button onClick={handleOpen}>{chats[e].groupName}</button>
             </div>)
         })}
+
+        <SubmitGroupChatMessage />
     </div>
    ) 
 }

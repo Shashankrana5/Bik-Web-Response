@@ -4,13 +4,18 @@ const sendMessage = async (req, res) => {
   const { senderEmail, receiverEmail, messageType, ticketNumber, groupId, content } = req.body;
 
   if (groupId) {
+
     const response = await Message.create({ senderEmail, messageType, groupId, content });
-    return res.status(200).json(response);
+
+   return res.status(200).json(response);
+
   } else if (ticketNumber) {
+
     const response = await Message.create({ ticketNumber, senderEmail, content, messageType});
     return res.status(200).json(response);
   } 
   else if (messageType == "personal"){
+
     const response = await Message.create({senderEmail, receiverEmail, messageType, content})
     return res.status(200).json(response);
   }
@@ -67,22 +72,39 @@ const getChatsByEmail = async(req, res) =>{
       return res.status(400).json({message: err.message})
     }
 }
-    const getMessagesByTicketNumber = async(req, res) => {
+const getMessagesByTicketNumber = async(req, res) => {
 
-      const { ticketNumber } = req.body;
+    const { ticketNumber } = req.body;
 
-      try{
-        const response = await Message.find({ticketNumber});
-        return res.status(200).json(response);
-        
-      }catch(error){
-        return res.status(400).json({message: error.message})
-      }
+    try{
+      const response = await Message.find({ticketNumber});
+      return res.status(200).json(response);
+      
+    }catch(error){
+      return res.status(400).json({message: error.message})
     }
+}
+
+const getMessagesByGroupId = async (req, res) => {
+
+  const { id } = req.params;
+
+  console.log(id)
+  try {
+    const response = await Message.find({groupId: aid});
+    return res.status(200).json(response)
+  }catch(error){
+    console.log(typeof error)
+    return res.status(400).json({message: error.message})
+  }
+}
+
+
 module.exports = {
   sendMessage,
   getMessage,
   getMessagesByEmails,
   getChatsByEmail,
-  getMessagesByTicketNumber
+  getMessagesByTicketNumber,
+  getMessagesByGroupId
 };

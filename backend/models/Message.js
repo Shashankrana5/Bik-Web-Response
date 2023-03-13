@@ -8,7 +8,7 @@ const messageSchema = new Schema({
         type: String,
         require: true
     },
-    groupdId: {
+    groupId: {
         type: String,
         require: false
     },
