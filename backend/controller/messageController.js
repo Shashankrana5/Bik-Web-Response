@@ -5,9 +5,9 @@ const sendMessage = async (req, res) => {
 
   if (groupId) {
 
-    const response = await Message.create({ senderEmail, messageType, groupId, content });
-
-   return res.status(200).json(response);
+    const response = await Message.create({ senderEmail, messageType: "group", groupId, content });
+    console.log(response)
+    return res.status(200).json(response);
 
   } else if (ticketNumber) {
 
@@ -21,7 +21,6 @@ const sendMessage = async (req, res) => {
   }
   else {
     return res.status(400).json({ error: "Input provided are invalid" });
-    // return res.status(400).json({error: error.message})
   }
 };
 
@@ -89,12 +88,10 @@ const getMessagesByGroupId = async (req, res) => {
 
   const { id } = req.params;
 
-  console.log(id)
   try {
-    const response = await Message.find({groupId: aid});
+    const response = await Message.find({groupId: id});
     return res.status(200).json(response)
   }catch(error){
-    console.log(typeof error)
     return res.status(400).json({message: error.message})
   }
 }

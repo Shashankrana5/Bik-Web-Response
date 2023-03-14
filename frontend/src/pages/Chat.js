@@ -35,8 +35,9 @@ const Chat = () => {
             setUserId(returnedId);
         }
     }
-
-    fetchUserIdFromEmail(loggedinUserEmail);
+    useEffect(() => {
+        fetchUserIdFromEmail(loggedinUserEmail);
+    }, [])
 
     useEffect(() => {
         const fetchPersonalChats = async () =>{
@@ -72,8 +73,8 @@ const Chat = () => {
     }, [groupChatDispatch])
     return (
         <div className="chat">
-            <Navbar />
-
+             <Navbar />
+            
             <GroupChat user_id = {userId} loggedInUserEmail = {loggedinUserEmail } />
 
             <PersonalChat />
