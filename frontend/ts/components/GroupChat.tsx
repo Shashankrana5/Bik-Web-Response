@@ -12,16 +12,12 @@ interface GroupChatProps {
     loggedInUserEmail: string
 }
 
-
 const GroupChat: React.FC = (props: GroupChatProps) => {
 
     const { user_id, loggedInUserEmail } = props;
     const [receiverGroupId, setReceiverGroupId] = useState<string>(null);
-
-
     const displayGroupChatMessages = useDisplayGroupChatMessageContext()["displayGroupChatMessages"];
     const displayGroupChatMessageDispatch = useDisplayGroupChatMessageContext()["displayGroupChatMessageDispatch"];
-
     const chats = useGroupChatContext()["groupChats"];
     let index:number = 0;
 

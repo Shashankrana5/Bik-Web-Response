@@ -37,8 +37,9 @@ app.use("/api/message/", require("./routes/message"))
 app.use("/api/email/", require("./routes/email"))
 app.use("/api/group", require("./routes/group"))
 
-var activeUserChats = new Object();
-var activeTicketChats = new Object();
+let activeUserChats = new Object();
+let activeTicketChats = new Object();
+let activeGroupChats = new Object();
 
 mongoose.connect(process.env.MONGO_URI)
     .then(()=>{
@@ -96,7 +97,18 @@ io.of("/ticketchat").on("connection", socket => {
 
 io.of("/groupchat").on("connection", socket => {
 
-    
+    const userSocketId = socket.id;
+    const userEmail = socket.handshake.query.senderEmail;
+
+    console.log(`Group chat has user ${userSocketId} with email ${userEmail}`);
+
+    socket.on("join-groupchat", groupId => {
+        socket.join(groupId);
+    })
+
+    socket.on("send-groupchat-message", data => {
+        socket.to(data.groupId).emit("receive-groupchat-message", data);
+    })
 })
 
 server.listen(9000, () => console.log("Chat server is up and running"))

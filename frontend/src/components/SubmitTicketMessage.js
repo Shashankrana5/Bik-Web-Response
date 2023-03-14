@@ -31,7 +31,7 @@ const SubmitMessage = ({subject, ticketNumber, senderEmail, emailCheck, receiver
         e.preventDefault();
         
         if (emailCheck){
-          const emailResponse = await fetch("/api/email/", {
+          const emailResponse = await fetch("http://localhost:4000/api/email/", {
             method: "POST",
             body: JSON.stringify({subject: "[RE] " + subject, senderEmail, receiverEmail, ticketNumber, body: content }),
             headers: {
@@ -41,7 +41,7 @@ const SubmitMessage = ({subject, ticketNumber, senderEmail, emailCheck, receiver
         } 
 
         const messageData = {ticketNumber, senderEmail, content, messageType: "ticket"};
-        const response = await fetch("/api/message/sendmessage", {
+        const response = await fetch("http://localhost:4000/api/message/sendmessage", {
           method: "POST",
           body: JSON.stringify(messageData),
           headers:{

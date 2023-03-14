@@ -22,7 +22,7 @@ const Ticket = () => {
     useEffect(() => {
 
         const fetchTicket = async() => {
-            const response = await fetch("/api/"+ ticketNumber, {method:"GET"});
+            const response = await fetch("http://localhost:4000/api/"+ ticketNumber, {method:"GET"});
             const json = await response.json()
             setSubject(json[0].subject)
             setInitialRequest(json[0].initialRequest);
@@ -30,7 +30,7 @@ const Ticket = () => {
         }
 
         const fetchMessages = async()=> {
-            const response = await fetch("/api/message/fromticketnumber", {
+            const response = await fetch("http://localhost:4000/api/message/fromticketnumber", {
                 method: "POST",
                 body: JSON.stringify({ticketNumber}),
                 headers:{
