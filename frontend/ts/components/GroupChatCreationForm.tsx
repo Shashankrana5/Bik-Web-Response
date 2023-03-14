@@ -24,15 +24,9 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
     const [groupCreationParams, setGroupCreationParams] = React.useState<GroupCreationParameter>({
         requestSender: loggedInUserEmail,
         user_id: user_id,
-        users: [{_id: "kevin id", email: "kevin@xyz.com"}, {_id: "steph id", email: "steph@xyz.com"}]
-        // users: []
-        // users: {"firstid": "jaylen@xyz.com", "secondid": "another jaylen"}
+        users: [{_id: user_id, email: loggedInUserEmail}]
     })
 
-    // if (user_id != ""){
-    //     groupCreationParams.user_id = user_id;
-    
-    // setGroupCreationParams({groupName: "", requestSender: loggedInUserEmail, user_id: user_id})
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.FormEvent<HTMLFormElement>) =>{
         
         e.preventDefault();
@@ -71,7 +65,7 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
                 groupName: e.target.value,
                 requestSender: loggedInUserEmail,
                 user_id: user_id,
-                users: [{_id: user_id, email: loggedInUserEmail}, {_id: "ginanis id", email: "ginanis@xyz.com"}]
+                users: [{_id: user_id, email: loggedInUserEmail}, {_id: "63c3aa3cf23cfc29b8270401", email: "brandon@xyz.com"}]
             })}}></input>
             <label>Add Users</label>
             <input placeholder = "Search Users to add" onChange = {(e) => 
@@ -85,5 +79,3 @@ const GroupChatCreationgForm: React.FC<Props> = ({loggedInUserEmail, user_id}: P
 
 
 export default GroupChatCreationgForm;
-
-// users: {"63c3aa3cf23cfc29b8270401": "brandon@xyz.com", "63d4553868587458d1bae036": "jayson@xyz.com"}

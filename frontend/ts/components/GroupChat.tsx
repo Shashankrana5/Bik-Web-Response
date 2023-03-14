@@ -2,7 +2,8 @@ import { useState } from "react";
 import useGroupChatContext from "../hooks/useGroupChatContext";
 import GroupChatCreationgForm from "./GroupChatCreationForm"
 import SubmitGroupChatMessage from "./SubmitGroupChatMessage";
-
+import useDisplayGroupChatMessageContext from "../hooks/useDisplayGroupChatMessageContext";
+import DisplayGroupChatMessage from "./DisplayGroupChatMessage";
 
 
 interface GroupChatProps {
@@ -17,7 +18,10 @@ const GroupChat: React.FC = (props: GroupChatProps) => {
     const { user_id, loggedInUserEmail } = props;
     const [receiverGroupId, setReceiverGroupId] = useState<string>(null);
 
-    // const displayGroupChats = useDisplayGroupChatMessageContext();
+
+    const displayGroupChatMessages = useDisplayGroupChatMessageContext()["displayGroupChatMessages"];
+    const displayGroupChatMessageDispatch = useDisplayGroupChatMessageContext()["displayGroupChatMessageDispatch"];
+
     const chats = useGroupChatContext()["groupChats"];
     let index:number = 0;
 
@@ -27,8 +31,8 @@ const GroupChat: React.FC = (props: GroupChatProps) => {
         
         const response = await fetch(`http://localhost:4000/api/message/groupchat/${group_id}`);
         const json = await response.json()
-        console.log(json)
 
+        displayGroupChatMessageDispatch({type: "SET_MESSAGE", payload: json})
         setReceiverGroupId(group_id);
 
     }
@@ -44,7 +48,8 @@ const GroupChat: React.FC = (props: GroupChatProps) => {
                 <button onClick={event => handleOpen(event, chats[e]._id)}>{chats[e].groupName}</button>
             </div>)
         })}
-        {/* <DisplayGroupChatMessage /> */}
+
+        <DisplayGroupChatMessage />
         <SubmitGroupChatMessage senderEmail = {loggedInUserEmail} receiverGroupId = {receiverGroupId}/>
     </div>
    ) 

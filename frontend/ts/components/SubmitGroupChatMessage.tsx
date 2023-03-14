@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useDisplayGroupChatMessageContext from '../hooks/useDisplayGroupChatMessageContext';
 interface SubmitGroupChatMessageProps {
     receiverGroupId: string;
     senderEmail: string;
@@ -8,6 +9,7 @@ const SubmitGroupChatMessage: React.FC<SubmitGroupChatMessageProps> = (props: Su
 
     const { receiverGroupId, senderEmail } = props;
     const [ content, setContent ] = useState<string>("");
+    const displayGroupChatMessageDispatch = useDisplayGroupChatMessageContext()["displayGroupChatMessageDispatch"];
 
     const handleSend = async(e: React.FormEvent) => {
         e.preventDefault();
@@ -20,7 +22,8 @@ const SubmitGroupChatMessage: React.FC<SubmitGroupChatMessageProps> = (props: Su
                         "Content-Type": "application/json"
                     }
                 })
-    
+                const json = await response.json()
+                displayGroupChatMessageDispatch({type: "CREATE_MESSAGE", payload: json})
     }
     }catch(err){
         throw Error(err);

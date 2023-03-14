@@ -8,12 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
+const useDisplayGroupChatMessageContext_1 = __importDefault(require("../hooks/useDisplayGroupChatMessageContext"));
 const SubmitGroupChatMessage = (props) => {
     const { receiverGroupId, senderEmail } = props;
     const [content, setContent] = (0, react_1.useState)("");
+    const displayGroupChatMessageDispatch = (0, useDisplayGroupChatMessageContext_1.default)()["displayGroupChatMessageDispatch"];
     const handleSend = (e) => __awaiter(void 0, void 0, void 0, function* () {
         e.preventDefault();
         try {
@@ -25,6 +30,8 @@ const SubmitGroupChatMessage = (props) => {
                         "Content-Type": "application/json"
                     }
                 });
+                const json = yield response.json();
+                displayGroupChatMessageDispatch({ type: "CREATE_MESSAGE", payload: json });
             }
         }
         catch (err) {
