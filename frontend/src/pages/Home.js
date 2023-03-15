@@ -9,6 +9,8 @@ import DisplayMessages from "../components/DisplayMessages";
 import SendMessage from "../components/SendMessage";
 import PersonalChat from "../components/PersonalChat";
 import UserSearchBar from "../components/UserSearchBar"
+import LeftNavBar from "../components/LeftNavbar"
+import GroupChat from "../components/GroupChat"
 
 const Home = () => {
   const { tickets, dispatch } = useTicketContext();
@@ -81,19 +83,25 @@ const Home = () => {
       </div>
     )
   }
-  // console.log(user[0].role)
 
   else if (user && user[0]["role"] === "ADMIN"){
   return (
     <div className="home">
       <Navbar />
-      <TicketCreationForm/>
-      <UserSearchBar />
-      {tickets && tickets.map((ticket) => (<TicketDetails key={ticket._id} ticket={ticket}/> ))}
-      {console.log(tickets)}
-      <div className="create-ticket">
-      </div>
-    <PersonalChat />
+      <div className= "main-body ">
+          <div className="body bg-gray-100 flex">
+              <LeftNavBar />
+              <div className ="body-no-navigation">
+                <TicketCreationForm/>
+                {/* <UserSearchBar /> */}
+                {tickets && tickets.map((ticket) => (<TicketDetails key={ticket._id} ticket={ticket}/> ))}
+                <div className="create-ticket">
+                </div>
+                <PersonalChat />
+                <GroupChat />
+              </div>
+            </div>
+        </div>
     </div>
   );
   }
