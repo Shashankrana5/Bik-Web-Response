@@ -32,10 +32,11 @@ app.use(express.json());
 app.use(errorHandler);
 
 app.use("/api/", require("./routes/tickets"))
-app.use("/api/users", require("./routes/users"))
+app.use("/api/users/", require("./routes/users"))
 app.use("/api/message/", require("./routes/message"))
 app.use("/api/email/", require("./routes/email"))
-app.use("/api/group", require("./routes/group"))
+app.use("/api/group/", require("./routes/group"))
+app.use("/api/category/", require("./routes/category"))
 
 let activeUserChats = new Object();
 let activeTicketChats = new Object();

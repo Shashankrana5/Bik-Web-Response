@@ -13,7 +13,21 @@ const TicketCreationForm = () => {
     const [body, setBody] = useState("")
     const [assignedTo, setAssignedTo] = useState("N/a")
     const [resolved, setResolved] = useState(false);
-    
+    const [categories, setCategories] = useState([]);
+
+    useEffect(async() => {
+        
+        const response = await fetch("http://localhost:4000/api/category/getall");
+        const json = await response.json();
+        const initArray = []
+        if (json){
+            for (const k in json){
+                initArray.push(json[k]["category"]);
+            }
+        }
+        setCategories(initArray)
+
+    }, [])
 
     const handleSubmit = async (e) =>{
 
@@ -98,48 +112,66 @@ const TicketCreationForm = () => {
 
     }
         
-    
+
+
+    //name, email, sub, category, body, assign
+
     return (
-        <form id = "client-create-form" onSubmit = {handleSubmit}>
-            <h3>Create a new ticket</h3>
-            <label>Client name</label>
-            
-            <input id = "fullName-field" type ="text" onChange={(e) => {
-                if (e.nativeEvent.data === null){
-                    e.target.value  = (e.target.value).substring(0, e.target.value.length-1);
-                }
-                // console.log(e.target.value);
-                // setClientName(e.target.value)
-                fetchSearch("fullName", e.target.value)
-                console.log("fullname: " + clientName + " email: " + email);
-            }}
-            ></input>
-
-            <label>email address</label>
-            <input id = "email-field" type ="text" onChange={(e) => {
-                if (e.nativeEvent.data === null){
-                    e.target.value  = (e.target.value).substring(0, e.target.value.length-1);
-                }
-                // setEmail(e.target.value)
-                fetchSearch("email", e.target.value);
-                console.log(email);
-                }}></input>
-            
-            <label>subject</label>
-            <input id = "subject-field" type ="text" onChange={(e) => setSubject(e.target.value)}></input>
-
-            <label>Category</label>
-            <input id = "category-field" type ="text" onChange={(e) => setCategory(e.target.value)}></input>
-
-            <label>body</label>
-            <input id = "body-field" type ="text" onChange={(e) => setBody(e.target.value)}></input>
-
-            <label>Assign this to:</label>
-            <input id = "assignment-field" type ="text" onChange={(e) => setAssignedTo(e.target.value)}></input>
-
-            <button id = "ticket-create-btn">Create a new ticket</button>
+    <div className = "ticket-creation-form-main border border-gray-700 bg-white">
+        <form>
+            <label>Client Name</label>
+            <input placeholder="Enter client's name"></input>
+            <label>Email</label>
+            <input placeholder="Enter client's email"></input>
+            <label>Subject</label>
+            <input placeholder="Enter Subject"></input>
         </form>
-    )
+    </div>
+)
+
+// return(
+        // <form id = "client-create-form" onSubmit = {handleSubmit}>
+        //     <h3>Create a new ticket</h3>
+        //     <label>Client name</label>
+            
+        //     <input id = "fullName-field" type ="text" onChange={(e) => {
+        //         if (e.nativeEvent.data === null){
+        //             e.target.value  = (e.target.value).substring(0, e.target.value.length-1);
+        //         }
+        //         // console.log(e.target.value);
+        //         // setClientName(e.target.value)
+        //         fetchSearch("fullName", e.target.value)
+        //         console.log("fullname: " + clientName + " email: " + email);
+        //     }}
+        //     ></input>
+
+        //     <label>email address</label>
+        //     <input id = "email-field" type ="text" onChange={(e) => {
+        //         if (e.nativeEvent.data === null){
+        //             e.target.value  = (e.target.value).substring(0, e.target.value.length-1);
+        //         }
+        //         // setEmail(e.target.value)
+        //         fetchSearch("email", e.target.value);
+        //         console.log(email);
+        //         }}></input>
+            
+        //     <label>subject</label>
+        //     <input id = "subject-field" type ="text" onChange={(e) => setSubject(e.target.value)}></input>
+
+        //     <label>Category</label>
+        //     <input id = "category-field" type ="text" onChange={(e) => setCategory(e.target.value)}></input>
+
+        //     <label>body</label>
+        //     <input id = "body-field" type ="text" onChange={(e) => setBody(e.target.value)}></input>
+
+        //     <label>Assign this to:</label>
+        //     <input id = "assignment-field" type ="text" onChange={(e) => setAssignedTo(e.target.value)}></input>
+
+        //     <button id = "ticket-create-btn">Create a new ticket</button>
+        // </form>
+
+   
+    // )
 }
 
 export default TicketCreationForm;
