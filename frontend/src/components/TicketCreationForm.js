@@ -19,9 +19,12 @@ const TicketCreationForm = (props) => {
     const categoryOption = async() =>{
         const response = await fetch("http://localhost:4000/api/category/getall");
         const json = await response.json();
-        const initArray = []
         const categorySelect = document.querySelector("#ticket-creation-form-category-selection")
         if (json){
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "Select a category";
+            defaultOption.innerHTML = "Select a category";
+            categorySelect.appendChild(defaultOption)
             for (const k in json){
                 const tempOption = document.createElement("option");
                 tempOption.value = json[k]["category"]
@@ -37,7 +40,10 @@ const TicketCreationForm = (props) => {
         const admins = await fetch("http://localhost:4000/api/users/getadmins");
         const adminJson = await admins.json();
         const adminSelector = document.querySelector("#ticket-creation-form-assign-selection");
-
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "Select an operator";
+        defaultOption.innerHTML =  "Select an operator";
+        adminSelector.appendChild(defaultOption)
         if (adminJson){ 
 
             for (const  index in adminJson){
@@ -47,6 +53,10 @@ const TicketCreationForm = (props) => {
                 adminSelector.appendChild(tempOption);
             }
         }
+        const noneOption = document.createElement("option");
+        noneOption.value = "None";
+        noneOption.innerHTML = "None";
+        adminSelector.appendChild(noneOption)
     }
 
     useEffect(() => {
@@ -156,22 +166,23 @@ const TicketCreationForm = (props) => {
     //name, email, sub, category, body, assign
 
     return (
-    <div className = "ticket-creation-form-main border border-gray-700 bg-white">
+    <div className = "ticket-creation-form-main drop-shadow-2xl rounded-xl bg-white p-5">
         <form>
-            <div className="flex">
+            <div className="flex gap-4 p-2">
+
                 <div className="ticket-creation-client-name flex flex-col w-[50%]">
                     <label className="text-gray-400 mr-auto">Client Name</label>
-                    <input placeholder="Enter client's name" className="border border-yellow-700 bg-amber-50"></input>
+                    <input placeholder="Enter client's name" className="border border-yellow-700 bg-amber-50 rounded-md placeholder:pl-2"></input>
                 </div>
 
                 <div className="ticket-creation-email w-[50%] flex flex-col">
                     <label className="text-gray-400 mr-auto">Email</label>
-                    <input placeholder="Enter client's email" className="border border-yellow-700 bg-amber-50"></input>
+                    <input placeholder="Enter client's email" className="border border-yellow-700 bg-amber-50 rounded-md placeholder:pl-2"></input>
                 </div>
             </div>
-            <div className="ticket-creation-subject flex flex-row">
-                <label className="text-gray-400">Subject</label>
-                <input placeholder="Enter Subject" className="border border-yellow-700 bg-amber-50"></input>
+            <div className="ticket-creation-subject flex flex-col p-1.5">
+                <label className="text-gray-400  pl-1 mr-auto">Subject</label>
+                <input placeholder="Enter Subject" className="border border-yellow-700 bg-amber-50 rounded-md w-full placeholder:pl-2"></input>
             </div>
             <div className="ticket-creation-issue">
                 <label className="text-gray-400 w-full max-w-xs">Describe the issue:</label>
@@ -179,19 +190,19 @@ const TicketCreationForm = (props) => {
                 {/* <input placeholder="Describe the issue" className="border border-yellow-700 bg-amber-50"></input> */}
                 <input className="block w-full p-4 text-gray-900 border border-yellow-700 rounded-xl bg-amber-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 "></input>
             </div>
-            <div className="ticket-creation-category">
-            <label className="text-gray-400">Category</label>
-                <select id="ticket-creation-form-category-selection">
+            <div className="ticket-creation-category p-3 mt-1">
+            <label className="text-gray-400 pr-2">Category</label>
+                <select id="ticket-creation-form-category-selection" className="border border-yellow-700 bg-amber-50 rounded-md placeholder:pl-2">
                 </select>
             </div>
 
           
 
-            <div className="ticket-creation-assign">
-                <label className="text-gray-400">Assigned operator</label>
-                <select id= "ticket-creation-form-assign-selection">
+            <div className="ticket-creation-assign mt-1">
+                <label className="text-gray-400 pr-2">Assigned operator</label>
+                <select id= "ticket-creation-form-assign-selection" className = "border border-yellow-700 bg-amber-50 rounded-md placeholder:pl-2">
                 </select></div>
-            <button id = "ticket-create-btn">Create a new ticket</button>
+            <button id = "ticket-create-btn" className="bg-[#3091b2] text-[#fff] p-1.5 rounded-lg mt-6">Create Ticket</button>
 
         </form>
     </div>

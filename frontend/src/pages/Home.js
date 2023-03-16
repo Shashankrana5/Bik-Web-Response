@@ -18,7 +18,7 @@ const Home = () => {
   const loggedinUserEmail = JSON.parse(loggedinUser).email;
   const [user, setUser] = useState(null);
   const [minimizeLeftNavbar, setMinimizeLeftNavbar] = useState(false);
-  const [createTicket , setCreateTicket ] = useState(false);
+  const [createTicket , setCreateTicket ] = useState(true);
 
 
   useEffect(() => {
@@ -115,13 +115,13 @@ const Home = () => {
                   <TicketCreationForm createTicket = {createTicket} setCreateTicket = {setCreateTicket} />
                 </div>
                 {/* <UserSearchBar /> */}
-                <div className="show-tickets">
+                {/* <div className="show-tickets">
                   {tickets &&
                     tickets.map((ticket) => (
                       <TicketDetails key={ticket._id} ticket={ticket} />
                     ))}
                   <div className="create-ticket"></div>
-                </div>
+                </div> */}
                 {/* <PersonalChat /> */}
                 {/* <GroupChat /> */}
               </div>
