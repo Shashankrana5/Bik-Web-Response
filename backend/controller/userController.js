@@ -14,6 +14,16 @@ const getUser = async (req,res) => {
     }
 }
 
+const getAdmins = async(req, res) => {
+
+    try{
+        const admins = await User.find({role: "ADMIN"});
+        return res.status(200).json(admins);
+    }catch(err){
+        return res.status(400).json({message: err});
+    }
+}
+
 const getIdFromEmail = async(req, res) => {
 
     const {email} = req.params;
@@ -121,5 +131,6 @@ module.exports = {
     createUser,
     signupUser,
     loginUser,
-    getIdFromEmail
+    getIdFromEmail,
+    getAdmins
 }

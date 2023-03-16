@@ -17,7 +17,9 @@ const Home = () => {
   const loggedinUser = localStorage.getItem("user");
   const loggedinUserEmail = JSON.parse(loggedinUser).email;
   const [user, setUser] = useState(null);
-  const [ minimizeLeftNavbar, setMinimizeLeftNavbar ] = useState(false);
+  const [minimizeLeftNavbar, setMinimizeLeftNavbar] = useState(false);
+  const [createTicket , setCreateTicket ] = useState(false);
+
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -30,6 +32,7 @@ const Home = () => {
     };
     fetchTickets();
   }, [dispatch]);
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -71,26 +74,54 @@ const Home = () => {
     fetchMessage();
   }, [chatDispatch]);
 
+  const handleCreateTicket = (e) =>{
+
+    const booleanValue = (createTicket == true) ? false: true
+    setCreateTicket(booleanValue)
+  }
+
   if (user && user[0]["role"] === "USER") {
     return <div className="home-user">this is the user home</div>;
   } else if (user && user[0]["role"] === "ADMIN") {
-
     return (
       <div className="main-homepage-container flex h-screen">
-        <LeftNavBar minimizeLeftNavbar = {minimizeLeftNavbar}/>
+        <LeftNavBar minimizeLeftNavbar={minimizeLeftNavbar} />
         <div className="nav-and-body bg-amber-50 flex-grow">
-          <Navbar minimizeLeftNavbar = {minimizeLeftNavbar} setMinimizeLeftNavbar = {setMinimizeLeftNavbar}/>
+          <Navbar
+            minimizeLeftNavbar={minimizeLeftNavbar}
+            setMinimizeLeftNavbar={setMinimizeLeftNavbar}
+          />
 
           <div className="main-body">
-            <div className="body flex">
-              <div className="body-source w-fill">
-                <TicketCreationForm />
+            <div className="body flex justify-center">
+              <div className="body-source w-fill ">
+                <div className= "ticket-creation-form-container flex flex-col ">
+         
+                  <div id ="ticket-creation-division" className="ticket-creation-nav 
+                  flex ml-auto cursor-pointer rounded-md p-2  bg-orange-100 border
+                  text-gray-700 md:border-orange-200 md:border-2 hover:bg-orange-300 hover:text-white transition ease-out duration-500" onClick={handleCreateTicket}>
+
+                  <div className="">
+                    New Ticket
+                  </div>
+                  <div className=" w-6 h-6 relative">
+                  <button id="transform-button">
+                      <span id="transform-button-stick"></span>
+                      <span id="transform-button-stick"></span>
+                    </button>
+                    </div>
+
+                  </div>
+                  <TicketCreationForm createTicket = {createTicket} setCreateTicket = {setCreateTicket} />
+                </div>
                 {/* <UserSearchBar /> */}
-                {/* {tickets &&
-                  tickets.map((ticket) => (
-                    <TicketDetails key={ticket._id} ticket={ticket} />
-                  ))}
-                <div className="create-ticket"></div> */}
+                <div className="show-tickets">
+                  {tickets &&
+                    tickets.map((ticket) => (
+                      <TicketDetails key={ticket._id} ticket={ticket} />
+                    ))}
+                  <div className="create-ticket"></div>
+                </div>
                 {/* <PersonalChat /> */}
                 {/* <GroupChat /> */}
               </div>

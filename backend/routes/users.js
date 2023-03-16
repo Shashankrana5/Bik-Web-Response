@@ -1,10 +1,11 @@
 const express = require("express");
-const { getUser, createUser, getAllUsers, signupUser, loginUser, getUserFromParams, getIdFromEmail } = require("../controller/userController");
+const { getUser, createUser, getAllUsers, signupUser, loginUser, getUserFromParams, getIdFromEmail, getAdmins } = require("../controller/userController");
 const { SearchUsers, genericUserSearch } = require("../controller/SearchUserController");
 const router = express.Router();
 
 
 router.get("/getall", getAllUsers)
+router.get("/getadmins", getAdmins);
 router.post("/getuser", getUserFromParams)
 router.post("/search", SearchUsers)
 router.get("/searchquery/:searchparam", genericUserSearch)
