@@ -6,12 +6,12 @@ import TicketDetails from "../components/TicketDetails";
 import { useTicketContext } from "../hooks/useTicketContext";
 import useChatContext from "../hooks/useChatContext";
 import DisplayMessages from "../components/DisplayMessages";
-import SendMessage from "../components/SendMessage";
+import SendMessage from "../components/ArchivedSendMessage";
 import PersonalChat from "../components/PersonalChat";
 import UserSearchBar from "../components/UserSearchBar";
 import LeftNavBar from "../components/LeftNavbar";
 import GroupChat from "../components/GroupChat";
-import HomeChat from "../components/HomeChat"
+import HomeChat from "../components/HomeChat";
 
 const Home = () => {
   const { tickets, dispatch } = useTicketContext();
@@ -19,8 +19,7 @@ const Home = () => {
   const loggedinUserEmail = JSON.parse(loggedinUser).email;
   const [user, setUser] = useState(null);
   const [minimizeLeftNavbar, setMinimizeLeftNavbar] = useState(false);
-  const [createTicket , setCreateTicket ] = useState(false);
-
+  const [createTicket, setCreateTicket] = useState(false);
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -33,7 +32,6 @@ const Home = () => {
     };
     fetchTickets();
   }, [dispatch]);
-
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -75,11 +73,10 @@ const Home = () => {
     fetchMessage();
   }, [chatDispatch]);
 
-  const handleCreateTicket = (e) =>{
-
-    const booleanValue = (createTicket == true) ? false: true
-    setCreateTicket(booleanValue)
-  }
+  const handleCreateTicket = (e) => {
+    const booleanValue = createTicket == true ? false : true;
+    setCreateTicket(booleanValue);
+  };
 
   if (user && user[0]["role"] === "USER") {
     return <div className="home-user">this is the user home</div>;
@@ -96,24 +93,26 @@ const Home = () => {
           <div className="main-body">
             <div className="body flex justify-center">
               <div className="body-source w-fill ">
-                <div className= "ticket-creation-form-container flex flex-col ">
-         
-                  <div id ="ticket-creation-division" className="ticket-creation-nav 
+                <div className="ticket-creation-form-container flex flex-col ">
+                  <div
+                    id="ticket-creation-division"
+                    className="ticket-creation-nav 
                   flex ml-auto cursor-pointer rounded-md p-2  bg-orange-100 border
-                  text-gray-700 md:border-orange-200 md:border-2 hover:bg-orange-300 hover:text-white transition ease-out duration-500" onClick={handleCreateTicket}>
-
-                  <div className="">
-                    New Ticket
-                  </div>
-                  <div className=" w-6 h-6 relative">
-                  <button id="transform-button">
-                      <span id="transform-button-stick"></span>
-                      <span id="transform-button-stick"></span>
-                    </button>
+                  text-gray-700 md:border-orange-200 md:border-2 hover:bg-orange-300 hover:text-white transition ease-out duration-500"
+                    onClick={handleCreateTicket}
+                  >
+                    <div className="">New Ticket</div>
+                    <div className=" w-6 h-6 relative">
+                      <button id="transform-button">
+                        <span id="transform-button-stick"></span>
+                        <span id="transform-button-stick"></span>
+                      </button>
                     </div>
-
                   </div>
-                  <TicketCreationForm createTicket = {createTicket} setCreateTicket = {setCreateTicket} />
+                  <TicketCreationForm
+                    createTicket={createTicket}
+                    setCreateTicket={setCreateTicket}
+                  />
                 </div>
                 {/* <UserSearchBar /> */}
                 {/* <div className="show-tickets">
@@ -126,10 +125,8 @@ const Home = () => {
                 {/* <PersonalChat />
                 <GroupChat /> */}
               </div>
-
             </div>
-              <HomeChat />
-
+            <HomeChat />
           </div>
         </div>
       </div>

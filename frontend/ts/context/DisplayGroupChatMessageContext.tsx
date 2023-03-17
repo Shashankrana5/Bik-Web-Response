@@ -14,15 +14,7 @@ type ActionType = {
 }
 
 export const DisplayGroupChatMessageContext = createContext<Message | {}>({});
-// 0
-// : 
-// {_id: '640fd7eacd814886f9ead652', senderEmail: 'brandon@xyz.com', groupId: '640fd7bbcd814886f9ead644', messageType: 'group', content: 'Hey group', …}
-// 1
-// : 
-// {_id: '640fd7f7cd814886f9ead65e', senderEmail: 'shashank@xyz.com', groupId: '640fd7bbcd814886f9ead644', messageType: 'group', content: 'Hey Brandon', …}
-// 2
-// : 
-// {_id: '64
+
 export const displayGroupChatMessageReducer = (displayGroupChatMessageState: Message[], action: ActionType) => {
 
     switch (action.type){

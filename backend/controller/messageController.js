@@ -1,7 +1,7 @@
 const Message = require("../models/Message");
 const Group = require("../models/Group")
 const User = require("../models/User")
-const { getGroupById } = require("../controller/GroupController");
+
 
 const sendMessage = async (req, res) => {
   const { senderEmail, receiverEmail, messageType, ticketNumber, groupId, content } = req.body;
@@ -19,7 +19,10 @@ const sendMessage = async (req, res) => {
   } 
   else if (messageType == "personal"){
 
-    const response = await Message.create({senderEmail, receiverEmail, messageType, content})
+    const senderUser = await User.findOne({email: senderEmail});
+    const receiverUser = await User.findOne({email: receiverEmail})
+    const response = await Message.create({receiverName: receiverUser.fullName, senderName: senderUser.fullName, senderEmail, receiverEmail, messageType, content})
+    
     return res.status(200).json(response);
   }
   else {

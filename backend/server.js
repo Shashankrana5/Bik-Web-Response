@@ -53,6 +53,7 @@ mongoose.connect(process.env.MONGO_URI)
 io.of("/personalchat").on('connection', socket => {
 
     console.log(`A user has personal chat joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
+
     const userSocketId = socket.id;
     const userEmail = socket.handshake.query.name;
 

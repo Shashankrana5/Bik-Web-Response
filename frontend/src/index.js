@@ -13,6 +13,7 @@ import { EmailContextProvider } from "./context/EmailContext";
 import { GroupChatContextProvider } from "./context/GroupChatContext";
 import { DisplayGroupChatMessageContextProvider } from "./context/DisplayGroupChatMessageContext"
 import { ChatsContextProvider } from "./context/ChatsContext"
+import { DisplayChatContentContextProvider } from "./context/DisplayChatContentContext"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -21,6 +22,7 @@ root.render(
     <UserContextProvider>
       <EmailContextProvider>
         <AssignedTicketsContextProvider>
+          <DisplayChatContentContextProvider>
           <TicketContextProvider>
             <ChatsContextProvider>
             <ChatContextProvider>
@@ -38,6 +40,7 @@ root.render(
             </ChatContextProvider>
             </ChatsContextProvider>
           </TicketContextProvider>
+          </DisplayChatContentContextProvider>
         </AssignedTicketsContextProvider>
       </EmailContextProvider>
     </UserContextProvider>

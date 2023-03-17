@@ -8,6 +8,14 @@ const messageSchema = new Schema({
         type: String,
         require: true
     },
+    senderName:{
+        type: String,
+        require: true
+    },
+    receiverName: {
+        type: String,
+        require: true
+    },
     groupId: {
         type: String,
         require: false

@@ -10,38 +10,53 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
-// import { useDisplayMessageContext } from "../hooks/useDisplayMessageContext"
-const react_1 = require("react");
-const ChatsNavigation = ({ chats, chatsDispatch, personalChat, setPersonalChat }) => {
+const ChatsNavigation = ({ chats, chatsDispatch, personalChat, displayChatContentDispatch, setCurrentChat }) => {
     var index = 0;
-    // const {displayMessages, displayMessagesDispatch} = useDisplayMessageContext();
-    (0, react_1.useEffect)(() => {
-        console.log("here");
-        console.log(chats);
-    }, [chatsDispatch]);
-    const handleOpen = (e) => __awaiter(void 0, void 0, void 0, function* () {
-        e.preventDefault();
-        const receiver = e.target.textContent;
-        const loggedinUser = localStorage.getItem("user");
-        const loggedinUserEmail = yield JSON.parse(loggedinUser).email;
-        const response = yield fetch("http://localhost:4000/api/message/messagesbyemail", {
-            method: "POST",
-            body: JSON.stringify({ senderEmail: loggedinUserEmail, receiverEmail: receiver }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        const json = yield response.json();
-        //    displayMessagesDispatch({type: 'SET_MESSAGES', payload: json})
+    // useEffect(() => {
+    //     console.log("here")
+    //     console.log(chats)
+    // }, [chatsDispatch])
+    const handleOpen = (param) => __awaiter(void 0, void 0, void 0, function* () {
+        if (personalChat) {
+            setCurrentChat(param);
+            const receiver = param;
+            const loggedinUser = localStorage.getItem("user");
+            const loggedinUserEmail = yield JSON.parse(loggedinUser).email;
+            const response = yield fetch("http://localhost:4000/api/message/messagesbyemail", {
+                method: "POST",
+                body: JSON.stringify({ senderEmail: loggedinUserEmail, receiverEmail: receiver }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const json = yield response.json();
+            displayChatContentDispatch({ type: "SET_CHAT_CONTENT", payload: json });
+        }
+        else {
+            console.log(param);
+        }
+        //     const receiver = e.target.textContent
+        //     const loggedinUser = localStorage.getItem("user");
+        //     const loggedinUserEmail = await JSON.parse(loggedinUser).email
+        //     const response = await fetch("http://localhost:4000/api/message/messagesbyemail",
+        //     {
+        //         method: "POST",
+        //         body: JSON.stringify({senderEmail: loggedinUserEmail,receiverEmail:receiver}),
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         }
+        //     })
+        //    const json = await response.json();
+        // //    displayMessagesDispatch({type: 'SET_MESSAGES', payload: json})
     });
     if (personalChat) {
         return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "display-chats" }, { children: (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "list-chats" }, { children: chats && Object.keys(chats["personal"]).map(chat => {
-                    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'border border-yellow-700' }, { children: [(0, jsx_runtime_1.jsx)("p", { children: chats["personal"][chat] }), (0, jsx_runtime_1.jsx)("p", { children: chat })] })));
+                    return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'border border-yellow-700 cursor-pointer', onClick: () => handleOpen(chat) }, { children: [(0, jsx_runtime_1.jsx)("p", { children: chats["personal"][chat] }), (0, jsx_runtime_1.jsx)("p", { children: chat })] })));
                 }) })) })));
     }
     else {
         return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "display-chats" }, { children: (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "list-chats" }, { children: chats && Object.keys(chats["group"]).map(chat => {
-                    return ((0, jsx_runtime_1.jsx)("div", { children: chats["group"][chat]["0"]["groupName"] }));
+                    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: 'border border-yellow-700 cursor-pointer', onClick: () => handleOpen(chats["group"][chat]["0"]["_id"]) }, { children: chats["group"][chat]["0"]["groupName"] })));
                 }) })) })));
     }
 };
