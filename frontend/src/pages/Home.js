@@ -11,6 +11,7 @@ import PersonalChat from "../components/PersonalChat";
 import UserSearchBar from "../components/UserSearchBar";
 import LeftNavBar from "../components/LeftNavbar";
 import GroupChat from "../components/GroupChat";
+import HomeChat from "../components/HomeChat"
 
 const Home = () => {
   const { tickets, dispatch } = useTicketContext();
@@ -18,7 +19,7 @@ const Home = () => {
   const loggedinUserEmail = JSON.parse(loggedinUser).email;
   const [user, setUser] = useState(null);
   const [minimizeLeftNavbar, setMinimizeLeftNavbar] = useState(false);
-  const [createTicket , setCreateTicket ] = useState(true);
+  const [createTicket , setCreateTicket ] = useState(false);
 
 
   useEffect(() => {
@@ -122,10 +123,13 @@ const Home = () => {
                     ))}
                   <div className="create-ticket"></div>
                 </div> */}
-                {/* <PersonalChat /> */}
-                {/* <GroupChat /> */}
+                {/* <PersonalChat />
+                <GroupChat /> */}
               </div>
+
             </div>
+              <HomeChat />
+
           </div>
         </div>
       </div>

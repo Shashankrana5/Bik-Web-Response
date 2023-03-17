@@ -60,15 +60,18 @@ const PersonalChat = () => {
 
 
     return (
-        <>
-            <ChatCreation />
-            {/* <ChatNavigation chats = {chats}/> */}
-            <div className="list-chats">
-                {chats&& Object.keys(chats).map(chat => <div key = {index++} className="indivisual-chat"><button onClick = {handleOpen}>{chat}</button></div>)}
-            </div>
-            <DisplayMessages />
-            <SubmitMessage />
-        </>
+        <div>
+
+        </div>
+        // <>
+        //     {/* <ChatCreation /> */}
+            // <ChatNavigation chats = {chats}/>
+        //     {/* <div className="list-chats">
+        //         {chats&& Object.keys(chats).map(chat => <div key = {index++} className="indivisual-chat"><button onClick = {handleOpen}>{chat}</button></div>)}
+        //     </div> */}
+        //     <DisplayMessages />
+        //     <SubmitMessage />
+        // </>
     )
 }
 

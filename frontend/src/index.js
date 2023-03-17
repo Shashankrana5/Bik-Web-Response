@@ -12,6 +12,8 @@ import { AssignedTicketsContextProvider } from "./context/AssignedTicketsContext
 import { EmailContextProvider } from "./context/EmailContext";
 import { GroupChatContextProvider } from "./context/GroupChatContext";
 import { DisplayGroupChatMessageContextProvider } from "./context/DisplayGroupChatMessageContext"
+import { ChatsContextProvider } from "./context/ChatsContext"
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
@@ -20,6 +22,7 @@ root.render(
       <EmailContextProvider>
         <AssignedTicketsContextProvider>
           <TicketContextProvider>
+            <ChatsContextProvider>
             <ChatContextProvider>
               <GroupChatContextProvider>
                 <DisplayGroupChatMessageContextProvider>
@@ -33,6 +36,7 @@ root.render(
                 </DisplayGroupChatMessageContextProvider>
               </GroupChatContextProvider>
             </ChatContextProvider>
+            </ChatsContextProvider>
           </TicketContextProvider>
         </AssignedTicketsContextProvider>
       </EmailContextProvider>
