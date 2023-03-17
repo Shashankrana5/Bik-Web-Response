@@ -71,7 +71,7 @@ const Chat = () => {
     <div className="chat">
       <Navbar />
 
-      {/* <GroupChat user_id = {userId} loggedInUserEmail = {loggedinUserEmail } /> */}
+      <GroupChat user_id = {userId} loggedInUserEmail = {loggedinUserEmail } />
 
       <PersonalChat />
     </div>

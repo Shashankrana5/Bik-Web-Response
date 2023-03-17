@@ -8,7 +8,7 @@ const displayChatContentReducer = (displayChatContentState, action) => {
     switch (action.type) {
         case ("SET_CHAT_CONTENT"):
             return { displayChatContents: action.payload };
-        case ("CREAT_CHAT_CONTENT"):
+        case ("CREATE_CHAT_CONTENT"):
             return { displayChatContents: [...displayChatContentState["displayChatContents"], action.payload] };
         default:
             return displayChatContentState;

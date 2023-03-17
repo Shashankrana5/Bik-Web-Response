@@ -7,9 +7,9 @@ const sendMessage = async (req, res) => {
   const { senderEmail, receiverEmail, messageType, ticketNumber, groupId, content } = req.body;
 
   if (groupId) {
+    const senderUser = await User.findOne({email: senderEmail});
+    const response = await Message.create({ senderName: senderUser.fullName, senderEmail, messageType: "group", groupId, content });
 
-    const response = await Message.create({ senderEmail, messageType: "group", groupId, content });
-    console.log(response)
     return res.status(200).json(response);
 
   } else if (ticketNumber) {
@@ -59,7 +59,9 @@ const getChatsByEmail = async(req, res) =>{
     const { email } = req.body;
     try{
       const response = await Message.find({$or:[{senderEmail: email}, {receiverEmail: email}]})
+      const groupMember = await Group.find({"users.email": email})
 
+      // return res.status(200).json(groupMember)
 
       const chats = new Object();
       chats["group"] = new Object();
@@ -86,6 +88,14 @@ const getChatsByEmail = async(req, res) =>{
             chats["personal"][response[messages].receiverEmail] = response_user_receiver[0].fullName
           }
             
+        }
+      }
+
+      for (const groups in groupMember){
+
+        // console.log(groupMember[groups])
+        if (!(groupMember[groups]._id in chats["group"])){
+          chats["group"][groupMember[groups]._id] = {0: groupMember[groups]};
         }
       }
       // for (const messages in response){

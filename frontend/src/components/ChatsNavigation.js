@@ -12,13 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const ChatsNavigation = ({ chats, chatsDispatch, personalChat, displayChatContentDispatch, setCurrentChat }) => {
     var index = 0;
-    // useEffect(() => {
-    //     console.log("here")
-    //     console.log(chats)
-    // }, [chatsDispatch])
     const handleOpen = (param) => __awaiter(void 0, void 0, void 0, function* () {
+        setCurrentChat(param);
         if (personalChat) {
-            setCurrentChat(param);
             const receiver = param;
             const loggedinUser = localStorage.getItem("user");
             const loggedinUserEmail = yield JSON.parse(loggedinUser).email;
@@ -33,7 +29,10 @@ const ChatsNavigation = ({ chats, chatsDispatch, personalChat, displayChatConten
             displayChatContentDispatch({ type: "SET_CHAT_CONTENT", payload: json });
         }
         else {
-            console.log(param);
+            const response = yield fetch(`http://localhost:4000/api/message/groupchat/${param}`);
+            const json = yield response.json();
+            displayChatContentDispatch({ type: "SET_CHAT_CONTENT", payload: json });
+            // console.log(json)
         }
         //     const receiver = e.target.textContent
         //     const loggedinUser = localStorage.getItem("user");

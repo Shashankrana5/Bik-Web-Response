@@ -5,16 +5,11 @@ import useChatsContext from '../hooks/useChatsContext';
 const ChatsNavigation = ({chats, chatsDispatch, personalChat, displayChatContentDispatch, setCurrentChat}) => {
     var index = 0;
 
-    
-    // useEffect(() => {
-    //     console.log("here")
-    //     console.log(chats)
-    // }, [chatsDispatch])
 
     const handleOpen = async(param: string) => {
+        setCurrentChat(param)
 
         if (personalChat){
-                setCurrentChat(param)
                 const receiver = param;
                 const loggedinUser = localStorage.getItem("user");
                 const loggedinUserEmail = await JSON.parse(loggedinUser).email
@@ -34,7 +29,12 @@ const ChatsNavigation = ({chats, chatsDispatch, personalChat, displayChatContent
         }
 
         else{
-            console.log(param)
+            
+            const response = await fetch(`http://localhost:4000/api/message/groupchat/${param}`);
+            const json = await response.json()
+            
+            displayChatContentDispatch({type:"SET_CHAT_CONTENT", payload: json})
+            // console.log(json)
         }
 
     //     const receiver = e.target.textContent

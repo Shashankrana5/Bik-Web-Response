@@ -45,7 +45,7 @@ const GroupChatCreationgForm = ({ loggedInUserEmail, user_id }) => {
                             groupName: e.target.value,
                             requestSender: loggedInUserEmail,
                             user_id: user_id,
-                            users: [{ _id: user_id, email: loggedInUserEmail }, { _id: "63c3aa3cf23cfc29b8270401", email: "brandon@xyz.com" }]
+                            users: [{ _id: user_id, email: loggedInUserEmail }, { _id: "641404b9c942b8ca45034745", email: "caro@xyz.com" }]
                         });
                     } }), (0, jsx_runtime_1.jsx)("label", { children: "Add Users" }), (0, jsx_runtime_1.jsx)("input", { placeholder: "Search Users to add", onChange: (e) => fetchSearch(e.target.value) }), (0, jsx_runtime_1.jsx)("button", Object.assign({ type: "submit" }, { children: "Create Group" }))] })) }));
 };
