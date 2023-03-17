@@ -2,7 +2,8 @@ import useDisplayChatContentContext from "../hooks/useDisplayChatContentContext"
 
 interface DisplayChatContextProps {
 
-    personalChat?: boolean;
+    personalChat: boolean;
+
 }
 const DisplayChatContent = (props: DisplayChatContextProps) => {
 
@@ -10,7 +11,8 @@ const DisplayChatContent = (props: DisplayChatContextProps) => {
     const context = useDisplayChatContentContext();
     const displayChatContents = context["displayChatContents"]
     const displayChatContentDispatch = context["displayChatContentDispatch"]
-    
+
+
     if (personalChat){
     return (
         <div>
