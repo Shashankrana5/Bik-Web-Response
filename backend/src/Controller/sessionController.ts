@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { createSession, invalidateSession } from "../db/sessiondb";
-import { signJWT, verifyJWT } from "../utils/jwt-utils";
-let User = require("../models/User");
+import { signJWT, verifyJWT } from "../utils/jwt.utils";
+let User = require("../model/User");
 
 // login handler
 export async function createSessionHandler(req: Request, res: Response) {
+  console.log('here');
   const { email, password } = req.body;
 
-  // const user = getUser(email);
   const user = await User.findOne({email: email});
 
   if (!user || user.password !== password) {

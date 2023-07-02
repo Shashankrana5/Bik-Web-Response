@@ -3,8 +3,8 @@ import {
   createSessionHandler,
   getSessionHandler,
   deleteSessionHandler,
-} from "./Controller/sessionController";
-import { requireUser } from "./middleware/requireUser";
+} from "../controller/sessionController";
+import { requireUser } from "../middleware/requireUser";
 
 function routes(app: Express) {
   // login
