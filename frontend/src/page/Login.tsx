@@ -1,22 +1,19 @@
-const { useState } = require("react")
-const { useLogin } = require("../hooks/useLogin")
-
+import { useState } from "react"
 
 const Login = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const {login}  = useLogin()
+    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
-
-        await login(email, password);
+        
     }
     return (
         <form onSubmit={handleSubmit}>
-            <h3>login</h3>
+            <h3>Login page</h3>
             <label>Email</label>
             <input type="email" onChange = {e => setEmail(e.target.value)}/>
             <label>Password</label>

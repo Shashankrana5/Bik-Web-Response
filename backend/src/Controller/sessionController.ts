@@ -5,7 +5,7 @@ let User = require("../model/User");
 
 // login handler
 export async function createSessionHandler(req: Request, res: Response) {
-  console.log('here');
+  
   const { email, password } = req.body;
 
   const user = await User.findOne({email: email});
