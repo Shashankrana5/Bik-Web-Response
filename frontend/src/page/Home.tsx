@@ -1,23 +1,35 @@
-// import axios from "axios";
+import Navbar from "../components/Navbar";
+import { useEffect, useState } from "react";
 import { getSessionData } from "../utils/getSessionData";
+import Sidebar from "../components/Sidebar";
+
 const Home = () => {
 
-    const handleClick = () => {
-        getSessionData();
-        // async function getSessionData() {
-        //     axios
-        //       .get(`http://localhost:1913/api/session`, {
-        //         withCredentials: true,
-        //       })
-        //       .then((res) => console.log(res.data))
-        //       .catch((error) => console.log(error.message));
-        //     }
-        // getSessionData();
+    useEffect(() => {
+        const sessionCheck = async() => {
+            const response = await getSessionData();
+            if(response !== undefined){
+                setIsLoading(false);
+            }
+        }
+        sessionCheck();
+    }, [])
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    const handleClick = async() => {
+        const sessionData = await getSessionData();
+        console.log(sessionData);
     }
 
     return (
         <div>
-            <button onClick={handleClick}>click</button>
+            {isLoading === true ? <>This should be a blank page when the person isn't authenticated.</>: 
+            <div id = "main-page-authenticated">
+                <Sidebar />
+                <Navbar />
+                <button onClick={handleClick}>click</button>
+            </div>
+            }
         </div>
     )
 }

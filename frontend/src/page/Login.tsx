@@ -1,23 +1,36 @@
-import { useState } from "react"
+import axios from "axios"
 
 const Login = () => {
-
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-
-    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  
+    const handleSubmit = async(e: React.SyntheticEvent) => {
         e.preventDefault();
         
+        const target = e.target as typeof e.target & {
+            email: { value :string};
+            password: {value: string};
+        };
 
+        //@ts-ignore
+        const email = target.loginEmailField.value;
+
+        //@ts-ignore
+        const password = target.loginPasswordField.value;
+
+        try{
+            await axios.post("http://localhost:1913/api/session", {email, password}, {withCredentials: true});
+
+        }catch(error){
+            console.log({errorMessage: error});
+        }
         
     }
     return (
         <form onSubmit={handleSubmit}>
             <h3>Login page</h3>
             <label>Email</label>
-            <input type="email" onChange = {e => setEmail(e.target.value)}/>
+            <input id= "loginEmailField" type="email"/>
             <label>Password</label>
-            <input type="text" onChange={e => setPassword(e.target.value)}/>
+            <input id = "loginPasswordField" type="text"/>
 
             <button>Login</button>
 

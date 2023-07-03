@@ -37,3 +37,15 @@ input{
 h2{
   margin: 0;
 }
+
+#navbar-main {
+  background-color: orange;
+  color: white;
+
+}
+
+#sidebar-main {
+  background-color: lavender;
+  color: black;
+
+}
