@@ -91,8 +91,9 @@ export async function getChatsByEmail (req:Request, res:Response) {
 
 export const getMessagesByEmails = async (req:Request, res:Response) => {
 
-  const { senderEmail, receiverEmail } = req.body;
-
+  const { senderEmail, receiverEmail } = req.params;
+  console.log(senderEmail);
+  console.log(receiverEmail);
   try{
     const response = await Message.find({$or:[{senderEmail: senderEmail, receiverEmail: receiverEmail}, {senderEmail: receiverEmail, receiverEmail: senderEmail}]}).sort({createdAt: 1});
     return res.status(200).json(response);

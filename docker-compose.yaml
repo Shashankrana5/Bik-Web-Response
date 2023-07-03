@@ -7,7 +7,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "4000:4000"
+      - "1913:1913"
     volumes:
       - logs:/app/logs
       - ./backend:/app
@@ -29,7 +29,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "1912:1912"
     volumes:
       - ./frontend/src:/app/src
     networks:
