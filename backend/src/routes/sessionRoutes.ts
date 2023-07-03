@@ -6,7 +6,7 @@ import {
 } from "../controller/sessionController";
 import { requireUser } from "../middleware/requireUser";
 
-function routes(app: Express) {
+function sessionRoutes(app: Express) {
   // login
   app.post("/api/session", createSessionHandler);
   // get the current session
@@ -16,4 +16,4 @@ function routes(app: Express) {
   app.delete("/api/session", requireUser, deleteSessionHandler);
 }
 
-export default routes;
+export default sessionRoutes;
