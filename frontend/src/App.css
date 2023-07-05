@@ -47,5 +47,14 @@ h2{
 #sidebar-main {
   background-color: lavender;
   color: black;
+}
 
+#chat-navbar {
+  border: 2px solid pink;
+}
+
+.chat-button-indivisual{
+  padding: 0;
+  margin: 0;
+  width:40%
 }

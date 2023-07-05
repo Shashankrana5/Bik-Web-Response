@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
-const Message = require("../model/Message");
-const User = require("../model/User");
-const Group = require("../model/Group");
+import Message from "../model/Message";
+import User from "../model/User";
+import Group from "../model/Group";
 
 export async function sendMessage(req:Request, res:Response){
     const { senderEmail, receiverEmail, messageType, ticketNumber, groupId, content } = req.body;
   
     if (groupId) {
       const senderUser = await User.findOne({email: senderEmail});
+      //@ts-ignore
       const response = await Message.create({ senderName: senderUser.fullName, senderEmail, messageType: "group", groupId, content });
   
       return res.status(200).json(response);
@@ -21,6 +22,7 @@ export async function sendMessage(req:Request, res:Response){
   
       const senderUser = await User.findOne({email: senderEmail});
       const receiverUser = await User.findOne({email: receiverEmail})
+      //@ts-ignore
       const response = await Message.create({receiverName: receiverUser.fullName, senderName: senderUser.fullName, senderEmail, receiverEmail, messageType, content})
       
       return res.status(200).json(response);
@@ -39,21 +41,21 @@ export async function getChatsByEmail (req:Request, res:Response) {
 
       const chats = new Object();
       //@ts-ignore
-      chats["group"] = new Object();
+      chats["Group"] = new Object();
       //@ts-ignore
 
-      chats["personal"] = new Set;
+      chats["Personal"] = new Set;
 
       for (const messages in response) {
       //@ts-ignore
 
-        if (response[messages].messageType == "group" && !(response[messages].groupId in chats["group"])){
+        if (response[messages].messageType == "group" && !(response[messages].groupId in chats["Group"])){
           
             const response_group = await Group.find({_id: response[messages].groupId});
 
             if (response[messages].groupId != undefined){
       //@ts-ignore
-      chats["group"][response[messages].groupId] = {...response_group}}
+      chats["Group"][response[messages].groupId] = {...response_group}}
             
         }
         else{
@@ -61,11 +63,10 @@ export async function getChatsByEmail (req:Request, res:Response) {
               const response_user_sender = await User.find({email: response[messages].senderEmail})
               const response_user_receiver = await User.find({email: response[messages].receiverEmail})
 
-
       //@ts-ignore
-      chats["personal"][response[messages].senderEmail] = response_user_sender[0].fullName
+      chats["Personal"][response[messages].senderEmail] = response_user_sender[0]
       //@ts-ignore
-      chats["personal"][response[messages].receiverEmail] = response_user_receiver[0].fullName
+      chats["Personal"][response[messages].receiverEmail] = response_user_receiver[0]
           }
             
         }
@@ -74,10 +75,18 @@ export async function getChatsByEmail (req:Request, res:Response) {
       for (const groups in groupMember){
       //@ts-ignore
 
-        if (!(groupMember[groups]._id in chats["group"])){
+        if (!(groupMember[groups]._id in chats["Group"])){
       //@ts-ignore
-      chats["group"][groupMember[groups]._id] = {0: groupMember[groups]};
+      chats["Group"][groupMember[groups]._id] = {0: groupMember[groups]};
         }
+      }
+
+      //@ts-ignore
+      if(email in chats["Personal"]){
+        //@ts-ignore
+        chats["User"] = chats["Personal"][email];
+        //@ts-ignore
+        delete chats["Personal"][email];
       }
       return res.status(200).json(chats)
       
@@ -92,8 +101,7 @@ export async function getChatsByEmail (req:Request, res:Response) {
 export const getMessagesByEmails = async (req:Request, res:Response) => {
 
   const { senderEmail, receiverEmail } = req.params;
-  console.log(senderEmail);
-  console.log(receiverEmail);
+
   try{
     const response = await Message.find({$or:[{senderEmail: senderEmail, receiverEmail: receiverEmail}, {senderEmail: receiverEmail, receiverEmail: senderEmail}]}).sort({createdAt: 1});
     return res.status(200).json(response);

@@ -5,6 +5,7 @@
   "author": "Tom Nagle",
   "license": "MIT",
   "dependencies": {
+    "@types/mongodb": "^4.0.7",
     "@types/mongoose": "^5.11.97",
     "@types/socket.io": "^3.0.2",
     "cookie-parser": "^1.4.5",
@@ -15,7 +16,7 @@
     "socket.io": "^4.7.1"
   },
   "scripts": {
-    "start": "./node_modules/.bin/ts-node server.ts",
+    "start": "nodemon server.ts",
     "dev": "nodemon --exec \"ts-node --cache-directory .tscache\" server.ts"
   },
   "devDependencies": {
