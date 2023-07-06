@@ -6,6 +6,7 @@ import deserializeUser from "./src/middleware/deserializeUser";
 import userRoutes from "./src/routes/userRoutes";
 import mongoose from "mongoose";
 import messageRoutes from "./src/routes/messageRoutes";
+import groupRoutes from "./src/routes/groupRoutes";
 const socketio = require("socket.io")
 const http = require("http")
 
@@ -142,6 +143,7 @@ function main() {
     sessionRoutes(app);
     userRoutes(app);
     messageRoutes(app);
+    groupRoutes(app)
 }
 
 main();

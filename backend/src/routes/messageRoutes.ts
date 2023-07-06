@@ -5,6 +5,6 @@ export default function messageRoutes(app:Express){
 
     app.get("/api/message/getchatsbyemail/:email", getChatsByEmail);
     app.get("/api/message/getmessagebyemails/:senderEmail/to/:receiverEmail", getMessagesByEmails);
-    app.post("/api/message/sendMessage", sendMessage);
+    app.post("/api/message/sendmessage", sendMessage);
     
 }

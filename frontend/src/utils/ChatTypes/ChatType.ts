@@ -1,4 +1,4 @@
-import { Group, GroupFields } from "./GroupChatTypes";
+import { Group } from "./GroupChatTypes";
 import { UserField } from './UserTypes';
 
 export interface Chat {
@@ -9,7 +9,8 @@ export interface Chat {
 
 export interface SelectedChat {
     chatType: "Personal" | "Group";
-    _id?: GroupFields; //GroupId.
-    email?: UserField //The person who I am talking to's email.
+    // _id?: GroupFields; //GroupId.
+    // email?: UserField //The person who I am talking to's email.
 
+    selected: Group | UserField;
 }

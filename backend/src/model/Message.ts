@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { MessageType } from "../utils/ChatType/ChatType";
 
 //We need atleast the receiver's email or groupId.
 const messageSchema = new Schema({
@@ -30,8 +31,9 @@ const messageSchema = new Schema({
     },
     content: {
         type: String,
+        require: true
     }
 }, {timestamps: true})
 
-const Message = mongoose.model("Message", messageSchema);
+const Message = mongoose.model<MessageType>("Message", messageSchema);
 export default Message;
