@@ -7,10 +7,14 @@ export interface Chat {
     User: UserField;
 }
 
-export interface SelectedChat {
-    chatType: "Personal" | "Group";
-    // _id?: GroupFields; //GroupId.
-    // email?: UserField //The person who I am talking to's email.
+export type SelectedChat = selectedGroupChat | selectedPersonalChat;
 
-    selected: Group | UserField;
+interface selectedGroupChat {
+    chatType: "Group";
+    selected: Group;
+}
+
+interface selectedPersonalChat {
+    chatType: "Personal";
+    selected: UserField
 }

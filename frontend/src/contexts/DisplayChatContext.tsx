@@ -1,13 +1,25 @@
 import { createContext, useReducer } from "react";
 
-type Message = {
+type Message = personalMessage | groupMessage;
+
+interface personalMessage {
     _id: string;
-    senderEmail?: string;
-    receiverEmail?: string;
-    messageType: string;
+    senderEmail: string;
+    receiverEmail: string;
+    messageType: "personal";
     content: string;
-    createdAt?: string;
-    updatedAt?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+interface groupMessage {
+    _id: string;
+    senderEmail: string;
+    messageType: "group";
+    content: string;
+    groupId: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 type ActionType = {
@@ -37,10 +49,10 @@ export const DisplayChatContext = createContext<contextType>({...initialState, d
 
 
 export function reducer (state: DisplayChatType, action: ActionType):DisplayChatType {
-
+    
         switch(action.type){
             case('SET_MESSAGE'):
-                return {currentUser: action.payload.currentUser, chatType: action.payload.chatType, messages: action.payload.messages.data};
+                return {currentUser: action.payload.currentUser, chatType: action.payload.chatType, messages: action.payload.messages};
             case("CREATE_MESSAGE"):
             // TODO
                 return {messages: [], chatType: "Personal",currentUser: ""};

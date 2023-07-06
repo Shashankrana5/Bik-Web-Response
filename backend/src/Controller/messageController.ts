@@ -113,10 +113,36 @@ export const getMessagesByEmails = async (req: Request, res: Response) => {
         { senderEmail: senderEmail, receiverEmail: receiverEmail },
         { senderEmail: receiverEmail, receiverEmail: senderEmail },
       ],
-    }).sort({ createdAt: 1 });
+    }).sort({ updatedAt: -1 });
     return res.status(200).json(response);
   } catch (error) {
     //@ts-ignore
     return res.status(400).json({ error: error.message });
   }
 };
+
+export async function getGroupMessage (req: Request, res: Response){
+
+  const { email, _id} = req.params;
+
+  try {
+    const messagesResult = await Message.find({groupId: _id}).sort({updatedAt: 1});
+    const group = await Group.findById(_id);
+    const messages = new Array();
+
+    for(const message in messagesResult){
+      messages.push(messagesResult[message]);
+    }
+
+    for(const user in group?.users){
+      if (group?.users[user].email === email)
+        return res.status(200).json(messages);
+    }
+    throw Error("Invalid group or user not a member of the group.")
+
+  }catch(error){
+    //@ts-ignore
+    return res.status(400).json({error: error.message});
+  }
+
+}
