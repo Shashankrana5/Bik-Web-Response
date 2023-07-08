@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "npm install && npx ts-node server.ts",
-    "dev": "./node_modules/.bin/ts-node ./server.ts"
+    "dev": "nodemon server.ts"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",

@@ -49,13 +49,13 @@ export const DisplayChatContext = createContext<contextType>({...initialState, d
 
 
 export function reducer (state: DisplayChatType, action: ActionType):DisplayChatType {
-    
+
+
         switch(action.type){
             case('SET_MESSAGE'):
                 return {currentUser: action.payload.currentUser, chatType: action.payload.chatType, messages: action.payload.messages};
             case("CREATE_MESSAGE"):
-            // TODO
-                return {messages: [], chatType: "Personal",currentUser: ""};
+                return {...state, messages : [...state.messages, action.payload]}
             default:
                 throw state;
         }

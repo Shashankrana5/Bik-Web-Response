@@ -3,6 +3,7 @@ import { ChatNabar } from './ChatNavbar';
 import { DisplayChat } from "./DisplayChat";
 import { SelectedChat } from '../utils/ChatTypes/ChatType';
 import { User } from '../utils/ChatTypes/UserTypes';
+import SendMessage from './SendMessage';
 
 const ChatBox = () => {
 
@@ -20,6 +21,7 @@ const ChatBox = () => {
     <>
         <ChatNabar selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
         <DisplayChat selectedChat = {selectedChat} currentUser = {currentUser}/>
+        <SendMessage selectedChat = {selectedChat} currentUser = {currentUser}/>
     </>
    )
 

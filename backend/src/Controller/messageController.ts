@@ -9,40 +9,33 @@ import {
 } from "../utils/ChatType/ChatType";
 
 export async function sendMessage(req: Request, res: Response) {
-  const {
-    senderEmail,
-    receiverEmail,
-    messageType,
-    ticketNumber,
-    groupId,
-    content,
-  } = req.body;
 
-  if (groupId) {
-    const senderUser = await User.findOne({ email: senderEmail });
+  const { selectedChat, currentUser, content } = req.body;
+
+  try{
+  const senderUser = await User.findById(currentUser._id);
+
+  if(!senderUser){
+    throw Error("Invalid user");
+  }
+
+  if (selectedChat.chatType === "Group"){
+    const message = await Message.create({groupId: selectedChat.selected._id, messageType: "group", senderName: senderUser.fullName, senderEmail: senderUser.email, content});
+    return res.status(200).json(message)
+  }
+  else if (selectedChat.chatType === "Personal"){
+
+    const message = await Message.create({senderName: senderUser?.fullName, senderEmail: currentUser.email, receiverEmail: selectedChat.selected.email, receiverName: selectedChat.selected.fullName,  messageType: "personal", content});
+    return res.status(200).json(message);
+
+  }
+  else {
+    throw Error("Invalid message type");
+  }
+  }catch(error){
+    
     //@ts-ignore
-    const response = await Message.create({senderName: senderUser.fullName,senderEmail,messageType: "group",groupId,content,
-    });
-
-    return res.status(200).json(response);
-  } else if (ticketNumber) {
-    const response = await Message.create({
-      ticketNumber,
-      senderEmail,
-      content,
-      messageType,
-    });
-    return res.status(200).json(response);
-  } else if (messageType == "personal") {
-    const senderUser = await User.findOne({ email: senderEmail });
-    const receiverUser = await User.findOne({ email: receiverEmail });
-    //@ts-ignore
-    const response = await Message.create({receiverName: receiverUser.fullName,senderName: senderUser.fullName,senderEmail,receiverEmail,messageType,content,
-    });
-
-    return res.status(200).json(response);
-  } else {
-    return res.status(400).json({ errorMessage: "Input provided are invalid" });
+    return res.status(400).json({errorMessage: error.message})
   }
 }
 
@@ -113,7 +106,7 @@ export const getMessagesByEmails = async (req: Request, res: Response) => {
         { senderEmail: senderEmail, receiverEmail: receiverEmail },
         { senderEmail: receiverEmail, receiverEmail: senderEmail },
       ],
-    }).sort({ updatedAt: -1 });
+    }).sort({ updatedAt: 1 });
     return res.status(200).json(response);
   } catch (error) {
     //@ts-ignore

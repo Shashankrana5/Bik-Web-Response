@@ -6,7 +6,7 @@ import { User } from '../utils/ChatTypes/UserTypes';
 
 interface DisplayChatProps{
     selectedChat: SelectedChat | null;
-    currentUser: User | null;
+    currentUser: User;
 }
 
 export const DisplayChat = (displayChatProps: DisplayChatProps) => {
