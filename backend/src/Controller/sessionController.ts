@@ -1,24 +1,27 @@
 import { Request, Response } from "express";
 import { createSession, invalidateSession } from "../db/sessiondb";
 import { signJWT, verifyJWT } from "../utils/jwt.utils";
-let User = require("../model/User");
+import User from "../model/User";
+import { UserType } from "../utils/ChatType/ChatType";
 
 // login handler
 export async function createSessionHandler(req: Request, res: Response) {
   
   const { email, password } = req.body;
+  console.log(email)
+  console.log(password)
+  const user:UserType |null = await User.findOne({email: email, password});
 
-  const user = await User.findOne({email: email});
-
-  if (!user || user.password !== password) {
+  console.log(user);
+  if (!user) {
     return res.status(401).send("Invalid email or password");
   }
 
-  const session = createSession(email, user.name);
+  const session = createSession(email, user.fullName);
 
   // create access token
   const accessToken = signJWT(
-    { email: user.email, name: user.name, sessionId: session.sessionId },
+    { email: user.email, name: user.fullName, sessionId: session.sessionId },
     "5s"
   );
 

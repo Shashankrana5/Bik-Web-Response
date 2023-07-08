@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
+import { UserType } from "../utils/ChatType/ChatType";
 
 const userSchema = new Schema({
 
@@ -24,5 +25,5 @@ const userSchema = new Schema({
     }
 })
 
-const User =  mongoose.model("User", userSchema);;
+const User =  mongoose.model<UserType>("User", userSchema);;
 export default User;

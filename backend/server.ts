@@ -7,127 +7,126 @@ import userRoutes from "./src/routes/userRoutes";
 import mongoose from "mongoose";
 import messageRoutes from "./src/routes/messageRoutes";
 import groupRoutes from "./src/routes/groupRoutes";
+import { ChatServerSocket } from "./socket";
 const socketio = require("socket.io")
 const http = require("http")
-
-
-
 
 const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(deserializeUser);
 app.use(
   cors({
     credentials: true,
     origin: "http://localhost:1912",
+
   })
 );
 
-const server = http.createServer(app);
+const chatServer = http.createServer(app);
 
-const io = socketio(server, {
-  cors:{
-      origin: "http://localhost:1912", 
-      methods: ["GET", "POST"]
-  },
-})
+new ChatServerSocket(chatServer);
+// //@ts-ignore
+// io.on("connection", socket => {
+//   console.log(socket.id);
+// })
 
-let activeUserChats = new Object();
-let activeTicketChats = new Object();
-let activeGroupChats = new Object();
 
-//@ts-ignore
-io.of("/personalchat").on('connection', socket => {
 
-  console.log(`A user has personal chat joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
+// let activeUserChats = new Object();
+// let activeTicketChats = new Object();
+// let activeGroupChats = new Object();
 
-  const userSocketId = socket.id;
-  const userEmail = socket.handshake.query.name;
+// //@ts-ignore
+// io.of("/personalchat").on('connection', socket => {
 
-  if (userEmail in activeUserChats){
-//@ts-ignore
+//   console.log(`A user has personal chat joined with id: ${socket.id} and email: ${socket.handshake.query.name}`)
 
-      (activeUserChats[userEmail]).add(userSocketId);
-  }
-  else{
-//@ts-ignore
+//   const userSocketId = socket.id;
+//   const userEmail = socket.handshake.query.name;
 
-      activeUserChats[userEmail] = new Set([userSocketId]);
-  }
-//@ts-ignore
+//   if (userEmail in activeUserChats){
+// //@ts-ignore
 
-  socket.on("send-personal-message", data => {
-//@ts-ignore
+//       (activeUserChats[userEmail]).add(userSocketId);
+//   }
+//   else{
+// //@ts-ignore
+
+//       activeUserChats[userEmail] = new Set([userSocketId]);
+//   }
+// //@ts-ignore
+
+//   socket.on("send-personal-message", data => {
+// //@ts-ignore
       
-      if (activeUserChats[data.receiverEmail]){
-//@ts-ignore
+//       if (activeUserChats[data.receiverEmail]){
+// //@ts-ignore
 
-          for (let socketAddress of activeUserChats[data.receiverEmail]){
+//           for (let socketAddress of activeUserChats[data.receiverEmail]){
 
-              socket.to(socketAddress).emit("receive-personal-message", data);
-          }
-      }
-  })
-//@ts-ignore
+//               socket.to(socketAddress).emit("receive-personal-message", data);
+//           }
+//       }
+//   })
+// //@ts-ignore
 
-  socket.on("disconnect", event =>{
-      // console.log(`A user has personal chat left with id: ${userSocketId} and email: ${userEmail}`)
-//@ts-ignore
+//   socket.on("disconnect", event =>{
+//       // console.log(`A user has personal chat left with id: ${userSocketId} and email: ${userEmail}`)
+// //@ts-ignore
       
-      activeUserChats[userEmail].delete(userSocketId);
-  })
+//       activeUserChats[userEmail].delete(userSocketId);
+//   })
 
-})
-//@ts-ignore
+// })
+// //@ts-ignore
 
-io.of("/ticketchat").on("connection", socket => {
-  // console.log(`A user has joined ticket chat with id: ${socket.id} and email: ${socket.handshake.query.name}`)
+// io.of("/ticketchat").on("connection", socket => {
+//   // console.log(`A user has joined ticket chat with id: ${socket.id} and email: ${socket.handshake.query.name}`)
   
-  const userSocketId = socket.id;
-  const userEmail = socket.handshake.query.name;
-//@ts-ignore
+//   const userSocketId = socket.id;
+//   const userEmail = socket.handshake.query.name;
+// //@ts-ignore
 
-  activeTicketChats[userEmail] = userSocketId;
+//   activeTicketChats[userEmail] = userSocketId;
 
-//@ts-ignore
+// //@ts-ignore
 
-  socket.on("join-ticket", data => {
-      console.log("user awant to joing " + data)
-      socket.join(data);
-  })
+//   socket.on("join-ticket", data => {
+//       console.log("user awant to joing " + data)
+//       socket.join(data);
+//   })
 
-//@ts-ignore
+// //@ts-ignore
 
-  socket.on("send-ticket-message", data =>{
-      socket.to(data.ticketNumber).emit("receive-ticket-message", data)
-  })
-})
+//   socket.on("send-ticket-message", data =>{
+//       socket.to(data.ticketNumber).emit("receive-ticket-message", data)
+//   })
+// })
 
-//@ts-ignore
+// //@ts-ignore
 
-io.of("/groupchat").on("connection", socket => {
+// io.of("/groupchat").on("connection", socket => {
 
-  const userSocketId = socket.id;
-  const userEmail = socket.handshake.query.senderEmail;
+//   const userSocketId = socket.id;
+//   const userEmail = socket.handshake.query.senderEmail;
 
-  console.log(`Group chat has user ${userSocketId} with email ${userEmail}`);
+//   console.log(`Group chat has user ${userSocketId} with email ${userEmail}`);
 
-//@ts-ignore
+// //@ts-ignore
 
-  socket.on("join-groupchat", groupId => {
-      socket.join(groupId);
-  })
-//@ts-ignore
+//   socket.on("join-groupchat", groupId => {
+//       socket.join(groupId);
+//   })
+// //@ts-ignore
 
-  socket.on("send-groupchat-message", data => {
-      socket.to(data.groupId).emit("receive-groupchat-message", data);
-  })
-})
+//   socket.on("send-groupchat-message", data => {
+//       socket.to(data.groupId).emit("receive-groupchat-message", data);
+//   })
+// })
 
-server.listen(9000, () => console.log("Chat server is up and running"))
 
 
 function main() {
