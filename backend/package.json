@@ -16,8 +16,8 @@
     "socket.io": "^4.7.1"
   },
   "scripts": {
-    "start": "nodemon server.ts",
-    "dev": "nodemon --exec \"ts-node --cache-directory .tscache\" server.ts"
+    "start": "npm install && npx ts-node server.ts",
+    "dev": "./node_modules/.bin/ts-node ./server.ts"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
