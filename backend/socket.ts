@@ -28,27 +28,50 @@ export class ChatServerSocket {
           this.startListeners(this.io);
           chatServer.listen(9000, () => console.log("Chat server is up and running"))
 
-        // this.io.on("connect", this.startListeners)
-
-        // this.io.on("connect", this.StartListeners);
-        // console.info("SOcket is started"); 
     }
 
     startListeners(io: Server) {
         // io.on("connection", (socket) => {
         //     // console.log(`${socket.id} ${socket.handshake.query.currentUser.email}`)
-        //     console.log(socket.handshake.query.currentUser)
+        //     console.log(socket.handshake.query)
         // })
 
 
         
-        // io.of("/personalchat").on("connection", socket => {
+        io.of("/personalchat").on("connection", socket => {
 
-        //     const user = JSON.parse(socket.handshake.query.currentUser as string);
-        //     console.log(`Personal chat ${socket.id} ${user.email}`)
+            const user = JSON.parse(socket.handshake.query.currentUser as string);
+            if(this.activeUsers[user.email] === undefined){
+                this.activeUsers[user.email] = new Set([socket.id])
+            }
+            else{
+                this.activeUsers[user.email].add(socket.id);
+            }
 
+            socket.on("send-personal-message", data => {
+                console.log(data)
+                if(this.activeUsers[data.receiverEmail]){
+                    for(let socketAddress of this.activeUsers[data.receiverEmail]){
+                        socket.to(socketAddress).emit("receive-personal-message", data);
+                    }
+                }
+            })
+
+            socket.on("disconnect", () => {
+                console.log(this.activeUsers)
+                this.activeUsers[user.email].delete(socket.id);
+            })
         
-        // })
+        })
+
+        io.of("/groupchat").on("connection", socket => {
+        //     // console.log(socket.handshake.query.currentUser)
+
+            const user = JSON.parse(socket.handshake.query.currentUser as string);
+
+
+            // console.log(`Group chat ${socket.id} ${user.email}`)
+        })
 
     }
      
