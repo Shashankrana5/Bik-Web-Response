@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ChatNabar } from "./ChatNavbar";
 import { DisplayChat } from "./DisplayChat";
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
-import { User, UserField } from "../utils/ChatTypes/UserTypes";
+import { UserField } from "../utils/ChatTypes/UserTypes";
 import SendMessage from "./SendMessage";
 
 interface ChatBoxProps {

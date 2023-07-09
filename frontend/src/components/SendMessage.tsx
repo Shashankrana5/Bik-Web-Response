@@ -28,7 +28,7 @@ const SendMessage = (props: SendMessageProps) => {
       }));
     }
 
-  }, [currentUser]);
+  }, [currentUser]);// eslint-disable-next-line
 
   useEffect(() => {
     if (personalChatSocket) {
@@ -36,7 +36,7 @@ const SendMessage = (props: SendMessageProps) => {
         dispatch({ type: "CREATE_MESSAGE", payload: data });
       });
     }
-
+// eslint-disable-next-line
   }, [personalChatSocket]);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const SendMessage = (props: SendMessageProps) => {
     if (selectedChat && selectedChat.selected && selectedChat.chatType === "Group"){
         groupChatSocket?.emit("join-groupchat", selectedChat.selected._id)
     }
-
+// eslint-disable-next-line
   }, [selectedChat])
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const SendMessage = (props: SendMessageProps) => {
       groupChatSocket.on("receive-groupchat-message", data => {
         dispatch({type:"CREATE_MESSAGE", payload: data})
       })
-    }
+    }// eslint-disable-next-line
   }, [groupChatSocket])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
