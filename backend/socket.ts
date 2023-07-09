@@ -49,7 +49,6 @@ export class ChatServerSocket {
             }
 
             socket.on("send-personal-message", data => {
-                console.log(data)
                 if(this.activeUsers[data.receiverEmail]){
                     for(let socketAddress of this.activeUsers[data.receiverEmail]){
                         socket.to(socketAddress).emit("receive-personal-message", data);
@@ -58,8 +57,11 @@ export class ChatServerSocket {
             })
 
             socket.on("disconnect", () => {
-                console.log(this.activeUsers)
                 this.activeUsers[user.email].delete(socket.id);
+                if(this.activeUsers[user.email].size === 0){
+                    delete this.activeUsers[user.email];
+                }
+                
             })
         
         })
