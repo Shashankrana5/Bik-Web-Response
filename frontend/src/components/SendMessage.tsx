@@ -45,37 +45,38 @@ const SendMessage = (props: SendMessageProps) => {
     //@ts-ignore
     if (e.target.sendMessageInput.value.length !== 0 && selectedChat !== null) {
     
-    //   const response = await axios.post(
-    //     "http://localhost:1913/api/message/sendmessage",
-    //     {
-    //       selectedChat,
-    //       currentUser,
-    //       //@ts-ignore
-    //       content: e.target.sendMessageInput.value,
-    //     }
-    //   );
-}
-// if(response){
-//   console.log(response.data);
-//   dispatch({type: "CREATE_MESSAGE", payload: response.data});
-// }
-        const response = {
+      const response = await axios.post(
+        "http://localhost:1913/api/message/sendmessage",
+        {
+          selectedChat,
+          currentUser,
+          //@ts-ignore
+          content: e.target.sendMessageInput.value,
+        }
+      );
 
-            _id: "6413f3ed09e78c618b1f01a4",
-            senderEmail: "shashank@xyz.com",
-            senderName: "Shashank Rana",
-            receiverName: "Jayson Tatum",
-            receiverEmail: "jayson@xyz.com",
-            messageType: "personal",
-            //@ts-ignore
-            content: e.target.sendMessageInput.value,
-            createdAt:"2023-03-17T05:00:29.080+00:00",
-            updatedAt: "2023-03-17T05:00:29.080+00:00"
+    if(response){
+      console.log(response.data);
+      dispatch({type: "CREATE_MESSAGE", payload: response.data});
+    }
+    //     const response = {
+
+    //         _id: "6413f3ed09e78c618b1f01a4",
+    //         senderEmail: "shashank@xyz.com",
+    //         senderName: "Shashank Rana",
+    //         receiverName: "Jayson Tatum",
+    //         receiverEmail: "jayson@xyz.com",
+    //         messageType: "personal",
+    //         //@ts-ignore
+    //         content: e.target.sendMessageInput.value,
+    //         createdAt:"2023-03-17T05:00:29.080+00:00",
+    //         updatedAt: "2023-03-17T05:00:29.080+00:00"
 
    
-    }
-    dispatch({type: "CREATE_MESSAGE", payload: response})
+    // }
+    // dispatch({type: "CREATE_MESSAGE", payload: response})
   }
+}
 
   return (
     <form onSubmit={handleSubmit}>

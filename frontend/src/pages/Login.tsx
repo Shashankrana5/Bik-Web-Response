@@ -2,9 +2,7 @@ import axios from "axios"
 import { UserField } from "../utils/ChatTypes/UserTypes";
 
 
-const Login = () => {
-  
-    
+const Login = () => {  
 
     const handleSubmit = async(e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -24,7 +22,7 @@ const Login = () => {
             const response = await axios.post("http://localhost:1913/api/session", {email, password}, {withCredentials: true});
             if(response.status === 200){
                 // setCurrentUser(response.data.user);
-                console.log(response.data.user)
+                console.log(response.data)
                 // console.log(currentUser);
             }
         }catch(error){

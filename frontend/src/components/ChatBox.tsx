@@ -5,23 +5,25 @@ import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import { User, UserField } from "../utils/ChatTypes/UserTypes";
 import SendMessage from "./SendMessage";
 
+interface ChatBoxProps {
+  currentUser: UserField;
+}
 
-const ChatBox = () => {
-
+const ChatBox = (props: ChatBoxProps) => {
+  
   const [selectedChat, setSelectedChat] = useState<SelectedChat | null>(null);
-
+  const { currentUser } = props;
   //TODO: set current user neds to be updated when a person logs in:
 
-    const [ currentUser] = useState<User>({_id: "63c2a594b1d5914df517bb42", email: "shashank@xyz.com"})
-
     useEffect(()=>{
+      // console.log(currentUser);
     // console.log(selectedChat);
-  }, [selectedChat]);
+  }, [selectedChat, currentUser]);
   return (
     <>
-        <ChatNabar selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
-        <DisplayChat selectedChat = {selectedChat} currentUser = {currentUser}/>
-        <SendMessage selectedChat = {selectedChat} currentUser = {currentUser}/>
+        <ChatNabar  currentUser = {currentUser!} selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
+        <DisplayChat  selectedChat = {selectedChat} currentUser = {currentUser}/>
+        <SendMessage  selectedChat = {selectedChat} currentUser = {currentUser}/>
     </>
   );
 };

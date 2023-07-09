@@ -5,6 +5,7 @@ type Message = personalMessage | groupMessage;
 interface personalMessage {
     _id: string;
     senderEmail: string;
+    senderName: string;
     receiverEmail: string;
     messageType: "personal";
     content: string;
@@ -15,6 +16,7 @@ interface personalMessage {
 interface groupMessage {
     _id: string;
     senderEmail: string;
+    senderName: string;
     messageType: "group";
     content: string;
     groupId: string;
@@ -60,11 +62,11 @@ export function reducer (state: DisplayChatType, action: ActionType):DisplayChat
                 throw state;
         }
 }
-export const DisplayChatContextProvider = ({children}: {children: React.ReactNode}) => {
+export function DisplayChatContextProvider ({children}: {children: React.ReactNode}): JSX.Element{
 
     const[state, dispatch] = useReducer(reducer, {messages: [], currentUser: "", chatType: "Personal"});
-
-    return <DisplayChatContext.Provider value = {{...state, dispatch}}>
+    //@ts-ignore
+    return (<DisplayChatContext.Provider value = {{...state, dispatch}}>
           {children}
-    </DisplayChatContext.Provider>
+    </DisplayChatContext.Provider>)
 }

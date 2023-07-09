@@ -7,28 +7,27 @@ import { Group } from "../utils/ChatTypes/GroupChatTypes";
 export type ChatNavbarProps = {
   selectedChat: SelectedChat | null;
   setSelectedChat: React.Dispatch<React.SetStateAction<SelectedChat | null>>;
+  currentUser: UserField;
 };
 
 export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
   //TODO: create a chat dispatch which updates the chats in the chat list.
 
   const [chats, setChats] = useState<Chat | null>(null);
-  const { setSelectedChat } = chatNavbarProps;
-
-  // useEffect(() => {
-  //   console.log(currentUser)
-  // }, [currentUser])
+  const { setSelectedChat, currentUser } = chatNavbarProps;
 
   useEffect(() => {
     async function fetchChats() {
-      // console.log(currentUser)
+
+      if(currentUser){
       const response = await axios.get(
-        "http://localhost:1913/api/message/getchatsbyemail/shashank@xyz.com"
+        `http://localhost:1913/api/message/getchatsbyemail/${currentUser.email}`
+
       );
-      setChats(response.data);
+      setChats(response.data);}
     }
     fetchChats();
-  }, [setChats]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [setChats, currentUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClickPersonal = (userField: UserField) => {
     setSelectedChat({ selected: userField, chatType: "Personal" });

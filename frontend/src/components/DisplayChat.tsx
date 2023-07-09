@@ -17,7 +17,6 @@ export const DisplayChat = (displayChatProps: DisplayChatProps) => {
 
         async function fetchChats () {
 
-            console.log(selectedChat?.chatType)
             if (selectedChat?.chatType === "Personal"){
                 const personalMessage = await axios.get(`http://localhost:1913/api/message/getmessagebyemails/${currentUser?.email}/to/${selectedChat.selected.email}`)
                 const pass = {messages: personalMessage.data, chatType: "Personal", currentUser: currentUser?.email};
@@ -38,20 +37,21 @@ export const DisplayChat = (displayChatProps: DisplayChatProps) => {
     }, [selectedChat]) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        console.log(messages);
+        // console.log(messages);
     }, [messages])
 
     //Todo: have the chats store users's name too so we can use it insstead of senderEmail.
     return(
         <div id = "chat-page">
             this is the chat page
-            <div>                
+            <div>   
+                {<>{console.log(messages)}</>}             
                 {messages && messages.map(
                     
                 (chat) => 
                     <div key = {chat._id}>
-                        
-                        <span>{chat.senderEmail}: </span>
+
+                        <span>{chat.senderName}: </span>
                         <span>{chat.content}</span>
                     </div>)}
             </div>

@@ -1,7 +1,14 @@
 import axios from "axios";
+import { UserField } from "../utils/ChatTypes/UserTypes";
 
-const Navbar = () => {
+interface NavbarProps {
+    currentUser: UserField;
+}
 
+
+const Navbar = (props: NavbarProps) => {
+
+    const { currentUser } = props;
     const handleProfileClick = async() =>{
 
         try{
@@ -16,7 +23,7 @@ const Navbar = () => {
         <div id = "navbar-main">
             <div id="navbar-profile" onClick={handleProfileClick}>
                 {/* TODO: need to make the div have different cursor */}
-                Logout(icon & name)
+                Logout(icon & {currentUser?.fullName})
             </div>
             <div>settings</div>
             <div>chat & bubble notification</div>
