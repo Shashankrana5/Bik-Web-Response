@@ -44,8 +44,7 @@ export const DisplayChat = (displayChatProps: DisplayChatProps) => {
     return(
         <div id = "chat-page">
             this is the chat page
-            <div>   
-                {<>{console.log(messages)}</>}             
+            <div>             
                 {messages && messages.map(
                     
                 (chat) => 

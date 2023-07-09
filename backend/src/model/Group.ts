@@ -1,4 +1,5 @@
 import mongoose, {Schema} from "mongoose";
+import { GroupType } from "../utils/ChatType/ChatType";
 
 const groupSchema = new Schema({
     users: {
@@ -13,7 +14,7 @@ const groupSchema = new Schema({
         type: String,
         require: false
     }
-});
+}, {timestamps: true});
 
-const Group =  mongoose.model("Group", groupSchema);
+const Group =  mongoose.model<GroupType>("Group", groupSchema);
 export default Group;

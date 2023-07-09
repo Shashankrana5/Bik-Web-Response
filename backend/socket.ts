@@ -71,7 +71,13 @@ export class ChatServerSocket {
 
             const user = JSON.parse(socket.handshake.query.currentUser as string);
 
-
+            socket.on("join-groupchat", groupId => {
+                socket.join(groupId);
+            })
+            socket.on("send-groupchat-message", data => {
+                console.log(data);
+                socket.to(data.groupId).emit("receive-groupchat-message", data);
+            })
             // console.log(`Group chat ${socket.id} ${user.email}`)
         })
 

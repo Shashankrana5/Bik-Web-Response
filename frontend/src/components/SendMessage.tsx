@@ -3,8 +3,7 @@ import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import { User } from "../utils/ChatTypes/UserTypes";
 import { io, Socket } from "socket.io-client";
-import { useEffect, useState } from 'react';
-import { ClientToServerEvents, ServerToClientEvents } from "../utils/Socket.io-clientTypes/Socket.io-client";
+import { useEffect, useState } from "react";
 
 interface SendMessageProps {
   selectedChat: SelectedChat | null;
@@ -14,50 +13,53 @@ interface SendMessageProps {
 const SendMessage = (props: SendMessageProps) => {
   const { dispatch } = useDisplayChatContext();
   const { selectedChat, currentUser } = props;
-    const [personalChatSocket, setPersonalChatSocket ] =  useState<Socket>()
+  const [personalChatSocket, setPersonalChatSocket] = useState<Socket>();
+  const [groupChatSocket, setGroupChatSocket] = useState<Socket>();
 
-    useEffect(() => {
-        // io.connect("http://localhost:9000/personalchat", {
-          if(currentUser){
-           setPersonalChatSocket(io("http://localhost:9000/personalchat", {
-            query: {currentUser: JSON.stringify(currentUser)}
-           }))
-          io("http://localhost:9000/groupchat", {
-            query: {currentUser: JSON.stringify(currentUser)}
-           })
-}
-
-        const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
-        
-        
-
-
-    }, [currentUser])
-
-
-
-    useEffect(() => {
-
-      if(personalChatSocket){
-        personalChatSocket.on("receive-personal-message", data => {
-          dispatch({type:"CREATE_MESSAGE", payload: data})
-          
+  useEffect(() => {
+    if (currentUser) {
+      setPersonalChatSocket(
+        io("http://localhost:9000/personalchat", {
+          query: { currentUser: JSON.stringify(currentUser) },
         })
-      }
-      // if(groupChatSocket)
-    }, [personalChatSocket])
+      );
+      setGroupChatSocket(io("http://localhost:9000/groupchat", {
+        query: { currentUser: JSON.stringify(currentUser) },
+      }));
+    }
 
+  }, [currentUser]);
 
+  useEffect(() => {
+    if (personalChatSocket) {
+      personalChatSocket.on("receive-personal-message", (data) => {
+        dispatch({ type: "CREATE_MESSAGE", payload: data });
+      });
+    }
 
+  }, [personalChatSocket]);
 
+  useEffect(() => {
+
+    if (selectedChat && selectedChat.selected && selectedChat.chatType === "Group"){
+        groupChatSocket?.emit("join-groupchat", selectedChat.selected._id)
+    }
+
+  }, [selectedChat])
+
+  useEffect(() => {
+    if (groupChatSocket){
+      groupChatSocket.on("receive-groupchat-message", data => {
+        dispatch({type:"CREATE_MESSAGE", payload: data})
+      })
+    }
+  }, [groupChatSocket])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-
     e.preventDefault();
 
     //@ts-ignore
     if (e.target.sendMessageInput.value.length !== 0 && selectedChat !== null) {
-    
       const response = await axios.post(
         "http://localhost:1913/api/message/sendmessage",
         {
@@ -68,34 +70,17 @@ const SendMessage = (props: SendMessageProps) => {
         }
       );
 
-    if(response){
-      console.log(response.data);
-      dispatch({type: "CREATE_MESSAGE", payload: response.data});
-      if(selectedChat?.chatType === "Personal"){
-        personalChatSocket?.emit("send-personal-message", response.data);
-  
+      if (response) {
+
+        dispatch({ type: "CREATE_MESSAGE", payload: response.data });
+        if (selectedChat?.chatType === "Personal") {
+          personalChatSocket?.emit("send-personal-message", response.data);
+        } else if (selectedChat && selectedChat.selected && selectedChat?.chatType === "Group") {
+          groupChatSocket?.emit("send-groupchat-message", response.data)
+        }
       }
     }
-    //     const response = {
-
-    //         _id: "6413f3ed09e78c618b1f01a4",
-    //         senderEmail: "shashank@xyz.com",
-    //         senderName: "Shashank Rana",
-    //         receiverName: "Caro Romero",
-    //         receiverEmail: "caro@xyz.com",
-    //         messageType: "personal",
-    //         //@ts-ignore
-    //         content: e.target.sendMessageInput.value,
-    //         createdAt:"2023-03-17T05:00:29.080+00:00",
-    //         updatedAt: "2023-03-17T05:00:29.080+00:00"
-
-   
-    // }
-
-    // dispatch({type: "CREATE_MESSAGE", payload: response})
-  
   }
-}
 
   return (
     <form onSubmit={handleSubmit}>

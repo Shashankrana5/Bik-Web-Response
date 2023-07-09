@@ -87,6 +87,18 @@ export async function getChatsByEmail(req: Request, res: Response) {
       }
     }
 
+    for(const group in groupMember) {
+      console.log((groupMember[group]._id).toString())
+      if(!groupChatSet.has(groupMember[group]._id.toString())){
+        groupChatSet.add((groupMember[group]._id).toString());
+        chats.Group.push(groupMember[group]);
+      }
+
+    }
+    console.log(groupChatSet)
+
+
+
     const currentUser: UserType | null = await User.findOne({ email });
     if (currentUser) chats.User = currentUser;
 
@@ -120,17 +132,19 @@ export async function getGroupMessage (req: Request, res: Response){
 
   try {
     const messagesResult = await Message.find({groupId: _id}).sort({updatedAt: 1});
-    const group = await Group.findById(_id);
+    const group:GroupType | null = await Group.findById(_id);
     const messages = new Array();
 
     for(const message in messagesResult){
       messages.push(messagesResult[message]);
     }
 
-    for(const user in group?.users){
-      if (group?.users[user].email === email)
+    for( const user of group?.users!){
+     if (user.email === email)
         return res.status(200).json(messages);
+      
     }
+
     throw Error("Invalid group or user not a member of the group.")
 
   }catch(error){
