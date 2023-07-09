@@ -8,11 +8,9 @@ import { UserType } from "../utils/ChatType/ChatType";
 export async function createSessionHandler(req: Request, res: Response) {
   
   const { email, password } = req.body;
-  console.log(email)
-  console.log(password)
-  const user:UserType |null = await User.findOne({email: email, password});
 
-  console.log(user);
+  const user:UserType |null = await User.findOne({email: email, password});
+  
   if (!user) {
     return res.status(401).send("Invalid email or password");
   }
@@ -29,7 +27,7 @@ export async function createSessionHandler(req: Request, res: Response) {
 
   // set access token in cookie
   res.cookie("accessToken", accessToken, {
-    maxAge: 300000, // 5 minutes
+    maxAge: 30000000, // 5 minutes
     httpOnly: true,
   });
 
@@ -39,7 +37,7 @@ export async function createSessionHandler(req: Request, res: Response) {
   });
 
   // send user back
-  return res.send(session);
+  return res.send({session, user});
 }
 
 // get the session session

@@ -39,13 +39,16 @@ export class ChatServerSocket {
         //     // console.log(`${socket.id} ${socket.handshake.query.currentUser.email}`)
         //     console.log(socket.handshake.query.currentUser)
         // })
-        io.of("/personalchat").on("connection", socket => {
 
-            const user = JSON.parse(socket.handshake.query.currentUser as string);
-            console.log(`Personal chat ${socket.id} ${user.email}`)
 
         
-        })
+        // io.of("/personalchat").on("connection", socket => {
+
+        //     const user = JSON.parse(socket.handshake.query.currentUser as string);
+        //     console.log(`Personal chat ${socket.id} ${user.email}`)
+
+        
+        // })
 
     }
      
