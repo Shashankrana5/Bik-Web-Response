@@ -19,7 +19,6 @@ export const displayChatContentReducer = (displayChatContentState, action) => {
 export const DisplayChatContentContextProvider = ({children}) => {
 
     const [ displayChatContentState, displayChatContentDispatch ] = useReducer(displayChatContentReducer, {displayChatContents: null});
-//@ts-ignore
     return <DisplayChatContentContext.Provider value = {{...displayChatContentState, displayChatContentDispatch}}>
         {children}
     </DisplayChatContentContext.Provider>

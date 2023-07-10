@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-const User = require("../model/User");
+import User from "../model/User";
 
 export async function addUser(req: Request, res: Response){
 
@@ -40,5 +40,14 @@ export async function getUserByEmail(req:Request ,res:Response){
     catch(error){
         //@ts-ignore
         return res.status(400).json({message: error.message})
+    }
+}
+
+export async function getAdmins(req: Request, res: Response){
+    try {
+        const admins = await User.find({role: "ADMIN"});
+        return res.status(200).json(admins);
+    }catch(error){
+        return res.status(400).json({errorMessage: error});
     }
 }

@@ -88,14 +88,13 @@ export async function getChatsByEmail(req: Request, res: Response) {
     }
 
     for(const group in groupMember) {
-      console.log((groupMember[group]._id).toString())
+
       if(!groupChatSet.has(groupMember[group]._id.toString())){
         groupChatSet.add((groupMember[group]._id).toString());
         chats.Group.push(groupMember[group]);
       }
 
     }
-    console.log(groupChatSet)
 
 
 

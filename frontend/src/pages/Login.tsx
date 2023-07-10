@@ -20,6 +20,7 @@ const Login = () => {
             const response = await axios.post("http://localhost:1913/api/session", {email, password}, {withCredentials: true});
             if(response.status === 200){
                 console.log(response.data)
+                window.history.back();
             }
         }catch(error){
             console.log({errorMessage: error});
