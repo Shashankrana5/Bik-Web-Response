@@ -31,7 +31,7 @@ const handleMinimizeLeftNavbar = () => {
         <div className="navbar-main flex justify-between h-14 items-center border-b border-gray-400">
             <div className = "navbar-main-right-elements flex" onClick={handleMinimizeLeftNavbar}>
             <Link to="/" className="cursor-pointer ">
-                <svg className="h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 17H20M4 12H20M4 7H20" stroke="#4a4645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                <svg className="h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 17H20M4 12H20M4 7H20" stroke="#4a4645" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
             </Link>
             <Link to = "/" className="text-gray-700 text-lg font-semibold pl-8"><h3>Bik-Web Response</h3></Link>
             </div>
