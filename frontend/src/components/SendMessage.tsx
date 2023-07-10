@@ -19,11 +19,11 @@ const SendMessage = (props: SendMessageProps) => {
   useEffect(() => {
     if (currentUser) {
       setPersonalChatSocket(
-        io("http://localhost:9000/personalchat", {
+        io("http://localhost:1914/personalchat", {
           query: { currentUser: JSON.stringify(currentUser) },
         })
       );
-      setGroupChatSocket(io("http://localhost:9000/groupchat", {
+      setGroupChatSocket(io("http://localhost:1914/groupchat", {
         query: { currentUser: JSON.stringify(currentUser) },
       }));
     }

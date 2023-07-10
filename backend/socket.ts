@@ -26,7 +26,7 @@ export class ChatServerSocket {
             },
           })
           this.startListeners(this.io);
-          chatServer.listen(9000, () => console.log("Chat server is up and running"))
+          chatServer.listen(1914, () => console.log("Chat server is up and running"))
 
     }
 

@@ -65,8 +65,10 @@ export function reducer (state: DisplayChatType, action: ActionType):DisplayChat
 export function DisplayChatContextProvider ({children}: {children: React.ReactNode}): JSX.Element{
 
     const[state, dispatch] = useReducer(reducer, {messages: [], currentUser: "", chatType: "Personal"});
-    //@ts-ignore
-    return (<DisplayChatContext.Provider value = {{...state, dispatch}}>
-          {children}
-    </DisplayChatContext.Provider>)
+
+    return (
+        <DisplayChatContext.Provider value = {{...state, dispatch}}>
+            {children}
+        </DisplayChatContext.Provider>
+    )
 }

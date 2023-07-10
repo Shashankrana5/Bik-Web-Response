@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ChatBox from "../components/ChatBox";
 import { getSessionData } from "../utils/getSessionData";
 import { UserField } from "../utils/ChatTypes/UserTypes";
-import Navbar from "../components/Navbar";
 
 const Chat = () => {
 
@@ -18,7 +17,11 @@ const Chat = () => {
     
     return(
         <div id = "chat-page">
-            <Navbar currentUser={currentUser!}/>
+            {/* <Navbar currentUser={currentUser!}
+            setMinimizeSidebar={setMinimizeSidebar}
+            // minimizeLeftNavbar={minimizeLeftNavbar}
+            // setMinimizeLeftNavbar={setMinimizeLeftNavbar}
+          /> */}
 
             <ChatBox currentUser = {currentUser!}/>
         </div>
