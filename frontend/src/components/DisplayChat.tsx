@@ -23,7 +23,7 @@ export const DisplayChat = (displayChatProps: DisplayChatProps) => {
 
                 dispatch({type: "SET_MESSAGE", payload: pass})
             }
-            //TODO: Do i want the currentUser to be a string or do I want it to be an User object.
+        
 
             else if (selectedChat?.chatType === "Group"){
                 const groupMessage = await axios.get(`http://localhost:1913/api/message/getgroupmessage/${selectedChat?.selected._id}/user/${currentUser?.email}`)
@@ -40,19 +40,24 @@ export const DisplayChat = (displayChatProps: DisplayChatProps) => {
         // console.log(messages);
     }, [messages])
 
-    //Todo: have the chats store users's name too so we can use it insstead of senderEmail.
     return(
-        <div id = "chat-page">
-            this is the chat page
-            <div>             
-                {messages && messages.map(
-                    
-                (chat) => 
-                    <div key = {chat._id}>
 
-                        <span>{chat.senderName}: </span>
-                        <span>{chat.content}</span>
-                    </div>)}
+        <div id="displaychat border-2 border-yellow-700">
+            <div className="flex display-chat-container max-h-64 overflow-y-auto flex-col-reverse">
+            {messages && messages.map(chat => 
+                {return (currentUser.email === chat.senderEmail) ? 
+                    <div className="flex flex-row-reverse">
+                        <div>
+                            <p className="bg-orange-200 border-2 border-orange-200 rounded-md">{chat.content}</p>
+                        </div>
+                    </div>
+                :   (<div className="flex">
+                            <div>
+                                <p className="bg-gray-200 border-2 border-gray-200 rounded-md">{chat.content}</p>
+                            </div>
+                        </div>)
+            }
+            )}
             </div>
         </div>
     )

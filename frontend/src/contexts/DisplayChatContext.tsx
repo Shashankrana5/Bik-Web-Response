@@ -25,7 +25,7 @@ interface groupMessage {
 }
 
 type ActionType = {
-    type: "SET_MESSAGE" | "CREATE_MESSAGE";
+    type: "SET_MESSAGE" | "CREATE_MESSAGE" | "CLEAR_MESSAGE";
     payload?: any;
 }
 
@@ -54,10 +54,12 @@ export function reducer (state: DisplayChatType, action: ActionType):DisplayChat
 
 
         switch(action.type){
+            case("CLEAR_MESSAGE"):
+                return {...state, messages: []}
             case('SET_MESSAGE'):
                 return {currentUser: action.payload.currentUser, chatType: action.payload.chatType, messages: action.payload.messages};
             case("CREATE_MESSAGE"):
-                return {...state, messages : [...state.messages, action.payload]}
+                return {...state, messages : [action.payload, ...state.messages]}
             default:
                 throw state;
         }

@@ -16,7 +16,7 @@ const Chat = () => {
     }, [])
     
     return(
-        <div id = "chat-page">
+        <div id = "chat-page" className="flex">
             {/* <Navbar currentUser={currentUser!}
             setMinimizeSidebar={setMinimizeSidebar}
             // minimizeLeftNavbar={minimizeLeftNavbar}

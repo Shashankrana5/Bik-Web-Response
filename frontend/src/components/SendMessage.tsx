@@ -15,6 +15,7 @@ const SendMessage = (props: SendMessageProps) => {
   const { selectedChat, currentUser } = props;
   const [personalChatSocket, setPersonalChatSocket] = useState<Socket>();
   const [groupChatSocket, setGroupChatSocket] = useState<Socket>();
+  
 
   useEffect(() => {
     if (currentUser) {
@@ -57,7 +58,7 @@ const SendMessage = (props: SendMessageProps) => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
+    
     //@ts-ignore
     if (e.target.sendMessageInput.value.length !== 0 && selectedChat !== null) {
       const response = await axios.post(
@@ -79,6 +80,8 @@ const SendMessage = (props: SendMessageProps) => {
           groupChatSocket?.emit("send-groupchat-message", response.data)
         }
       }
+      /*@ts-ignore */
+      e.target.sendMessageInput.value = "";
     }
   }
 

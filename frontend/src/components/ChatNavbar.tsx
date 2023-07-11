@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Chat, SelectedChat } from "../utils/ChatTypes/ChatType";
 import { UserField } from "../utils/ChatTypes/UserTypes";
 import { Group } from "../utils/ChatTypes/GroupChatTypes";
+import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 
 export type ChatNavbarProps = {
   selectedChat: SelectedChat | null;
@@ -14,7 +15,8 @@ export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
   //TODO: create a chat dispatch which updates the chats in the chat list.
 
   const [chats, setChats] = useState<Chat | null>(null);
-  const { setSelectedChat, currentUser } = chatNavbarProps;
+  const { selectedChat, setSelectedChat, currentUser } = chatNavbarProps;
+  const { dispatch } = useDisplayChatContext();
 
   useEffect(() => {
     async function fetchChats() {
@@ -30,17 +32,40 @@ export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
   }, [setChats, currentUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClickPersonal = (userField: UserField) => {
-    setSelectedChat({ selected: userField, chatType: "Personal" });
+    if (selectedChat && selectedChat.chatType === "Personal" && selectedChat.selected.email === userField.email) {
+      setSelectedChat(null);
+      dispatch({ type: "CLEAR_MESSAGE" })
+    }
+    else
+      setSelectedChat({ selected: userField, chatType: "Personal" });
   };
   const handleClickGroup = (groupField: Group) => {
-    setSelectedChat({ selected: groupField, chatType: "Group" });
+    if (selectedChat && selectedChat.chatType === "Group" && selectedChat.selected._id === groupField._id) {
+      setSelectedChat(null);
+      dispatch({ type: "CLEAR_MESSAGE" })
+
+    }
+    else
+      setSelectedChat({ selected: groupField, chatType: "Group" });
   };
   const handleClickAll = (field: (Group | UserField)) => {
     if ("users" in field) {
-      setSelectedChat({ selected: field, chatType: "Group" });
+      if (selectedChat && selectedChat.selected._id === field._id) {
+        setSelectedChat(null);
+        dispatch({ type: "CLEAR_MESSAGE" })
+
+      }
+      else
+        setSelectedChat({ selected: field, chatType: "Group" });
     }
     else {
-      setSelectedChat({ selected: field, chatType: "Personal" });
+      if (selectedChat && selectedChat.selected._id === field._id) {
+        setSelectedChat(null);
+        dispatch({ type: "CLEAR_MESSAGE" })
+
+      }
+      else
+        setSelectedChat({ selected: field, chatType: "Personal" });
     }
   }
 
