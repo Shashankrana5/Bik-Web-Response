@@ -1,5 +1,5 @@
 import { Server as HTTPServer } from "http";
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 const socketio = require("socket.io")
 
 export class ChatServerSocket {
@@ -11,17 +11,10 @@ export class ChatServerSocket {
     constructor(chatServer: HTTPServer){
         this.users = {};
         this.activeUsers = {};
-        // this.io = new Server(server, {
-        //     serveClient: false,
-        //     pingInterval: 10000,
-        //     pingTimeout: 5000,
-        //     cookie: false,
-        //     cors: {
-        //         origin: "http://localhost:1912"
-        //     }
+
         this.io = new Server(chatServer, {
             cors:{
-                origin: "http://localhost:1912", 
+                origin: `http://localhost:${process.env.CLIENT_PORT}`, 
                 methods: ["GET", "POST"]
             },
           })
@@ -31,12 +24,6 @@ export class ChatServerSocket {
     }
 
     startListeners(io: Server) {
-        // io.on("connection", (socket) => {
-        //     // console.log(`${socket.id} ${socket.handshake.query.currentUser.email}`)
-        //     console.log(socket.handshake.query)
-        // })
-
-
         
         io.of("/personalchat").on("connection", socket => {
 
@@ -67,41 +54,26 @@ export class ChatServerSocket {
         })
 
         io.of("/groupchat").on("connection", socket => {
-        //     // console.log(socket.handshake.query.currentUser)
-
-            const user = JSON.parse(socket.handshake.query.currentUser as string);
 
             socket.on("join-groupchat", groupId => {
                 socket.join(groupId);
             })
             socket.on("send-groupchat-message", data => {
-                console.log(data);
                 socket.to(data.groupId).emit("receive-groupchat-message", data);
             })
-            // console.log(`Group chat ${socket.id} ${user.email}`)
+        })
+
+        io.of("/ticketchat").on("connection", socket => {
+
+            socket.on("join-ticket", data => {
+                socket.join(data);
+            })
+        
+            socket.on("send-ticket-message", data =>{
+                socket.to(data.ticketNumber).emit("receive-ticket-message", data)
+            })
         })
 
     }
-     
-    // startListeners = (socket: Socket) => {
 
-    //     socket.on("connection", () => {
-    //         console.log(`${socket.id} has connected`)
-    //     })
-    //     socket.on("diconnect", () => {
-    //         console.log(`${socket.id} has disconnected`)
-    //     })
-    //     console.log(socket.id)
-        
-    // }
-    // StartListeners = (socket: Socket) => {
-    //     console.info("mesage received from " + socket.id);
-
-    //     socket.on("handshake", () => {
-    //         console.info("handshake received"); 
-    //     })
-    //     socket.on("disconnect", () => {
-    //         console.info("a user has disconnected");
-    //     })
-    // }
 }

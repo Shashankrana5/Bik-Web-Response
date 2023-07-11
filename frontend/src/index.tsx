@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { DisplayChatContextProvider } from './contexts/DisplayChatContext';
 
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

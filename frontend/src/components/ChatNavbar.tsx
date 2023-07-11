@@ -22,7 +22,6 @@ export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
       if(currentUser){
       const response = await axios.get(
         `http://localhost:1913/api/message/getchatsbyemail/${currentUser.email}`
-
       );
       setChats(response.data);}
     }

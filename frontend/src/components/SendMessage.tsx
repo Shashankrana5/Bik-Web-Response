@@ -19,11 +19,11 @@ const SendMessage = (props: SendMessageProps) => {
   useEffect(() => {
     if (currentUser) {
       setPersonalChatSocket(
-        io("http://localhost:1914/personalchat", {
+        io(`http://localhost:1914/personalchat`, {
           query: { currentUser: JSON.stringify(currentUser) },
         })
       );
-      setGroupChatSocket(io("http://localhost:1914/groupchat", {
+      setGroupChatSocket(io(`http://localhost:1914/groupchat`, {
         query: { currentUser: JSON.stringify(currentUser) },
       }));
     }
@@ -36,7 +36,7 @@ const SendMessage = (props: SendMessageProps) => {
         dispatch({ type: "CREATE_MESSAGE", payload: data });
       });
     }
-// eslint-disable-next-line
+
   }, [personalChatSocket]);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const SendMessage = (props: SendMessageProps) => {
     //@ts-ignore
     if (e.target.sendMessageInput.value.length !== 0 && selectedChat !== null) {
       const response = await axios.post(
-        "http://localhost:1913/api/message/sendmessage",
+        `http://localhost:1913/api/message/sendmessage`,
         {
           selectedChat,
           currentUser,
