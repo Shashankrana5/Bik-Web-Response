@@ -1,0 +1,81 @@
+/* #transform-button {
+  color: #ecf0f1;
+  background: #e74c3c;
+  width: 50px;
+  height: 50px;
+  border: 0;
+  font-size: 1.5em;
+  position: relative;
+} */
+
+/* button {
+  padding: 1rem;
+  border: none;
+  background-color: white;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+input{
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+h2{
+  margin: 0;
+}
+
+#navbar-main {
+  background-color: orange;
+  color: white;
+
+}
+
+#sidebar-main {
+  background-color: lavender;
+  color: black;
+}
+
+#chat-navbar {
+  border: 2px solid pink;
+}
+
+.chat-button-indivisual{
+  padding: 0;
+  margin: 0;
+  width:40%
+} */
+
+#transform-button #transform-button-stick {
+    position: absolute;
+    transition: 300ms;
+    background: gray;
+    border-radius: 2px;
+  }
+  
+  #transform-button #transform-button-stick:first-child {
+    top: 25%;
+    bottom: 25%;
+    width: 10%;
+    left: 45%;
+  }
+  
+  #transform-button #transform-button-stick:last-child {
+    left: 25%;
+    right: 25%;
+    height: 10%;
+    top: 45%;
+  }
+  
+  #ticket-creation-division:hover #transform-button-stick {
+    transform: rotate(90deg);
+  }
+  
+  #ticket-creation-division:hover #transform-button-stick:last-child {
+    left: 50%;
+    right: 50%;
+  }
+  
+  #ticket-creation-division:hover #transform-button-stick{
+    background:white;
+  }

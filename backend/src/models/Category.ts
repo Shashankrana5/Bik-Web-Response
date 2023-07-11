@@ -1,10 +1,13 @@
-const categorySchema = new mongoose.Schema({
+import mongoose, {Schema} from "mongoose";
+import { GroupType } from "../utils/ChatType/ChatType";
 
-    category:{
+const groupSchema = new Schema({
+    category: {
         type: String,
         require: true,
         unique: true
     }
-})
+}, {timestamps: true});
 
-module.exports = mongoose.model("Category", categorySchema);
+const Category =  mongoose.model("Category", groupSchema);
+export default Category;

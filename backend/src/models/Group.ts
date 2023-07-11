@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose, {Schema} from "mongoose";
+import { GroupType } from "../utils/ChatType/ChatType";
 
-const groupSchema = new mongoose.Schema({
+const groupSchema = new Schema({
     users: {
         type: Object,
         require: true
@@ -9,13 +10,11 @@ const groupSchema = new mongoose.Schema({
         type: Object,
         require: true
     },
-
-    groupName:{
+    groupName: {
         type: String,
         require: false
     }
+}, {timestamps: true});
 
-})
-
-
-module.exports = mongoose.model("Group", groupSchema);
+const Group =  mongoose.model<GroupType>("Group", groupSchema);
+export default Group;
