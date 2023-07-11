@@ -40,8 +40,6 @@ export async function createSessionHandler(req: Request, res: Response) {
 }
 
 // get the session session
-
-// log out handler
 export async function getSessionHandler(req: Request, res: Response) {
   //@ts-ignore
   const user = await User.findOne({ email: req.user.email });
@@ -49,6 +47,7 @@ export async function getSessionHandler(req: Request, res: Response) {
   return res.send({ session: req.user, user });
 }
 
+//logout
 export function deleteSessionHandler(req: Request, res: Response) {
   res.cookie("accessToken", "", {
     maxAge: 0,

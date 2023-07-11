@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Message from "../models/Message";
 import User from "../models/User";
 import Group from "../models/Group";
-import { ChatResponse, GroupType, UserType } from "../utils/ChatType/ChatType";
+import { ChatResponse, GroupType } from "../utils/ChatType/ChatType";
 
 export async function sendMessage(req: Request, res: Response) {
   const { selectedChat, currentUser, content } = req.body;
@@ -22,6 +22,11 @@ export async function sendMessage(req: Request, res: Response) {
         senderEmail: senderUser.email,
         content,
       });
+
+      await Group.findOneAndUpdate({ _id: selectedChat.selected._id },
+        { $push: { messages: message } }
+      )
+
       return res.status(200).json(message);
     } else if (selectedChat.chatType === "Personal") {
       const message = await Message.create({
@@ -37,73 +42,96 @@ export async function sendMessage(req: Request, res: Response) {
       throw Error("Invalid message type");
     }
   } catch (error) {
-    //@ts-ignore
-    return res.status(400).json({ errorMessage: error.message });
+
+    return res.status(400).json({ errorMessage: error });
   }
 }
 
 export async function getChatsByEmail(req: Request, res: Response) {
   const { email } = req.params;
+
   try {
-    const response = await Message.find({
-      $or: [{ senderEmail: email }, { receiverEmail: email }],
-    }).sort({ updatedAt: -1 });
-    const groupMember = await Group.find({ "users.email": email });
 
-    const chats: ChatResponse = { Personal: [], Group: [], User: {} };
     const personalChatSet = new Set();
-    const groupChatSet = new Set();
 
-    for (const message in response) {
-      if (
-        response[message]["messageType"] === "group" &&
-        !groupChatSet.has(response[message]["groupId"])
-      ) {
-        groupChatSet.add(response[message]["groupId"]);
-        const group: GroupType | null = await Group.findById(
-          response[message]["groupId"]
-        );
+    const personalResponse = await Message.find({
+      messageType: "personal",
+      $or: [{ senderEmail: email }, { receiverEmail: email }]
+    }).sort({ updatedAt: -1 });
+    const groupResponse = await Group.find({ "users.email": email }).sort({ updatedAt: -1 });
+    const chats: ChatResponse = { Personal: [], Group: [], AllChats: [], User: {} };
 
-        if (group) {
-          chats.Group.push(group);
+    for (const personalMessage of personalResponse) {
+      if (email !== personalMessage["receiverEmail"] && !personalChatSet.has(personalMessage["receiverEmail"])) {
+        personalChatSet.add(personalMessage["receiverEmail"]);
+        const user = await User.findOne({ email: personalMessage["receiverEmail"] });
+        chats.Personal.push(user!);
+      }
+      else if (email !== personalMessage["senderEmail"] && !personalChatSet.has(personalMessage["senderEmail"])) {
+        personalChatSet.add(personalMessage["senderEmail"]);
+        const user = await User.findOne({ email: personalMessage["senderEmail"] });
+        chats.Personal.push(user!);
+      }
+
+    }
+    chats.Group = groupResponse;
+
+    const currentUser = await User.findOne({ email });
+    if (currentUser)
+      chats.User = currentUser;
+
+    let ptr1 = 0;
+    let ptr2 = 0;
+    let allChats = new Array();
+    const allChatPersonal = new Set();
+
+    while (ptr1 < personalResponse.length && ptr2 < groupResponse.length) {
+      //@ts-ignore
+      if (personalResponse[ptr1].updatedAt > groupResponse[ptr2].updatedAt) {
+
+        if (email !== personalResponse[ptr1]["receiverEmail"] && !allChatPersonal.has(personalResponse[ptr1]["receiverEmail"])) {
+          allChatPersonal.add(personalResponse[ptr1]["receiverEmail"]);
+          const user = await User.findOne({ email: personalResponse[ptr1]["receiverEmail"] });
+          allChats.push(user!);
         }
-      } else if (response[message]["messageType"] === "personal") {
-        if (
-          email !== response[message]["receiverEmail"] &&
-          !personalChatSet.has(response[message]["receiverEmail"])
-        ) {
-          personalChatSet.add(response[message]["receiverEmail"]);
-          const userChatted: UserType | null = await User.findOne({
-            email: response[message]["receiverEmail"],
-          });
-          if (userChatted) chats.Personal.push(userChatted);
-        } else if (
-          email !== response[message]["senderEmail"] &&
-          !personalChatSet.has(response[message]["senderEmail"])
-        ) {
-          personalChatSet.add(response[message]["senderEmail"]);
-          const userChatted: UserType | null = await User.findOne({
-            email: response[message]["senderEmail"],
-          });
-          if (userChatted) chats.Personal.push(userChatted);
+        else if (email !== personalResponse[ptr1]["senderEmail"] && !allChatPersonal.has(personalResponse[ptr1]["senderEmail"])) {
+          allChatPersonal.add(personalResponse[ptr1]["senderEmail"]);
+          const user = await User.findOne({ email: personalResponse[ptr1]["senderEmail"] });
+          allChats.push(user!);
         }
+
+        ptr1++;
+      } else {
+        allChats.push(groupResponse[ptr2])
+        ptr2++;
       }
     }
 
-    for (const group in groupMember) {
-      if (!groupChatSet.has(groupMember[group]._id.toString())) {
-        groupChatSet.add(groupMember[group]._id.toString());
-        chats.Group.push(groupMember[group]);
+    while (ptr1 < personalResponse.length) {
+      if (email !== personalResponse[ptr1]["receiverEmail"] && !allChatPersonal.has(personalResponse[ptr1]["receiverEmail"])) {
+        allChatPersonal.add(personalResponse[ptr1]["receiverEmail"]);
+        const user = await User.findOne({ email: personalResponse[ptr1]["receiverEmail"] });
+        allChats.push(user!);
       }
+      else if (email !== personalResponse[ptr1]["senderEmail"] && !allChatPersonal.has(personalResponse[ptr1]["senderEmail"])) {
+        allChatPersonal.add(personalResponse[ptr1]["senderEmail"]);
+        const user = await User.findOne({ email: personalResponse[ptr1]["senderEmail"] });
+        allChats.push(user!);
+      }
+
+      ptr1++;
     }
 
-    const currentUser: UserType | null = await User.findOne({ email });
-    if (currentUser) chats.User = currentUser;
+    while (ptr2 < groupResponse.length) {
+      allChats.push(groupResponse[ptr2])
+      ptr2++;
+    }
 
-    return res.status(200).json(chats);
-  } catch (err) {
-    //@ts-ignore
-    return res.status(400).json({ message: err.message });
+    chats.AllChats = allChats
+
+    return res.status(200).json(chats)
+  } catch (error) {
+    return res.status(400).json({ errroMessage: error });
   }
 }
 
@@ -119,8 +147,8 @@ export const getMessagesByEmails = async (req: Request, res: Response) => {
     }).sort({ updatedAt: 1 });
     return res.status(200).json(response);
   } catch (error) {
-    //@ts-ignore
-    return res.status(400).json({ error: error.message });
+
+    return res.status(400).json({ error: error });
   }
 };
 
@@ -144,7 +172,6 @@ export async function getGroupMessage(req: Request, res: Response) {
 
     throw Error("Invalid group or user not a member of the group.");
   } catch (error) {
-    //@ts-ignore
-    return res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error });
   }
 }

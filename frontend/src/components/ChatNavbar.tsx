@@ -19,11 +19,12 @@ export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
   useEffect(() => {
     async function fetchChats() {
 
-      if(currentUser){
-      const response = await axios.get(
-        `http://localhost:1913/api/message/getchatsbyemail/${currentUser.email}`
-      );
-      setChats(response.data);}
+      if (currentUser) {
+        const response = await axios.get(
+          `http://localhost:1913/api/message/getchatsbyemail/${currentUser.email}`
+        );
+        setChats(response.data);
+      }
     }
     fetchChats();
   }, [setChats, currentUser]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -34,18 +35,27 @@ export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
   const handleClickGroup = (groupField: Group) => {
     setSelectedChat({ selected: groupField, chatType: "Group" });
   };
+  const handleClickAll = (field: (Group | UserField)) => {
+    if ("users" in field) {
+      setSelectedChat({ selected: field, chatType: "Group" });
+    }
+    else {
+      setSelectedChat({ selected: field, chatType: "Personal" });
+    }
+  }
 
   return (
     <div id="chat-navbar">
+
       Chats(from the navbar):
       {chats &&
         Object.keys(chats["Personal"]).map((key: string) => (
           <button
             key={key}
-            onClick={() => handleClickPersonal(chats["Personal"][key])}
+            onClick={() => handleClickPersonal(chats["Personal"][Number(key)])}
             className="chat-button-indivisual"
           >
-            {chats["Personal"][key]["fullName"]}
+            {chats["Personal"][Number(key)]["fullName"]}
           </button>
         ))}
       <div>groups:</div>
@@ -53,12 +63,27 @@ export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
         Object.keys(chats["Group"]).map((key) => (
           <button
             className="chat-button-indivisual"
-            onClick={() => handleClickGroup(chats["Group"][key])}
-            key={chats["Group"][key]["_id"]}
+            onClick={() => handleClickGroup(chats["Group"][Number(key)])}
+            key={chats["Group"][Number(key)]["_id"]}
           >
-            {chats["Group"][key]["groupName"]}
+            {chats["Group"][Number(key)]["groupName"]}
           </button>
         ))}
+      <div>All:</div>
+      {chats && Object.keys(chats["AllChats"]).map((key) =>
+        <button
+          className="chat-button-indivisual"
+          onClick={() => handleClickAll(chats["AllChats"][Number(key)])}
+          key={chats["AllChats"][Number(key)]._id}
+        >
+          {"groupName" in chats["AllChats"][Number(key)] ?
+            /*@ts-ignore */
+            chats["AllChats"][Number(key)].groupName :
+            /*@ts-ignore */
+            chats["AllChats"][Number(key)].fullName}
+        </button>
+
+      )}
     </div>
   );
 };

@@ -36,7 +36,7 @@ const SendMessage = (props: SendMessageProps) => {
         dispatch({ type: "CREATE_MESSAGE", payload: data });
       });
     }
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personalChatSocket]);
 
   useEffect(() => {

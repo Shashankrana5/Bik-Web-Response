@@ -8,8 +8,7 @@ export async function addUser(req: Request, res: Response) {
     const user = await User.create({ fullName, email, password });
     return res.status(200).json(user);
   } catch (error) {
-    //@ts-ignore
-    return res.status(400).json({ message: error.message });
+    return res.status(400).json({ message: error });
   }
 }
 
@@ -20,8 +19,7 @@ export async function getUserById(req: Request, res: Response) {
     const user = await User.findById(id);
     return res.status(200).json(user);
   } catch (error) {
-    //@ts-ignore
-    return res.status(400).json({ message: error.message });
+    return res.status(400).json({ message: error });
   }
 }
 
@@ -32,8 +30,7 @@ export async function getUserByEmail(req: Request, res: Response) {
     const user = await User.findOne({ email });
     return res.status(200).json(user);
   } catch (error) {
-    //@ts-ignore
-    return res.status(400).json({ message: error.message });
+    return res.status(400).json({ message: error });
   }
 }
 

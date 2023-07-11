@@ -2,9 +2,10 @@ import { Group } from "./GroupChatTypes";
 import { UserField } from './UserTypes';
 
 export interface Chat {
-    Group: {[id: string]: Group};
-    Personal: {[email: string]: UserField};
+    Group: Group[];
+    Personal: UserField[]; 
     User: UserField;
+    AllChats: (Group | UserField)[];
 }
 
 export type SelectedChat = selectedGroupChat | selectedPersonalChat;
