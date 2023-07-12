@@ -1,0 +1,66 @@
+import axios from "axios";
+import { useEffect } from "react";
+import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
+import { SelectedChat } from "../utils/ChatTypes/ChatType";
+import { User } from '../utils/ChatTypes/UserTypes';
+import { DisplayMessageNavbar } from "./DisplayMessageNavbar";
+
+interface DisplayChatProps {
+    selectedChat: SelectedChat | null;
+    currentUser: User;
+    setSelectedChat: React.Dispatch<React.SetStateAction<SelectedChat | null>>;
+}
+
+export function DisplayMessage(displayChatProps: DisplayChatProps) {
+    const { messages, dispatch } = useDisplayChatContext();
+    const { currentUser, selectedChat, setSelectedChat } = displayChatProps;
+
+    useEffect(() => {
+
+        async function fetchChats() {
+
+            if (selectedChat?.chatType === "Personal") {
+                const personalMessage = await axios.get(`http://localhost:1913/api/message/getmessagebyemails/${currentUser?.email}/to/${selectedChat.selected.email}`);
+                const pass = { messages: personalMessage.data, chatType: "Personal", currentUser: currentUser?.email };
+
+                dispatch({ type: "SET_MESSAGE", payload: pass });
+            }
+
+
+            else if (selectedChat?.chatType === "Group") {
+                const groupMessage = await axios.get(`http://localhost:1913/api/message/getgroupmessage/${selectedChat?.selected._id}/user/${currentUser?.email}`);
+                const paramsToPass = { messages: groupMessage.data, chatType: "Group", currentUser: currentUser?.email };
+
+                dispatch({ type: "SET_MESSAGE", payload: paramsToPass });
+            }
+
+        }
+        fetchChats();
+    }, [selectedChat]); // eslint-disable-line react-hooks/exhaustive-deps
+
+
+    return (
+
+        <div id="displaychat" className="flex justify-center">
+            <div className="">
+                <DisplayMessageNavbar currentUser={currentUser} selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
+                <div className="display-chat-container max-w-lg max-h-64 overflow-y-auto flex flex-col-reverse border-2 border-yellow-700 ">
+                    {messages && [...messages].reverse().map(chat => {
+                        return (currentUser.email === chat.senderEmail) ?
+                            <div className="flex flex-row-reverse">
+                                <div>
+                                    <p className="bg-orange-200 border-2 border-orange-200 rounded-md">{chat.content}</p>
+                                </div>
+                            </div>
+                            : (<div className="flex">
+                                <div>
+                                    <p className="bg-gray-200 border-2 border-gray-200 rounded-md">{chat.content}</p>
+                                </div>
+                            </div>);
+                    }
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}

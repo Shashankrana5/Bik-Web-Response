@@ -1,64 +1,77 @@
+import { useEffect, useState } from "react"
+import { UserField } from "../utils/ChatTypes/UserTypes"
+import { Chat, SelectedChat } from "../utils/ChatTypes/ChatType";
 import axios from "axios";
-import { useEffect } from "react";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
-import { SelectedChat } from "../utils/ChatTypes/ChatType";
-import { User } from '../utils/ChatTypes/UserTypes';
+import { Group } from "../utils/ChatTypes/GroupChatTypes";
 
-interface DisplayChatProps{
+interface DisplayChatProps {
+    currentUser: UserField;
     selectedChat: SelectedChat | null;
-    currentUser: User;
+    setSelectedChat: React.Dispatch<React.SetStateAction<SelectedChat | null>>;
 }
 
-export const DisplayChat = (displayChatProps: DisplayChatProps) => {
-    const {messages, dispatch} = useDisplayChatContext();
-    const { currentUser, selectedChat } = displayChatProps;
+export const DisplayChat = (props: DisplayChatProps) => {
+
+    const { currentUser, selectedChat, setSelectedChat } = props;
+    const [chats, setChats] = useState<Chat | null>(null);
+    const { dispatch } = useDisplayChatContext();
 
     useEffect(() => {
-
-        async function fetchChats () {
-
-            if (selectedChat?.chatType === "Personal"){
-                const personalMessage = await axios.get(`http://localhost:1913/api/message/getmessagebyemails/${currentUser?.email}/to/${selectedChat.selected.email}`)
-                const pass = {messages: personalMessage.data, chatType: "Personal", currentUser: currentUser?.email};
-
-                dispatch({type: "SET_MESSAGE", payload: pass})
+        async function fetchAllChats() {
+    
+            if (currentUser) {
+                const response = await axios.get(
+                    `http://localhost:1913/api/message/getchatsbyemail/${currentUser.email}`
+                );
+                setChats(response.data);
+                console.log(response.data);
             }
-        
-
-            else if (selectedChat?.chatType === "Group"){
-                const groupMessage = await axios.get(`http://localhost:1913/api/message/getgroupmessage/${selectedChat?.selected._id}/user/${currentUser?.email}`)
-                const paramsToPass = {messages: groupMessage.data, chatType: "Group", currentUser: currentUser?.email};
-
-                dispatch({type: "SET_MESSAGE", payload: paramsToPass})
-            }
-
         }
-        fetchChats();
-    }, [selectedChat]) // eslint-disable-line react-hooks/exhaustive-deps
+        fetchAllChats();
+    }, [currentUser])
 
-    useEffect(() => {
-        // console.log(messages);
-    }, [messages])
+    const handleClickAll = (field: (Group | UserField)) => {
+        if ("users" in field) {
+            if (selectedChat && selectedChat.selected._id === field._id) {
+                setSelectedChat(null);
+                dispatch({ type: "CLEAR_MESSAGE" })
 
-    return(
-
-        <div id="displaychat border-2 border-yellow-700">
-            <div className="flex display-chat-container max-h-64 overflow-y-auto flex-col-reverse">
-            {messages && messages.map(chat => 
-                {return (currentUser.email === chat.senderEmail) ? 
-                    <div className="flex flex-row-reverse">
-                        <div>
-                            <p className="bg-orange-200 border-2 border-orange-200 rounded-md">{chat.content}</p>
-                        </div>
-                    </div>
-                :   (<div className="flex">
-                            <div>
-                                <p className="bg-gray-200 border-2 border-gray-200 rounded-md">{chat.content}</p>
-                            </div>
-                        </div>)
             }
+            else
+                setSelectedChat({ selected: field, chatType: "Group" });
+        }
+        else {
+            if (selectedChat && selectedChat.selected._id === field._id) {
+                setSelectedChat(null);
+                dispatch({ type: "CLEAR_MESSAGE" })
+
+            }
+            else
+                setSelectedChat({ selected: field, chatType: "Personal" });
+        }
+    }
+
+
+
+    return (
+        <div>
+            a
+            {chats && Object.keys(chats["AllChats"]).map((key) =>
+                <button
+                    className="chat-button-indivisual"
+                    onClick={() => handleClickAll(chats["AllChats"][Number(key)])}
+                    key={chats["AllChats"][Number(key)]._id}
+                >
+                    {"groupName" in chats["AllChats"][Number(key)] ?
+                        /*@ts-ignore */
+                        chats["AllChats"][Number(key)].groupName :
+                        /*@ts-ignore */
+                        chats["AllChats"][Number(key)].fullName}
+                </button>
+
             )}
-            </div>
+
         </div>
     )
-};
+}

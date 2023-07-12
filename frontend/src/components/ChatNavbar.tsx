@@ -70,7 +70,7 @@ export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
   }
 
   return (
-    <div id="chat-navbar">
+    <div id="chat-navbar" className="sm:hidden md:block w-[100%]">
 
       Chats(from the navbar):
       {chats &&
