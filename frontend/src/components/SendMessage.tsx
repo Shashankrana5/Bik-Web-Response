@@ -86,10 +86,10 @@ const SendMessage = (props: SendMessageProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="border border-blue-200" >
       <input id="sendMessageInput" placeholder="Send message" />
       <button id="sendMessageButton" type="submit">
-        Send Message
+        Send
       </button>
     </form>
   );

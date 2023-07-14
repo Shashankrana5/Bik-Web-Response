@@ -4,7 +4,7 @@ import { Chat, SelectedChat } from "../utils/ChatTypes/ChatType";
 import { UserField } from "../utils/ChatTypes/UserTypes";
 import { Group } from "../utils/ChatTypes/GroupChatTypes";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
-
+import "../css/userActive.css"
 export type ChatNavbarProps = {
   selectedChat: SelectedChat | null;
   setSelectedChat: React.Dispatch<React.SetStateAction<SelectedChat | null>>;
@@ -70,7 +70,8 @@ export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
   }
 
   return (
-    <div id="chat-navbar" className="sm:hidden md:block w-[100%]">
+    // <div id="chat-navbar" className="sm:hidden md:block w-[100%]">
+    <div id="chat-navbar" className="hidden">
 
       Chats(from the navbar):
       {chats &&

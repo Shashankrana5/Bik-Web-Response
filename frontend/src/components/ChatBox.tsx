@@ -18,10 +18,10 @@ const ChatBox = (props: ChatBoxProps) => {
   const { currentUser } = props;
 
   return (
-    <div className="chatbox-main border-2 border-pink-400 max-w-4xl">
-        <ChatNabar  currentUser = {currentUser!} selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
+    <div className="chatbox-main border-2 border-pink-400 max-w-4xl w-[35vw]">
+        <ChatNabar currentUser = {currentUser!} selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
         
-        <div id="display-container">
+        <div id="display-container" className="h-[100%]">
 
           {(selectedChat !== null) ? 
           (<DisplayMessage  selectedChat = {selectedChat} currentUser = {currentUser} setSelectedChat ={setSelectedChat}/>) :

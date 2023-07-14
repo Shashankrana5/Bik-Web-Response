@@ -37,22 +37,20 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
         }
         fetchChats();
     }, [selectedChat]); // eslint-disable-line react-hooks/exhaustive-deps
-
-
     return (
 
-        <div id="displaychat" className="flex justify-center">
+        <div id="displaymessage" className="flex justify-center max-h-64">
             <div className="">
                 <DisplayMessageNavbar currentUser={currentUser} selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
-                <div className="display-chat-container max-w-lg max-h-64 overflow-y-auto flex flex-col-reverse border-2 border-yellow-700 ">
+                <div className="display-message-container max-w-lg max-h-[100%] overflow-y-auto flex flex-col-reverse border-2 border-yellow-700 ">
                     {messages && [...messages].reverse().map(chat => {
                         return (currentUser.email === chat.senderEmail) ?
-                            <div className="flex flex-row-reverse">
+                            <div className="flex flex-row-reverse" key = {chat._id}>
                                 <div>
                                     <p className="bg-orange-200 border-2 border-orange-200 rounded-md">{chat.content}</p>
                                 </div>
                             </div>
-                            : (<div className="flex">
+                            : (<div className="flex" key = {chat._id}>
                                 <div>
                                     <p className="bg-gray-200 border-2 border-gray-200 rounded-md">{chat.content}</p>
                                 </div>

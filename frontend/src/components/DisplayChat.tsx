@@ -25,7 +25,6 @@ export const DisplayChat = (props: DisplayChatProps) => {
                     `http://localhost:1913/api/message/getchatsbyemail/${currentUser.email}`
                 );
                 setChats(response.data);
-                console.log(response.data);
             }
         }
         fetchAllChats();
@@ -52,16 +51,20 @@ export const DisplayChat = (props: DisplayChatProps) => {
         }
     }
 
-
-
     return (
-        <div>
-            a
+        <div id="display-chat-main" className="w-[100%] h-[100%] flex flex-col items-center gap-1">
+            
             {chats && Object.keys(chats["AllChats"]).map((key) =>
+
+            <div className ="border flex border-gray-300 w-[75%] h-[10%] rounded-lg relative" key={chats["AllChats"][Number(key)]._id}>
+                <div className="profile-picture-status-container h-[100%] maxh-h-[100%]">
+                    <img alt = "" className="profile-picture-img h-[100%]" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAf9JREFUaEPtmP0xRTEQxc+rgBKoABWgAqMCVIAOqIAO0AEVoAJUQAlUwByTO/Pwkmx2D5k77s7cP95Mknd+2Y8kO8PIbTZy/ZgAenvwNzywBWAPwHr6yPiYvisAd0poJQAFnwEgQMkIcJyAwiwqAIq/BbBsVPQKYFsBoQBoFT8wSiAUANz5WtjkHMNwoifcFgWgcAJEjADuxI4CXKaKEwFgZdr3LhAFeJgrlV4NLLEb3slRgHfvH3+b59bhnpgEjB6A7l8LeuEpEoZRD4w+iUdfRhk9rOGbzjC6DxyCn38ZDSGuwasEIZYaId6SeOaR2xQAHgiJeJUHht2jJ84N4cSwOVLcRNUAAwgTm1cDAg0llqWSocKq5b73LIozVQi5Yzg6cQKI7mB0/r/3ABN1J9Vzvof522JMaD4pmdA3kYrk9QDbJicAVixqDWNeUqfi2jD2y5BWAAq+iB7/BZH0yAEAApmsBcDbfTAJmRvU1K2wAlA8n49/aXxmVu9JFgCGDcVbm1YqSHqCEMVwsgBE+j5RmGrfqAbAOw2TtqftAshWpxrAs7BUejeBIbSam1wC6JG4OZ3ZhC4B8G5/6N028bzTdHD+WLYEEHnrivUj+3YuASjahiqQbPuxBKDquqkgFmqdAFTba1in2QOGNfsPqR1k/RVWFEwAvV00eaC3Bz4ALkdQMYEpwEIAAAAASUVORK5CYII="/> 
+                    <div className="status-circle active"></div>
+                </div>
                 <button
                     className="chat-button-indivisual"
                     onClick={() => handleClickAll(chats["AllChats"][Number(key)])}
-                    key={chats["AllChats"][Number(key)]._id}
+                    
                 >
                     {"groupName" in chats["AllChats"][Number(key)] ?
                         /*@ts-ignore */
@@ -69,7 +72,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
                         /*@ts-ignore */
                         chats["AllChats"][Number(key)].fullName}
                 </button>
-
+            </div>
             )}
 
         </div>
