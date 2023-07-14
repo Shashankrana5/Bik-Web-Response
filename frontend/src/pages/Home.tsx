@@ -10,6 +10,7 @@ const Home = () => {
 
     const [currentUser, setCurrentUser ] = useState<UserField>();
     const [minimizeSidebar, setMinimizeSidebar ] = useState<boolean>(false);
+    const [ showChat, setShowChat ] = useState<boolean>(false);
 
     useEffect(() => {
         const sessionCheck = async() => {
@@ -32,8 +33,8 @@ const Home = () => {
         {isLoading === true ? <>This should be a blank page when the person isn't authenticated.</>: 
 
       <div className="main-homepage-container flex h-screen w-screen">
-        <Sidebar 
-        minimizeSidebar={minimizeSidebar} 
+        <Sidebar currentUser = {currentUser!}
+        minimizeSidebar={minimizeSidebar} showChat = {showChat} setShowChat = {setShowChat}
         />
         <div className="nav-and-body bg-amber-50 flex-grow">
           <Navbar currentUser={currentUser!}
@@ -61,10 +62,10 @@ const Home = () => {
                       </button>
                     </div>
                   </div>
-                  <TicketCreationForm
+                  {/* <TicketCreationForm
                     // createTicket={createTicket}
                     // setCreateTicket={setCreateTicket}
-                  />
+                  /> */}
                 </div>
                 {/* <UserSearchBar /> */}
                 {/* <div className="show-tickets">

@@ -1,9 +1,21 @@
+import { UserField } from "../utils/ChatTypes/UserTypes";
+import ChatBox from "./ChatBox";
+import "../css/sidebar.css"
+
 interface SidebarProps {
     minimizeSidebar: boolean
+    showChat: boolean;
+    setShowChat: React.Dispatch<React.SetStateAction<boolean>>;
+    currentUser: UserField
 }
 export const Sidebar = (props: SidebarProps) => {
 
-    const { minimizeSidebar } = props;
+    const { minimizeSidebar, showChat, setShowChat, currentUser } = props;
+
+    const handleChatsOnClick = () => {
+        console.log("clicked");
+        setShowChat(prev => !prev);
+    }
     // return (
     //     <div id = "sidebar-main">
     //         <div>Bikweb response</div>
@@ -19,7 +31,6 @@ export const Sidebar = (props: SidebarProps) => {
     if (minimizeSidebar === true) {
         return (
             <div className="left-navigation-bar">
-
 
                 <div className="user-wrapper h-14 flex items-center">
                     <svg className="h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18 18.7023C18 15.6706 14.5 15 12 15C9.5 15 6 15.6706 6 18.7023M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9Z" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
@@ -68,10 +79,19 @@ export const Sidebar = (props: SidebarProps) => {
                         </div>
                         <div className="chat-left-navbar flex justify-start">
                             <svg className="h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 10H16.01M12 10H12.01M8 10H8.01M3 10C3 4.64706 5.11765 3 12 3C18.8824 3 21 4.64706 21 10C21 15.3529 18.8824 17 12 17C11.6592 17 11.3301 16.996 11.0124 16.9876L7 21V16.4939C4.0328 15.6692 3 13.7383 3 10Z" stroke="#ffae3d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
-                            <div className="chats-nav">
+                            <div className="chats-nav cursor-pointer relative" onClick={handleChatsOnClick}>
                                 Chats
                             </div>
+                            <div className="border left-[25%] absolute">
+                                <ChatBox currentUser = {currentUser!}/>
+                            </div>
+                            <div className="show-left-arrow right-[75%] absolute" />
+                            {/* <div className="triangle-left right-[75%] absolute">
+                                <div className="inner-triangle"></div>
+                            </div> */}
+
                         </div>
+                        
                         <div className="search-left-navbar flex justify-start">
                             <svg className="h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M4 11C4 7.13401 7.13401 4 11 4C14.866 4 18 7.13401 18 11C18 14.866 14.866 18 11 18C7.13401 18 4 14.866 4 11ZM11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C13.125 20 15.078 19.2635 16.6177 18.0319L20.2929 21.7071C20.6834 22.0976 21.3166 22.0976 21.7071 21.7071C22.0976 21.3166 22.0976 20.6834 21.7071 20.2929L18.0319 16.6177C19.2635 15.078 20 13.125 20 11C20 6.02944 15.9706 2 11 2Z" fill="#ffae3d"></path> </g></svg>
                             <div className="search-nav">
@@ -86,6 +106,7 @@ export const Sidebar = (props: SidebarProps) => {
                     </div>
                 </div>
             </div>
+
         );
     }
 }
