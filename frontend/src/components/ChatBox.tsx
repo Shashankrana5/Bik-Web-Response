@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChatNabar } from "./ChatNavbar";
+import { ChatNavbar } from "./ChatNavbar";
 import { DisplayMessage } from "./DisplayMessage";
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import SendMessage from "./SendMessage";
@@ -11,7 +11,7 @@ const ChatBox = () => {
 
   return (
     <div className="chatbox-main max-w-4xl w-[35vw]">
-        <ChatNabar selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
+        <ChatNavbar selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
         
         <div id="display-container" className="h-[100%]">
 

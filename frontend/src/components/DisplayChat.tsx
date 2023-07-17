@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import { UserField } from "../utils/ChatTypes/UserTypes"
-import { Chat, SelectedChat } from "../utils/ChatTypes/ChatType";
+import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import axios from "axios";
-import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
+import { useDisplayMessageContext } from "../hooks/useDisplayMessageContext";
 import { Group } from "../utils/ChatTypes/GroupChatTypes";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
+import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 
 interface DisplayChatProps {
     selectedChat: SelectedChat | null;
@@ -14,10 +15,10 @@ interface DisplayChatProps {
 export const DisplayChat = (props: DisplayChatProps) => {
 
     const {selectedChat, setSelectedChat } = props;
-    const [chats, setChats] = useState<Chat | null>(null);
-    const { dispatch } = useDisplayChatContext();
+    const { dispatch } = useDisplayMessageContext();
     const {currentUser} = useCurrentUserContext();
-    
+    const { chats, displayChatDispatch } = useDisplayChatContext();
+
     useEffect(() => {
         async function fetchAllChats() {
     
@@ -25,7 +26,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
                 const response = await axios.get(
                     `http://localhost:1913/api/message/getchatsbyemail/${currentUser.email}`
                 );
-                setChats(response.data);
+                displayChatDispatch({type:"SET_CHAT", payload:response.data})
             }
         }
         fetchAllChats();

@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { DisplayChatContext } from "../contexts/DisplayChatContext"
+import { DisplayChatContext } from "../contexts/DisplayChatContext";
 
 export const useDisplayChatContext = () => {
 

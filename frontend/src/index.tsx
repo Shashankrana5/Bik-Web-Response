@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import { DisplayMessageContextProvider } from './contexts/DisplayMessageContext';
 import { DisplayChatContextProvider } from './contexts/DisplayChatContext';
 // import { CurrentUserContextProvider } from './contexts/CurrentUserContext';
 
@@ -11,11 +12,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   // <React.StrictMode>
-  // <CurrentUserContextProvider>
+
     <DisplayChatContextProvider>
-      <App />
+      <DisplayMessageContextProvider>
+        <App />
+      </DisplayMessageContextProvider>
     </DisplayChatContextProvider>
-    // </CurrentUserContextProvider>
+    
   // </React.StrictMode>
   
 );

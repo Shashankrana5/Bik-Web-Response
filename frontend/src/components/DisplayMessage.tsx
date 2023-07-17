@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
+import { useDisplayMessageContext } from "../hooks/useDisplayMessageContext";
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import { DisplayMessageNavbar } from "./DisplayMessageNavbar";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
@@ -11,7 +11,7 @@ interface DisplayChatProps {
 }
 
 export function DisplayMessage(displayChatProps: DisplayChatProps) {
-    const { messages, dispatch } = useDisplayChatContext();
+    const { messages, dispatch } = useDisplayMessageContext();
     const { selectedChat, setSelectedChat } = displayChatProps;
     const {currentUser} = useCurrentUserContext();
 

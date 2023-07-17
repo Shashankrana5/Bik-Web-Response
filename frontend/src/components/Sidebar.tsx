@@ -75,10 +75,12 @@ export const Sidebar = (props: SidebarProps) => {
                                 Tickets
                             </div>
                         </div>
-                        <div id="chat-left-navbar" className="flex justify-start w-fit cursor-pointer" onClick={handleChatsOnClick}>
+                        <div id="chat-left-navbar" className="flex justify-start w-fit " >
+                            <div id="chat-left-navbar-content" className="cursor-pointer flex justify-start w-fit " onClick={handleChatsOnClick}>
                             <svg className="h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 10H16.01M12 10H12.01M8 10H8.01M3 10C3 4.64706 5.11765 3 12 3C18.8824 3 21 4.64706 21 10C21 15.3529 18.8824 17 12 17C11.6592 17 11.3301 16.996 11.0124 16.9876L7 21V16.4939C4.0328 15.6692 3 13.7383 3 10Z" stroke="#ffae3d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
                             <div className="chats-nav relative" >
                                 Chats
+                            </div>
                             </div>
                             {(showChat === true) &&
                                 <div id="chatbox-container" className="p-0">

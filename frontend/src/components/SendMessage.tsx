@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
+import { useDisplayMessageContext } from "../hooks/useDisplayMessageContext";
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import { io, Socket } from "socket.io-client";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ interface SendMessageProps {
 }
 
 const SendMessage = (props: SendMessageProps) => {
-  const { dispatch } = useDisplayChatContext();
+  const { dispatch } = useDisplayMessageContext();
   const {currentUser} = useCurrentUserContext();
   const { selectedChat } = props;
   const [personalChatSocket, setPersonalChatSocket] = useState<Socket>();
