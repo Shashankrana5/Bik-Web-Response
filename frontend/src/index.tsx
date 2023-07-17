@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { DisplayChatContextProvider } from './contexts/DisplayChatContext';
+// import { CurrentUserContextProvider } from './contexts/CurrentUserContext';
 
 
 const root = ReactDOM.createRoot(
@@ -10,10 +11,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   // <React.StrictMode>
+  // <CurrentUserContextProvider>
     <DisplayChatContextProvider>
       <App />
     </DisplayChatContextProvider>
+    // </CurrentUserContextProvider>
   // </React.StrictMode>
+  
 );
 
 // If you want to start measuring performance in your app, pass a function

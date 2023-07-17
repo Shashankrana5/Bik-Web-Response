@@ -1,18 +1,18 @@
 import axios from "axios";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
-import { User } from "../utils/ChatTypes/UserTypes";
 import { io, Socket } from "socket.io-client";
 import { useEffect, useState } from "react";
+import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 
 interface SendMessageProps {
   selectedChat: SelectedChat | null;
-  currentUser: User;
 }
 
 const SendMessage = (props: SendMessageProps) => {
   const { dispatch } = useDisplayChatContext();
-  const { selectedChat, currentUser } = props;
+  const {currentUser} = useCurrentUserContext();
+  const { selectedChat } = props;
   const [personalChatSocket, setPersonalChatSocket] = useState<Socket>();
   const [groupChatSocket, setGroupChatSocket] = useState<Socket>();
   

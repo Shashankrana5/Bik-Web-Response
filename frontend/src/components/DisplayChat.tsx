@@ -4,19 +4,20 @@ import { Chat, SelectedChat } from "../utils/ChatTypes/ChatType";
 import axios from "axios";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 import { Group } from "../utils/ChatTypes/GroupChatTypes";
+import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 
 interface DisplayChatProps {
-    currentUser: UserField;
     selectedChat: SelectedChat | null;
     setSelectedChat: React.Dispatch<React.SetStateAction<SelectedChat | null>>;
 }
 
 export const DisplayChat = (props: DisplayChatProps) => {
 
-    const { currentUser, selectedChat, setSelectedChat } = props;
+    const {selectedChat, setSelectedChat } = props;
     const [chats, setChats] = useState<Chat | null>(null);
     const { dispatch } = useDisplayChatContext();
-
+    const {currentUser} = useCurrentUserContext();
+    
     useEffect(() => {
         async function fetchAllChats() {
     

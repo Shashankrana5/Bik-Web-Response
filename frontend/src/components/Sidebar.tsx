@@ -1,4 +1,3 @@
-import { UserField } from "../utils/ChatTypes/UserTypes";
 import ChatBox from "./ChatBox";
 import "../css/sidebar.css"
 
@@ -6,11 +5,10 @@ interface SidebarProps {
     minimizeSidebar: boolean
     showChat: boolean;
     setShowChat: React.Dispatch<React.SetStateAction<boolean>>;
-    currentUser: UserField
 }
 export const Sidebar = (props: SidebarProps) => {
 
-    const { minimizeSidebar, showChat, setShowChat, currentUser } = props;
+    const { minimizeSidebar, setShowChat } = props;
 
     const handleChatsOnClick = () => {
         console.log("clicked");
@@ -83,7 +81,7 @@ export const Sidebar = (props: SidebarProps) => {
                                 Chats
                             </div>
                             <div className="border left-[25%] absolute">
-                                <ChatBox currentUser = {currentUser!}/>
+                                <ChatBox/>
                             </div>
                             <div className="show-left-arrow right-[75%] absolute" />
                             {/* <div className="triangle-left right-[75%] absolute">

@@ -5,18 +5,20 @@ import { UserField } from "../utils/ChatTypes/UserTypes";
 import { Group } from "../utils/ChatTypes/GroupChatTypes";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 import "../css/userActive.css"
+import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
+
 export type ChatNavbarProps = {
   selectedChat: SelectedChat | null;
   setSelectedChat: React.Dispatch<React.SetStateAction<SelectedChat | null>>;
-  currentUser: UserField;
 };
 
 export const ChatNabar = (chatNavbarProps: ChatNavbarProps) => {
   //TODO: create a chat dispatch which updates the chats in the chat list.
 
   const [chats, setChats] = useState<Chat | null>(null);
-  const { selectedChat, setSelectedChat, currentUser } = chatNavbarProps;
+  const { selectedChat, setSelectedChat } = chatNavbarProps;
   const { dispatch } = useDisplayChatContext();
+  const {currentUser} = useCurrentUserContext();
 
   useEffect(() => {
     async function fetchChats() {

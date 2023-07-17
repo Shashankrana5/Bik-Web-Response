@@ -2,13 +2,13 @@ import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { getSessionData } from "../utils/getSessionData";
 import Sidebar from "../components/Sidebar";
-import { UserField } from "../utils/ChatTypes/UserTypes";
-import { TicketCreationForm } from "../components/TicketCreationForm";
+import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
+// import { TicketCreationForm } from "../components/TicketCreationForm";
 import "../css/home.css"
 
 const Home = () => {
 
-    const [currentUser, setCurrentUser ] = useState<UserField>();
+    const { currentUser, setCurrentUser } = useCurrentUserContext();
     const [minimizeSidebar, setMinimizeSidebar ] = useState<boolean>(false);
     const [ showChat, setShowChat ] = useState<boolean>(false);
 
@@ -21,7 +21,9 @@ const Home = () => {
             }
         }
         sessionCheck();
-    }, [])
+    
+      }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const handleClick = async() => {
@@ -33,7 +35,7 @@ const Home = () => {
         {isLoading === true ? <>This should be a blank page when the person isn't authenticated.</>: 
 
       <div className="main-homepage-container flex h-screen w-screen">
-        <Sidebar currentUser = {currentUser!}
+        <Sidebar
         minimizeSidebar={minimizeSidebar} showChat = {showChat} setShowChat = {setShowChat}
         />
         <div className="nav-and-body bg-amber-50 flex-grow">
