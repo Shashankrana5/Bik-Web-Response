@@ -1,36 +1,21 @@
 import axios from "axios";
 import { useDisplayMessageContext } from "../hooks/useDisplayMessageContext";
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
-import { io, Socket } from "socket.io-client";
-import { useEffect, useState } from "react";
+import { Socket } from "socket.io-client";
+import { useEffect} from "react";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 
 interface SendMessageProps {
   selectedChat: SelectedChat | null;
+  personalChatSocket: Socket;
+  groupChatSocket: Socket;
 }
 
 const SendMessage = (props: SendMessageProps) => {
   const { dispatch } = useDisplayMessageContext();
   const {currentUser} = useCurrentUserContext();
-  const { selectedChat } = props;
-  const [personalChatSocket, setPersonalChatSocket] = useState<Socket>();
-  const [groupChatSocket, setGroupChatSocket] = useState<Socket>();
+  const { selectedChat, personalChatSocket, groupChatSocket } = props;
   
-
-  useEffect(() => {
-    if (currentUser) {
-      setPersonalChatSocket(
-        io(`http://localhost:1914/personalchat`, {
-          query: { currentUser: JSON.stringify(currentUser) },
-        })
-      );
-      setGroupChatSocket(io(`http://localhost:1914/groupchat`, {
-        query: { currentUser: JSON.stringify(currentUser) },
-      }));
-    }
-
-  }, [currentUser]);// eslint-disable-next-line
-
   useEffect(() => {
     if (personalChatSocket) {
       personalChatSocket.on("receive-personal-message", (data) => {

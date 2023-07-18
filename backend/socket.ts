@@ -1,6 +1,6 @@
 import { Server as HTTPServer } from "http";
 import { Server } from "socket.io";
-const socketio = require("socket.io")
+import { getPersonalChats } from "./src/db/messagedb";
 
 export class ChatServerSocket {
     public static instance: ChatServerSocket;
@@ -35,6 +35,17 @@ export class ChatServerSocket {
                 this.activeUsers[user.email].add(socket.id);
             }
 
+            
+            getPersonalChats(user.email).then(set => {
+              set.forEach(email => {
+                if(this.activeUsers[email as string] !== undefined){
+                    this.activeUsers[email as string].forEach((receivingSocket) => {
+                        socket.to(receivingSocket).emit("send-active-status", user);
+                    })
+                }
+              })
+            })
+
             socket.on("send-personal-message", data => {
                 if(this.activeUsers[data.receiverEmail]){
                     for(let socketAddress of this.activeUsers[data.receiverEmail]){
@@ -44,6 +55,17 @@ export class ChatServerSocket {
             })
 
             socket.on("disconnect", () => {
+
+                getPersonalChats(user.email).then(set => {
+                    set.forEach(email => {
+                        if (this.activeUsers[email as string] !== undefined){
+                            this.activeUsers[email as string].forEach((receivingSocket) => {
+                                socket.to(receivingSocket).emit("send-inactive-status", user);
+                            })
+                        }
+                    })
+                })
+
                 this.activeUsers[user.email].delete(socket.id);
                 if(this.activeUsers[user.email].size === 0){
                     delete this.activeUsers[user.email];

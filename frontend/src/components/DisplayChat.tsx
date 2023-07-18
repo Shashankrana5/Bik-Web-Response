@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { UserField } from "../utils/ChatTypes/UserTypes"
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import axios from "axios";
@@ -30,6 +30,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
             }
         }
         fetchAllChats();
+        // eslint-disable-next-line
     }, [currentUser])
 
     const handleClickAll = (field: (Group | UserField)) => {
