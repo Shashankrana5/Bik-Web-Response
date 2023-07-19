@@ -1,5 +1,6 @@
 import { Server as HTTPServer } from "http";
 import { Server } from "socket.io";
+import { getPersonalChats } from "./src/db/messagedb";
 
 export class ChatServerSocket {
     public static instance: ChatServerSocket;
@@ -41,29 +42,56 @@ export class ChatServerSocket {
                 chats.forEach((userChatted:any) => {
                     if(this.activeUsers[userChatted.email]){
                         this.activeUsers[userChatted.email].forEach(receivingSocket => {
-                            socket.to(receivingSocket).emit("user-status-online", userChatted);
+                            socket.to(receivingSocket).emit("user-status-online", user);
                         })
 
                         friendsActiveSocket.push(userChatted);
                     }
                 })
                 //get others' status.
-                this.activeUsers[user.email].forEach(receivingSocket => {
+                this.activeUsers[user.email].forEach(() => {
                     socket.emit("friends-status-online", friendsActiveSocket);
                 })
             })
+
             
-            socket.on("send-personal-message", data => {
+            socket.on("send-personal-message", (data) => {
                 if(this.activeUsers[data.receiverEmail]){
                     for(let socketAddress of this.activeUsers[data.receiverEmail]){
                         socket.to(socketAddress).emit("receive-personal-message", data);
                     }
                 }
             })
+            // socket.on("personal-disconnect", (data: {any: any}) => {
+            //     console.log(data);
+            //     this.activeUsers[user.email].delete(socket.id);
+            //     if(this.activeUsers[user.email].size === 0){
+            //         // //@ts-ignore
+            //         // data.forEach((users: any) => {
+            //         //     if(this.activeUsers[users.email] !== undefined){
+            //         //         this.activeUsers[users.email].forEach(receivingSocket => {
+            //         //             console.log(user + " has disconnected");
+            //         //             socket.to(receivingSocket).emit("friend-status-offline", user);
+            //         //         })
+            //         //     }
+            //         // })
+            //         delete this.activeUsers[user.email];
+            //     }
+
+            // })
 
             socket.on("disconnect", () => {
                 this.activeUsers[user.email].delete(socket.id);
                 if(this.activeUsers[user.email].size === 0){
+                    getPersonalChats(user.email).then(setOfUsers => {
+                        setOfUsers.forEach((userChatted: any) => {
+                            if(this.activeUsers[userChatted] !== undefined){
+                                this.activeUsers[userChatted].forEach(receivingSocket => {
+                                    socket.to(receivingSocket).emit("friends-status-offline", user);
+                                })
+                            }
+                        })
+                    })
                     delete this.activeUsers[user.email];
                 }
                 

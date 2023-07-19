@@ -1,23 +1,28 @@
 import { useEffect, useState } from "react";
-import { useEffect, useState } from "react";
 import { ChatNavbar } from "./ChatNavbar";
 import { DisplayMessage } from "./DisplayMessage";
-import { SelectedChat } from '../utils/ChatTypes/ChatType';
 import { SelectedChat } from '../utils/ChatTypes/ChatType';
 import SendMessage from "./SendMessage";
 import { DisplayChat } from "./DisplayChat";
 import { Socket, io } from "socket.io-client";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
+import { useActiveChatsContext } from "../hooks/useActiveChatsContext";
 
-const ChatBox = () => {
+interface ChatBoxProps { 
+  showChat?: boolean;
+}
+
+const ChatBox = (props: ChatBoxProps) => {
   
   const [selectedChat, setSelectedChat] = useState<SelectedChat | null>(null);
   const [personalChatSocket, setPersonalChatSocket] = useState<Socket>();
   const [groupChatSocket, setGroupChatSocket] = useState<Socket>();
   const { currentUser } = useCurrentUserContext();
   const { chats } = useDisplayChatContext();
-  const [ onlines, setOnlines] = useState<any>();
+  const { activeChats, activeChatsDispatch } = useActiveChatsContext();
+  const { showChat } = props;
+
   useEffect(() => {
     if (currentUser) {
       setPersonalChatSocket(
@@ -40,30 +45,46 @@ const ChatBox = () => {
   }, [chats]);
 
   useEffect(() => {
-    console.log(personalChatSocket)
-        personalChatSocket?.on("friends-status-online", activeFriends => {
-      console.log("these friends are active")
-        setOnlines(activeFriends)
+    
+      personalChatSocket?.on("friends-status-online", activeFriends => {
+      console.log("these friends are active");
       console.log(activeFriends);
+      activeChatsDispatch({type: "SET_ACTIVE_CHAT", payload: activeFriends});
     })
     personalChatSocket?.on("user-status-online", onlineFriend => {
       console.log("this person is came online")
       console.log(onlineFriend);
+      activeChatsDispatch({type: "CREATE_ACTIVE_CHAT", payload: [onlineFriend]})
+      
     })
 
-  }, [personalChatSocket, onlines, setOnlines])
+    personalChatSocket?.on("friends-status-offline", (data) => {
+      console.log("disconntected");
+      console.log(data);
+      activeChatsDispatch({type: "DELETE_ACTIVE_CHAT", payload: data})
+    })
+    // if(!showChat){
+    //   personalChatSocket?.disconnect();
+    // }
+
+  }, [personalChatSocket]);
 
 
   useEffect(() => {
-    personalChatSocket?.on("oin", data => {
-      console.log(data)
-    })
-  })
+    console.log(activeChats);
+  }, [activeChatsDispatch, activeChats])
 
   return (
     <div className="chatbox-main max-w-4xl w-[35vw]">
         <ChatNavbar selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
-        
+        <div>
+          <div>
+          {activeChats && Array.from(activeChats).map(key => {
+            console.log(activeChats);
+            return (<div>{key.fullName}</div>)
+          })}
+          </div>
+        </div>
         <div id="display-container" className="h-[100%]">
 
           {(selectedChat !== null) ? 
@@ -74,8 +95,8 @@ const ChatBox = () => {
 
         {(selectedChat === null)? null: 
         <SendMessage  selectedChat = {selectedChat} groupChatSocket={groupChatSocket!} personalChatSocket={personalChatSocket!}/>
-        <SendMessage  selectedChat = {selectedChat} groupChatSocket={groupChatSocket!} personalChatSocket={personalChatSocket!}/>
         }
+
     </div>
   );
 };
