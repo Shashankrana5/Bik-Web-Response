@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { DisplayMessageContextProvider } from './contexts/DisplayMessageContext';
 import { DisplayChatContextProvider } from './contexts/DisplayChatContext';
+import { ActiveChatsContextProvider } from './contexts/ActiveChatsContext';
 // import { CurrentUserContextProvider } from './contexts/CurrentUserContext';
 
 
@@ -12,12 +13,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   // <React.StrictMode>
-
+    <ActiveChatsContextProvider>
     <DisplayChatContextProvider>
       <DisplayMessageContextProvider>
         <App />
       </DisplayMessageContextProvider>
     </DisplayChatContextProvider>
+    </ActiveChatsContextProvider>
     
   // </React.StrictMode>
   
