@@ -1,14 +1,17 @@
 import { Request, Response } from "express";
 import Ticket from "../models/Ticket";
+import User from "../models/User";
 
 export async function createTicket(req: Request, res: Response){
 
     const {clientName, email, subject, category, initialRequest, resolved, assignedTo} = req.body;
+    const client = await User.findOne({email});
     
-    const ticketNumber = "TKN" + Math.random().toString(16).slice(2);
+    const ticketNumber = "TKN-" + Math.random().toString(16).slice(2);
     
     try{
-        const ticket = await Ticket.create({ticketNumber, clientName, email, subject, category, initialRequest, resolved, assignedTo})
+        // const ticket = await Ticket.create({ticketNumber, clientName, email, subject, category, initialRequest, resolved, assignedTo})
+        const ticket = await Ticket.create({ticketNumber, clientName, client, email, subject, category, initialRequest, resolved, assignedTo});
         res.status(200).json(ticket);
     }
     catch(error){

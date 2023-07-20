@@ -11,6 +11,12 @@ const ticketSchema = new Schema({
         type: String,
         require: true
     },
+    client: {
+        type: Schema.Types.Mixed,
+        ref:"User",
+        require: true
+    },
+
     email: {
         type: String,
         require: true,
@@ -20,7 +26,8 @@ const ticketSchema = new Schema({
         require: true
     },
     category: {
-        type: String,
+        type: Schema.Types.Mixed,
+        ref: "Category",
         require: true
     },
     initialRequest: {
@@ -32,7 +39,8 @@ const ticketSchema = new Schema({
         require: true
     },
     assignedTo: {
-        type: String,
+        type: Schema.Types.Mixed,
+        ref:"User",
         require: true
     }
 }, {timestamps: true});

@@ -23,7 +23,7 @@ const userSchema = new Schema({
         type:String,
         require:true
     }
-})
+}, {timestamps: true})
 
 const User =  mongoose.model<UserType>("User", userSchema);;
 export default User;

@@ -9,11 +9,7 @@ import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 import { useActiveChatsContext } from "../hooks/useActiveChatsContext";
 
-interface ChatBoxProps { 
-  showChat?: boolean;
-}
-
-const ChatBox = (props: ChatBoxProps) => {
+const ChatBox = () => {
   
   const [selectedChat, setSelectedChat] = useState<SelectedChat | null>(null);
   const [personalChatSocket, setPersonalChatSocket] = useState<Socket>();
@@ -21,7 +17,6 @@ const ChatBox = (props: ChatBoxProps) => {
   const { currentUser } = useCurrentUserContext();
   const { chats } = useDisplayChatContext();
   const { activeChats, activeChatsDispatch } = useActiveChatsContext();
-  const { showChat } = props;
 
   useEffect(() => {
     if (currentUser) {
@@ -42,37 +37,25 @@ const ChatBox = (props: ChatBoxProps) => {
     if (chats.Personal.length > 0){
       personalChatSocket?.emit("fetch-status-personal", chats.Personal);
     }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chats]);
 
   useEffect(() => {
     
       personalChatSocket?.on("friends-status-online", activeFriends => {
-      console.log("these friends are active");
-      console.log(activeFriends);
       activeChatsDispatch({type: "SET_ACTIVE_CHAT", payload: activeFriends});
     })
     personalChatSocket?.on("user-status-online", onlineFriend => {
-      console.log("this person is came online")
-      console.log(onlineFriend);
       activeChatsDispatch({type: "CREATE_ACTIVE_CHAT", payload: [onlineFriend]})
       
     })
 
     personalChatSocket?.on("friends-status-offline", (data) => {
-      console.log("disconntected");
-      console.log(data);
       activeChatsDispatch({type: "DELETE_ACTIVE_CHAT", payload: data})
     })
-    // if(!showChat){
-    //   personalChatSocket?.disconnect();
-    // }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personalChatSocket]);
-
-
-  useEffect(() => {
-    console.log(activeChats);
-  }, [activeChatsDispatch, activeChats])
 
   return (
     <div className="chatbox-main max-w-4xl w-[35vw]">
