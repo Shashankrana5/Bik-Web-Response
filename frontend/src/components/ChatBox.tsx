@@ -63,7 +63,6 @@ const ChatBox = () => {
         <div>
           <div>
           {activeChats && Array.from(activeChats).map(key => {
-            console.log(activeChats);
             return (<div>{key.fullName}</div>)
           })}
           </div>

@@ -10,6 +10,7 @@ export interface MessageType {
   senderName: string;
   messageType: "group" | "personal";
   groupId?: string;
+  invisible?: boolean;
   receiverEmail?: string;
   ticketNumber?: string;
   content: string;

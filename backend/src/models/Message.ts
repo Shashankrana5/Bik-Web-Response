@@ -24,7 +24,10 @@ const messageSchema = new Schema({
         type: String, 
         require: false
     },
-
+    invisible: {
+        require: false,
+        type: Boolean
+    },
     ticketNumber: {
         type:String,
         require: false

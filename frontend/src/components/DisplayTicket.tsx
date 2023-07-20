@@ -58,26 +58,3 @@ export const DisplayTicket = () => {
         </div>
     )
 }
-
-/**
- * client
-: 
-null
-clientName
-: 
-"asdf"
-createdAt
-: 
-"2023-07-20T03:05:54.578Z"
-email
-: 
-"asdf"
-initialRequest
-: 
-"asdf"
-resolved
-: 
-false
-subject
-
- */
