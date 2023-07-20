@@ -1,12 +1,11 @@
 import { useEffect } from "react";
-import ChatBox from "../components/ChatBox";
 import { getSessionData } from "../utils/getSessionData";
 
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
-import Navbar from "../components/Navbar";
+import { DisplayTicket } from "../components/DisplayTicket";
 
-const Chat = () => {
-
+const Ticket = () => {
+    
     const {setCurrentUser } = useCurrentUserContext();
 
     useEffect(() => {
@@ -16,20 +15,13 @@ const Chat = () => {
         }
         sessionCheck();
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
-    
-    return(
-        <div id = "chat-page" className="flex">
-            <Navbar/>
-            {/* <Navbar currentUser={currentUser!}
-            setMinimizeSidebar={setMinimizeSidebar}
-            // minimizeLeftNavbar={minimizeLeftNavbar}
-            // setMinimizeLeftNavbar={setMinimizeLeftNavbar}
-          /> */}
 
-            <ChatBox/>
+    return(
+        <div>
+            Ticket page
+            <DisplayTicket />
         </div>
     )
-
 }
 
-export default Chat;
+export default Ticket;

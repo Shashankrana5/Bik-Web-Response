@@ -1,16 +1,19 @@
 import axios from "axios";
 import { UserField } from "../utils/ChatTypes/UserTypes";
 import { Link } from "react-router-dom";
+import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 
 interface NavbarProps {
-    currentUser: UserField;
-    setMinimizeSidebar: React.Dispatch<React.SetStateAction<boolean>>
+    currentUser?: UserField;
+    setMinimizeSidebar?: React.Dispatch<React.SetStateAction<boolean>>
 
 }
 
 const Navbar = (props: NavbarProps) => {
 
-    const { currentUser, setMinimizeSidebar } = props;
+    const { setMinimizeSidebar } = props;
+    const { currentUser } = useCurrentUserContext();
+    
     const handleProfileClick = async() =>{
 
         try{
@@ -23,7 +26,7 @@ const Navbar = (props: NavbarProps) => {
 }
 
 const handleMinimizeLeftNavbar = () => {
-    setMinimizeSidebar((prevState: boolean) => !prevState);
+    setMinimizeSidebar!((prevState: boolean) => !prevState);
 }
 
     return (
@@ -40,7 +43,7 @@ const handleMinimizeLeftNavbar = () => {
                 </div>
                 <img alt = "" className="h-6" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAf9JREFUaEPtmP0xRTEQxc+rgBKoABWgAqMCVIAOqIAO0AEVoAJUQAlUwByTO/Pwkmx2D5k77s7cP95Mknd+2Y8kO8PIbTZy/ZgAenvwNzywBWAPwHr6yPiYvisAd0poJQAFnwEgQMkIcJyAwiwqAIq/BbBsVPQKYFsBoQBoFT8wSiAUANz5WtjkHMNwoifcFgWgcAJEjADuxI4CXKaKEwFgZdr3LhAFeJgrlV4NLLEb3slRgHfvH3+b59bhnpgEjB6A7l8LeuEpEoZRD4w+iUdfRhk9rOGbzjC6DxyCn38ZDSGuwasEIZYaId6SeOaR2xQAHgiJeJUHht2jJ84N4cSwOVLcRNUAAwgTm1cDAg0llqWSocKq5b73LIozVQi5Yzg6cQKI7mB0/r/3ABN1J9Vzvof522JMaD4pmdA3kYrk9QDbJicAVixqDWNeUqfi2jD2y5BWAAq+iB7/BZH0yAEAApmsBcDbfTAJmRvU1K2wAlA8n49/aXxmVu9JFgCGDcVbm1YqSHqCEMVwsgBE+j5RmGrfqAbAOw2TtqftAshWpxrAs7BUejeBIbSam1wC6JG4OZ3ZhC4B8G5/6N028bzTdHD+WLYEEHnrivUj+3YuASjahiqQbPuxBKDquqkgFmqdAFTba1in2QOGNfsPqR1k/RVWFEwAvV00eaC3Bz4ALkdQMYEpwEIAAAAASUVORK5CYII="/> 
                 <div className="user-name text-sm">
-                    {currentUser.fullName}
+                    {currentUser?.fullName}
                 </div>
                 <Link to="/" className = "h-8 pt-1 cursor-pointer" onClick={handleProfileClick}> | Logout</Link>
                 <div className="notification">

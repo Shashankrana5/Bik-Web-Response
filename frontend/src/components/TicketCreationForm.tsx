@@ -75,10 +75,12 @@ export const TicketCreationForm = () => {
 
     const handleFormSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const paramsToPass = {clientName, email,  subject,  initialRequest,  category, resolved: false, assignedTo}
-        console.log(paramsToPass)
-        const response = await axios.post("http://localhost:1913/api/ticket/createticket", paramsToPass);
-        console.log(response.data)
+        const paramsToPass = {clientName, email,  subject,  initialRequest,  category, status: "New", assignedTo}
+        try{
+            await axios.post("http://localhost:1913/api/ticket/createticket", paramsToPass);
+        }catch(error){
+            console.log({errorMessage: error});
+        }
     }
 
 

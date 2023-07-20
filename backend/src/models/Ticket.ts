@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
+type Status = "New" | "Assigned" | "In Progress" | "Updated By Client" | "Waiting for Client Resopnse" | "Completed"
+
 const ticketSchema = new Schema({
 
     ticketNumber: {
@@ -34,9 +36,9 @@ const ticketSchema = new Schema({
         type: String,
         require: true
     },
-    resolved:{
-        type: Boolean,
-        require: true
+    status: {
+        type: String as () => Status,
+        require: true,
     },
     assignedTo: {
         type: Schema.Types.Mixed,

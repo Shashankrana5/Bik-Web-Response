@@ -7,9 +7,11 @@ import Chat from "./pages/Chat";
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
 import { useState } from "react";
 import { UserField } from "./utils/ChatTypes/UserTypes";
+import Ticket from "./pages/Ticket";
+import TicketContent from "./components/TicketContent";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<UserField>({ _id: "user's id", email: "user's email", fullName: "fullname", role: "role" })
+  const [currentUser, setCurrentUser] = useState<UserField | null>(null);
 
   return (
     <div className="App">
@@ -22,6 +24,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="/ticket" element={<Ticket/>}/>
+              <Route path="/ticket/:ticketNumber" element = {<TicketContent/>} />
             </Routes>
           </CurrentUserContext.Provider>
         </div>

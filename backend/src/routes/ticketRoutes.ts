@@ -6,7 +6,7 @@ getTicketByAssignedTo} from "../controllers/ticketController";
 function ticketRoutes(app: Express) {
   app.post("/api/ticket/createticket", createTicket);
   app.get("/api/ticket/getbyticketnumber/:ticketnumber", getTicketByTicketNumber);
-  app.get("/api/ticket/getbyassignee", getTicketByAssignedTo);
+  app.post("/api/ticket/getbyassignee", getTicketByAssignedTo);
 }
 
 export default ticketRoutes;

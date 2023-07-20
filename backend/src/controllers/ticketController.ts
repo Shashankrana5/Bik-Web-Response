@@ -4,14 +4,13 @@ import User from "../models/User";
 
 export async function createTicket(req: Request, res: Response){
 
-    const {clientName, email, subject, category, initialRequest, resolved, assignedTo} = req.body;
+    const {clientName, email, subject, category, initialRequest, status, assignedTo} = req.body;
     const client = await User.findOne({email});
     
     const ticketNumber = "TKN-" + Math.random().toString(16).slice(2);
     
     try{
-        // const ticket = await Ticket.create({ticketNumber, clientName, email, subject, category, initialRequest, resolved, assignedTo})
-        const ticket = await Ticket.create({ticketNumber, clientName, client, email, subject, category, initialRequest, resolved, assignedTo});
+        const ticket = await Ticket.create({ticketNumber, clientName, client, email, subject, category, initialRequest, status, assignedTo});
         res.status(200).json(ticket);
     }
     catch(error){
@@ -35,6 +34,7 @@ export const getTicketByTicketNumber = async(req: Request, res: Response) => {
 export const getTicketByAssignedTo = async (req: Request, res: Response) => {
 
     const { assignedTo } = req.body;
+    console.log(assignedTo);
     try{
         const tickets = await Ticket.find({assignedTo});
         return res.status(200).json(tickets);

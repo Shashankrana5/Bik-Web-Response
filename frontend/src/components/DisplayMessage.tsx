@@ -41,10 +41,10 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
 
         <div id="displaymessage" className="flex justify-center max-h-64">
             <div className="">
-                <DisplayMessageNavbar currentUser={currentUser} selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
+                <DisplayMessageNavbar currentUser={currentUser!} selectedChat={selectedChat} setSelectedChat = {setSelectedChat}/>
                 <div className="display-message-container max-w-lg max-h-[90%] overflow-y-auto flex flex-col-reverse border-2 border-yellow-700 ">
                     {messages && [...messages].reverse().map(chat => {
-                        return (currentUser.email === chat.senderEmail) ?
+                        return (currentUser?.email === chat.senderEmail) ?
                             <div className="flex flex-row-reverse" key = {chat._id}>
                                 <div>
                                     <p className="bg-orange-200 border-2 border-orange-200 rounded-md">{chat.content}</p>
