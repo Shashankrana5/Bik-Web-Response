@@ -25,6 +25,7 @@ export const DisplayTicket = () => {
 
         if(currentUser)
             fetchTickets();
+    // eslint-disable-next-line
     }, [currentUser])
 
 

@@ -9,7 +9,7 @@ export async function createTicket(req: Request, res: Response){
     
     const ticketNumber = "TKN-" + Math.random().toString(16).slice(2);
     
-    try{
+    try{ 
         const ticket = await Ticket.create({ticketNumber, clientName, client, email, subject, category, initialRequest, status, assignedTo});
         res.status(200).json(ticket);
     }
@@ -21,10 +21,13 @@ export async function createTicket(req: Request, res: Response){
 
 export const getTicketByTicketNumber = async(req: Request, res: Response) => {
 
-    const {ticketNumber} = req.params;
+    const {ticketnumber} = req.params;
+
     try{
-        const ticket = await Ticket.find({ticketNumber});
-        return res.status(200).json(ticket);
+        const ticket = await Ticket.findOne({ticketNumber: ticketnumber});
+        const user = await User.findOne({_id: ticket?.client})
+
+        return res.status(200).json({ticket, client: user});
     }
     catch(error){
         return res.status(500).json({errorMessage: error})
@@ -34,7 +37,7 @@ export const getTicketByTicketNumber = async(req: Request, res: Response) => {
 export const getTicketByAssignedTo = async (req: Request, res: Response) => {
 
     const { assignedTo } = req.body;
-    console.log(assignedTo);
+
     try{
         const tickets = await Ticket.find({assignedTo});
         return res.status(200).json(tickets);
