@@ -7,7 +7,6 @@ import { ActiveChatsContextProvider } from './contexts/ActiveChatsContext';
 import { TicketContextProvider } from './contexts/TicketContext';
 import { TicketContentContextProvider } from './contexts/TicketContentContext';
 
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

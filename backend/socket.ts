@@ -62,23 +62,6 @@ export class ChatServerSocket {
                     }
                 }
             })
-            // socket.on("personal-disconnect", (data: {any: any}) => {
-            //     console.log(data);
-            //     this.activeUsers[user.email].delete(socket.id);
-            //     if(this.activeUsers[user.email].size === 0){
-            //         // //@ts-ignore
-            //         // data.forEach((users: any) => {
-            //         //     if(this.activeUsers[users.email] !== undefined){
-            //         //         this.activeUsers[users.email].forEach(receivingSocket => {
-            //         //             console.log(user + " has disconnected");
-            //         //             socket.to(receivingSocket).emit("friend-status-offline", user);
-            //         //         })
-            //         //     }
-            //         // })
-            //         delete this.activeUsers[user.email];
-            //     }
-
-            // })
 
             socket.on("disconnect", () => {
                 this.activeUsers[user.email].delete(socket.id);

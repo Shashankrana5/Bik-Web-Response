@@ -16,3 +16,12 @@ export interface Ticket {
     subject: string;
     ticketNumber: string;
 }
+
+export interface TicketMessage{
+    senderEmail: string;
+    messageType: "ticket";
+    content: string;
+    senderName: string;
+    ticketNumber: string;
+    invisible: boolean
+}

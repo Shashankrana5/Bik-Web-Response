@@ -1,18 +1,18 @@
 import { createContext, useReducer } from "react";
-import { Ticket } from "../utils/TicketTypes/Ticket"
+import { Ticket, TicketMessage } from "../utils/TicketTypes/Ticket"
 
 type ActionType = {
     type: "SET_TICKET_CONTENT",
-    payload: Ticket[] | null
+    payload: TicketMessage[] | null
 }
 
 interface ContextType {
-    ticketContent: Ticket[] | null;
+    ticketContent: TicketMessage[] | null;
     ticketContentDispatch: React.Dispatch<ActionType>
 }
 
 interface TicketContentType {
-    ticketContent: Ticket[] | null;
+    ticketContent: TicketMessage[] | null;
 }
 
 export const TicketContentContext = createContext<ContextType>({ticketContent: null, ticketContentDispatch: () => null});

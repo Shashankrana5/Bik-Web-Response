@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Ticket from "../models/Ticket";
 import User from "../models/User";
+import Message from "../models/Message";
 
 export async function createTicket(req: Request, res: Response){
 
@@ -44,5 +45,19 @@ export const getTicketByAssignedTo = async (req: Request, res: Response) => {
 
     }catch(error){
         return res.status(400).json({errorMessage: error})
+    }
+}
+
+export const createTicketMessage = async(req: Request, res: Response) => {
+
+    const { currentUser, ticketNumber, invisible, content } = req.body;
+
+    try{
+        // const message = await Message.create({})
+        return res.status(200).json({senderEmail: currentUser.email, senderName: currentUser.fullName,
+            messageType: "ticket", ticketNumber, content, invisible
+        })
+    }catch(error){
+        return res.status(400).json({errorMessage: error});
     }
 }
