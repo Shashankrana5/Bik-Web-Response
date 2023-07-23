@@ -9,6 +9,7 @@ import { useState } from "react";
 import { UserField } from "./utils/ChatTypes/UserTypes";
 import Ticket from "./pages/Ticket";
 import TicketDetails from "./pages/TicketDetails";
+import { FrontendPlayground } from "./pages/FrontendPlayground";
 
 function App() {
   const [currentUser, setCurrentUser] = useState<UserField | null>(null);
@@ -21,6 +22,7 @@ function App() {
           <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
             <Routes>
               <Route path="/logintest" element={<TestLogin />} />
+              <Route path="/playground" element={<FrontendPlayground />} />
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="/chat" element={<Chat />} />
