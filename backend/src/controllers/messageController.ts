@@ -175,3 +175,16 @@ export async function getGroupMessage(req: Request, res: Response) {
     return res.status(400).json({ error: error });
   }
 }
+
+export const getMessageByTicketNumber = async(req: Request, res: Response) => {
+
+    const { ticketNumber } = req.params;
+
+    try {
+      const response = await Message.find({ticketNumber}).sort({createdAt: 1});
+      
+      return res.status(200).json(response);
+    }catch(error){
+        return res.status(400).json({errorMessage: error});
+    }
+}

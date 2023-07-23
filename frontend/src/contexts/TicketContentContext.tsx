@@ -2,8 +2,8 @@ import { createContext, useReducer } from "react";
 import { Ticket, TicketMessage } from "../utils/TicketTypes/Ticket"
 
 type ActionType = {
-    type: "SET_TICKET_CONTENT",
-    payload: TicketMessage[] | null
+    type: "SET_TICKET_CONTENT" | "CREATE_TICKET_CONTENT",
+    payload: TicketMessage[] | TicketMessage | null
 }
 
 interface ContextType {
@@ -23,7 +23,10 @@ export const reducer = (state: TicketContentType, action: ActionType): TicketCon
         return state;
     
     else if (action.type === "SET_TICKET_CONTENT"){
-        return {ticketContent: action.payload};
+        return {ticketContent: action.payload as TicketMessage[]};
+    }
+    else if (action.type === 'CREATE_TICKET_CONTENT'){
+        return {ticketContent: [...state.ticketContent!, action.payload as TicketMessage]}
     }
     else
         return state;

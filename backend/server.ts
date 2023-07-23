@@ -12,6 +12,7 @@ import http from "http";
 import categoryRoutes from "./src/routes/categoryRoutes";
 import ticketRoutes from "./src/routes/ticketRoutes";
 import * as dotenv from "dotenv";
+import searchRoutes from "./src/routes/searchRoutes";
 dotenv.config();
 
 const app = express();
@@ -52,6 +53,8 @@ function main() {
   groupRoutes(app);
   categoryRoutes(app);
   ticketRoutes(app);
+  searchRoutes(app);
+  
 }
 
 main();

@@ -53,10 +53,10 @@ export const createTicketMessage = async(req: Request, res: Response) => {
     const { currentUser, ticketNumber, invisible, content } = req.body;
 
     try{
-        // const message = await Message.create({})
-        return res.status(200).json({senderEmail: currentUser.email, senderName: currentUser.fullName,
-            messageType: "ticket", ticketNumber, content, invisible
-        })
+        const message = await Message.create({senderEmail: currentUser.email, senderName: currentUser.fullName,
+            messageType: "ticket", ticketNumber, content, invisible})
+        return res.status(200).json(message);
+        
     }catch(error){
         return res.status(400).json({errorMessage: error});
     }

@@ -18,6 +18,7 @@ export interface Ticket {
 }
 
 export interface TicketMessage{
+    _id: string;
     senderEmail: string;
     messageType: "ticket";
     content: string;

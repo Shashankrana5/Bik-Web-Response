@@ -4,6 +4,7 @@ import {
   sendMessage,
   getMessagesByEmails,
   getGroupMessage,
+  getMessageByTicketNumber,
 } from "../controllers/messageController";
 
 export default function messageRoutes(app: Express) {
@@ -14,4 +15,5 @@ export default function messageRoutes(app: Express) {
   );
   app.get("/api/message/getgroupmessage/:_id/user/:email", getGroupMessage);
   app.post("/api/message/sendmessage", sendMessage);
+  app.get("/api/message/getmessagebyticketnumber/:ticketNumber", getMessageByTicketNumber);
 }
