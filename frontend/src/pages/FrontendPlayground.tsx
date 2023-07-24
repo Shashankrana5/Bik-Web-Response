@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { TiEdit } from "react-icons/ti";
+import "../css/frontendplayground.css"
 
 export const FrontendPlayground = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -12,126 +13,304 @@ export const FrontendPlayground = () => {
   };
 
   return (
-    <div>
-      <>
-        <div className="container mx-auto bg-white shadow-lg">
-          <div className="flex items-center justify-center h-screen ">
-            <button
-              onClick={openModal}
-              className="bg-orange-400 hover:bg-orange-600 active:bg-orange-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-orange-500 px-4 py-2 text-white font-semibold text-md tracking-wider uppercase rounded-md"
-            >
-              <div id="icon-edit-container" className="flex gap-1">
-                <TiEdit className="h-6 w-6 text-white"></TiEdit>
-                <div>Edit</div>
-              </div>
-            </button>
-          </div>
-        </div>
-      </>
-
-      <div
-        className={`fixed z-10 inset-0 overflow-y-auto ${
-          isModalOpen ? "" : "hidden"
-        }`}
-      >
-        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-          <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-          </div>
-
-          <span
-            className="hidden sm:inline-block sm:align-middle sm:h-screen"
-            aria-hidden="true"
-          >
-            &#8203;
-          </span>
-
-          <div
-            className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modal-headline"
-          >
-            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <div className="sm:flex sm:items-start">
-                <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-orange-100 sm:mx-0 sm:h-10 sm:w-10">
-                  <TiEdit className="h-6 w-6 text-orange-300"></TiEdit>
-                </div>
-                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-[100%]">
-                  <h3
-                    className="text-lg leading-6 font-medium text-gray-900"
-                    id="modal-headline"
-                  >
-                    Edit User
-                  </h3>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      {/* Are you sure you want to deactivate your account? All of
-                      your data will be permanently removed. This action cannot
-                      be undone. */}
-
-                      <div className="block max-w-sm rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                        <form>
-                          <div
-                            className="relative mb-12"
-                            data-te-input-wrapper-init
-                          >
-                            <input
-                              id="email"
-                              name="email"
-                              type="text"
-                              className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-rose-600"
-                              placeholder="john@doe.com"
-                            />
-                            <label
-                              htmlFor="email"
-                              className="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                            >
-                              Email address
-                            </label>
-                          </div>
-
-                          <div className="mt-10 relative">
-                            <input
-                              id="name"
-                              type="text"
-                              name="password"
-                              className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-rose-600"
-                              placeholder="Name"
-                            />
-                            <label
-                              htmlFor="name"
-                              className="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                            >
-                              Name
-                            </label>
-                          </div>
-                        </form>
-                      </div>
-                    </p>
-                  </div>
-                </div>
-              </div>
+   <>
+   <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
+   <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
+      <div className="relative flex items-center space-x-4">
+         <div className="relative">
+            <span className="absolute text-green-500 right-0 bottom-0">
+               <svg width="20" height="20">
+                  <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
+               </svg>
+            </span>
+         <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"/>
+         </div>
+         <div className="flex flex-col leading-tight">
+            <div className="text-2xl mt-1 flex items-center">
+               <span className="text-gray-700 mr-3">Anderson Vanhron</span>
             </div>
-            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-              <button
-                onClick={closeModal}
-                type="button"
-                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-300 text-base font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:ml-3 sm:w-auto sm:text-sm"
-              >
-                Deactivate
-              </button>
-              <button
-                onClick={closeModal}
-                type="button"
-                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
+            <span className="text-lg text-gray-600">Junior Developer</span>
+         </div>
       </div>
-    </div>
-  );
-};
+      <div className="flex items-center space-x-2">
+         <button type="button" className="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+         </button>
+         <button type="button" className="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+         </button>
+         <button type="button" className="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+         </button>
+      </div>
+   </div>
+   <div id="messages" className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+      <div className="chat-message">
+         <div className="flex items-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+               <div><span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">Can be verified on any platform using docker</span></div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-1"/>
+         </div>
+      </div>
+      <div className="chat-message">
+         <div className="flex items-end justify-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+               <div><span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">Your error message says permission denied, npm global installs must be given root privileges.</span></div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-2"/>
+         </div>
+      </div>
+      <div className="chat-message">
+         <div className="flex items-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+               <div><span className="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600">Command was run with root privileges. I'm sure about that.</span></div>
+               <div><span className="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600">I've update the description so it's more obviously now</span></div>
+               <div><span className="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600">FYI https://askubuntu.com/a/700266/510172</span></div>
+               <div>
+                  <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+                     Check the line above (it ends with a # so, I'm running it as root )
+                     <pre># npm install -g @vue/devtools</pre>
+                  </span>
+               </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-1"/>
+         </div>
+      </div>
+      <div className="chat-message">
+         <div className="flex items-end justify-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+               <div><span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">Any updates on this issue? I'm getting the same error when trying to install devtools. Thanks</span></div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-2"/>
+         </div>
+      </div>
+      <div className="chat-message">
+         <div className="flex items-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+               <div><span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600"></span></div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-1" />
+         </div>
+      </div>
+      <div className="chat-message">
+         <div className="flex items-end justify-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+               <div><span className="px-4 py-2 rounded-lg inline-block bg-blue-600 text-white ">Are you using sudo?</span></div>
+               <div><span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">Run this command sudo chown -R `whoami` /Users//.npm-global/ then install the package globally without using sudo</span></div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-2" />
+         </div>
+      </div>
+      <div className="chat-message">
+         <div className="flex items-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+               <div><span className="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600">It seems like you are from Mac OS world. There is no /Users/ folder on linux ?</span></div>
+               <div><span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">I have no issue with any other packages installed with root permission globally.</span></div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-1" />
+         </div>
+      </div>
+      <div className="chat-message">
+         <div className="flex items-end justify-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+               <div><span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">yes, I have a mac. I never had issues with root permission as well, but this helped me to solve the problem</span></div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-2" />
+         </div>
+      </div>
+      <div className="chat-message">
+         <div className="flex items-end">
+            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+               <div><span className="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600">I get the same error on Arch Linux (also with sudo)</span></div>
+               <div><span className="px-4 py-2 rounded-lg inline-block bg-gray-300 text-gray-600">I also have this issue, Here is what I was doing until now: #1076</span></div>
+               <div><span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">even i am facing</span></div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-1" />
+         </div>
+      </div>
+   </div>
+   <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+      <div className="relative flex">
+         <span className="absolute inset-y-0 flex items-center">
+            <button type="button" className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+               </svg>
+            </button>
+         </span>
+         <input type="text" placeholder="Write your message!" className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3" />
+         <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
+            <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+               </svg>
+            </button>
+            <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+               </svg>
+            </button>
+            <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+               </svg>
+            </button>
+            <button type="button" className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
+               <span className="font-bold">Send</span>
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-6 w-6 ml-2 transform rotate-90">
+                  <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+               </svg>
+            </button>
+         </div>
+      </div>
+   </div>
+</div>
+  </>
+
+  )
+
+// return(
+//   <>
+  
+//   <div className="container mx-auto">
+//       <div className="min-w-full border rounded lg:grid lg:grid-cols-3">
+//         <div className="border-r border-gray-300 lg:col-span-1">
+//           <div className="mx-3 my-3">
+//             <div className="relative text-gray-600">
+//               <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+//                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+//                   viewBox="0 0 24 24" className="w-6 h-6 text-gray-300">
+//                   <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+//                 </svg>
+//               </span>
+//               <input type="search" className="block w-full py-2 pl-10 bg-gray-100 rounded outline-none" name="search"
+//                 placeholder="Search" required />
+//             </div>
+//           </div>
+
+//           <ul className="overflow-auto h-[32rem]">
+//             <h2 className="my-2 mb-2 ml-2 text-lg text-gray-600">Chats</h2>
+//             <li>
+//               <a
+//                 className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none">
+//                 <img className="object-cover w-10 h-10 rounded-full"
+//                   src="https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010__340.jpg" alt="username" />
+//                 <div className="w-full pb-2">
+//                   <div className="flex justify-between">
+//                     <span className="block ml-2 font-semibold text-gray-600">Jhon Don</span>
+//                     <span className="block ml-2 text-sm text-gray-600">25 minutes</span>
+//                   </div>
+//                   <span className="block ml-2 text-sm text-gray-600">bye</span>
+//                 </div>
+//               </a>
+//               <a
+//                 className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out bg-gray-100 border-b border-gray-300 cursor-pointer focus:outline-none">
+//                 <img className="object-cover w-10 h-10 rounded-full"
+//                   src="https://cdn.pixabay.com/photo/2016/06/15/15/25/loudspeaker-1459128__340.png" alt="username" />
+//                 <div className="w-full pb-2">
+//                   <div className="flex justify-between">
+//                     <span className="block ml-2 font-semibold text-gray-600">Same</span>
+//                     <span className="block ml-2 text-sm text-gray-600">50 minutes</span>
+//                   </div>
+//                   <span className="block ml-2 text-sm text-gray-600">Good night</span>
+//                 </div>
+//               </a>
+//               <a
+//                 className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none">
+//                 <img className="object-cover w-10 h-10 rounded-full"
+//                   src="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg" alt="username" />
+//                 <div className="w-full pb-2">
+//                   <div className="flex justify-between">
+//                     <span className="block ml-2 font-semibold text-gray-600">Emma</span>
+//                     <span className="block ml-2 text-sm text-gray-600">6 hour</span>
+//                   </div>
+//                   <span className="block ml-2 text-sm text-gray-600">Good Morning</span>
+//                 </div>
+//               </a>
+//             </li>
+//           </ul>
+//         </div>
+//         <div className="hidden lg:col-span-2 lg:block">
+//           <div className="w-full">
+//             <div className="relative flex items-center p-3 border-b border-gray-300">
+//               <img className="object-cover w-10 h-10 rounded-full"
+//                 src="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg" alt="username" />
+//               <span className="block ml-2 font-bold text-gray-600">Emma</span>
+//               <span className="absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3">
+//               </span>
+//             </div>
+//             <div className="relative w-full p-6 overflow-y-auto h-[40rem]">
+//               <ul className="space-y-2">
+//                 <li className="flex justify-start">
+//                   <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
+//                     <span className="block">Hi</span>
+//                   </div>
+//                 </li>
+//                 <li className="flex justify-end">
+//                   <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+//                     <span className="block">Hiiii</span>
+//                   </div>
+//                 </li>
+//                 <li className="flex justify-end">
+//                   <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+//                     <span className="block">how are you?</span>
+//                   </div>
+//                 </li>
+//                 <li className="flex justify-start">
+//                   <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
+//                     <span className="block">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+//                     </span>
+//                   </div>
+//                 </li>
+//               </ul>
+//             </div>
+
+//             <div className="flex items-center justify-between w-full p-3 border-t border-gray-300">
+//               <button>
+//                 <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24"
+//                   stroke="currentColor">
+//                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+//                     d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+//                 </svg>
+//               </button>
+//               <button>
+//                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+//                   stroke="currentColor">
+//                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+//                     d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+//                 </svg>
+//               </button>
+
+//               <input type="text" placeholder="Message"
+//                 className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
+//                 name="message" required />
+//               <button>
+//                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+//                   stroke="currentColor">
+//                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+//                     d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+//                 </svg>
+//               </button>
+//               <button type="submit">
+//                 <svg className="w-5 h-5 text-gray-500 origin-center transform rotate-90" xmlns="http://www.w3.org/2000/svg"
+//                   viewBox="0 0 20 20" fill="currentColor">
+//                   <path
+//                     d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+//                 </svg>
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   </>
+// )
+}

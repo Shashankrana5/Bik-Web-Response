@@ -10,6 +10,7 @@ import { UserField } from "./utils/ChatTypes/UserTypes";
 import Ticket from "./pages/Ticket";
 import TicketDetails from "./pages/TicketDetails";
 import { FrontendPlayground } from "./pages/FrontendPlayground";
+import { FrontendPlayground2 } from "./pages/FrontendPlayground2";
 
 function App() {
   const [currentUser, setCurrentUser] = useState<UserField | null>(null);
@@ -22,6 +23,7 @@ function App() {
             <Routes>
               <Route path="/logintest" element={<TestLogin />} />
               <Route path="/playground" element={<FrontendPlayground />} />
+              <Route path="/playground2" element={<FrontendPlayground2 />} />
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="/chat" element={<Chat />} />
