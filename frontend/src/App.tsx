@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TestLogin from "./pages/TestLogin";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -16,7 +16,6 @@ function App() {
 
   return (
     <div className="App">
-
       <BrowserRouter>
         <div className="pages">
           <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
@@ -26,13 +25,12 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="/chat" element={<Chat />} />
-              <Route path="/ticket" element={<Ticket/>}/>
-              <Route path="/ticket/:ticketNumber" element = {<TicketDetails/>} />
+              <Route path="/ticket" element={<Ticket />} />
+              <Route path="/ticket/:ticketNumber" element={<TicketDetails />} />
             </Routes>
           </CurrentUserContext.Provider>
         </div>
       </BrowserRouter>
-
     </div>
   );
 }

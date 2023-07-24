@@ -12,18 +12,19 @@ export async function getPersonalChats(email: string) {
 
     for (const personalMessage of personalResponse) {
       if (
-        email !== personalMessage["receiverEmail"] && !personalChatSet.has(personalMessage["receiverEmail"])
+        email !== personalMessage["receiverEmail"] &&
+        !personalChatSet.has(personalMessage["receiverEmail"])
       ) {
         personalChatSet.add(personalMessage["receiverEmail"]);
       } else if (
-        email !== personalMessage["senderEmail"] && !personalChatSet.has(personalMessage["senderEmail"])
+        email !== personalMessage["senderEmail"] &&
+        !personalChatSet.has(personalMessage["senderEmail"])
       ) {
         personalChatSet.add(personalMessage["senderEmail"]);
       }
     }
 
     return personalChatSet;
-
   } catch (error) {
     throw new Error("getPersonalChats caused an error " + error);
   }

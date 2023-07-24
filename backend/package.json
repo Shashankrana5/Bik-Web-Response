@@ -21,7 +21,8 @@
   },
   "scripts": {
     "start": "npm install && npx ts-node server.ts",
-    "dev": "nodemon server.ts"
+    "dev": "nodemon server.ts",
+    "lint": "eslint '**/*.{ts,tsx}'"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
@@ -29,6 +30,10 @@
     "@types/express": "^4.17.12",
     "@types/jsonwebtoken": "^8.5.2",
     "@types/node": "^15.12.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "prettier": "^3.0.0",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.4"
   }

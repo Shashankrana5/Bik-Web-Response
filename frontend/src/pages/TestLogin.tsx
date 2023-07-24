@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "../App.css";
 
-const TestLogin =  () => {
+const TestLogin = () => {
   const [loginData, setLoginData] = useState();
   const [sessionData, setSessionData] = useState();
   const [logoutData, setLogoutData] = useState();
@@ -16,16 +16,19 @@ const TestLogin =  () => {
     };
     const email = target.email.value;
     const password = target.password.value;
-   
+
     axios
       .post(
         `http://localhost:1913/api/session`,
         { email, password },
         {
           withCredentials: true,
-        }
+        },
       )
-      .then((res) => {console.log(res.data); setLoginData(res.data)})
+      .then((res) => {
+        console.log(res.data);
+        setLoginData(res.data);
+      })
       .catch((error) => setLoginData(error.message));
   }
 
@@ -47,11 +50,9 @@ const TestLogin =  () => {
       .catch((error) => setLogoutData(error.message));
   }
 
-
-
-    return(
-      <div>
-        <div className="wrapper">
+  return (
+    <div>
+      <div className="wrapper">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">Email</label>
@@ -78,14 +79,13 @@ const TestLogin =  () => {
 
         <div className="data">{JSON.stringify(logoutData, null, 4)}</div>
       </div>
-      </div>
-    )
-   
-}
+    </div>
+  );
+};
 
 export default TestLogin;
 // const App: React.FunctionComponent<{ message: string }> = ({ message }) => (
-//     return 
+//     return
 //     (<div>{message}</div>)
 //   );
 
@@ -93,13 +93,13 @@ export default TestLogin;
 // type AppProps = {
 //     message: string;
 //   }; /* use `interface` if exporting so that consumers can extend */
-  
+
 //   // Easiest way to declare a Function Component; return type is inferred.
-//   const App = ({ message }: AppProps) => 
+//   const App = ({ message }: AppProps) =>
 //   <div>{message}</div>;
-  
+
 //   // you can choose annotate the return type so an error is raised if you accidentally return some other type
 //   const App = ({ message }: AppProps): JSX.Element => <div>{message}</div>;
-  
+
 //   // you can also inline the type declaration; eliminates naming the prop types, but looks repetitive
 //   const App

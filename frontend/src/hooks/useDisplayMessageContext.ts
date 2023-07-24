@@ -1,12 +1,13 @@
-import { useContext } from "react"
-import { DisplayMessageContext } from "../contexts/DisplayMessageContext"
+import { useContext } from "react";
+import { DisplayMessageContext } from "../contexts/DisplayMessageContext";
 
 export const useDisplayMessageContext = () => {
+  const context = useContext(DisplayMessageContext);
 
-    const context = useContext(DisplayMessageContext);
-
-    if(!context){
-        throw Error("useDisplayMessageContext needs to be wrapped around DisplayMessageContextProvider");
-    }
-    return context;
-}
+  if (!context) {
+    throw Error(
+      "useDisplayMessageContext needs to be wrapped around DisplayMessageContextProvider",
+    );
+  }
+  return context;
+};

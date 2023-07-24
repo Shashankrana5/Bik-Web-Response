@@ -17,39 +17,44 @@ import { getSessionData } from "../utils/getSessionData";
 
 //ticket/:id page
 const TicketDetails = () => {
+  const { ticketNumber } = useParams();
+  const [ticketDetails, setTicketDetails] = useState<Ticket | null>(null);
+  const [client, setClient] = useState<UserField | null>(null);
+  const { setCurrentUser } = useCurrentUserContext();
 
-    const { ticketNumber } = useParams();
-    const [ ticketDetails, setTicketDetails ] = useState<Ticket|null>(null);
-    const [ client, setClient ] = useState<UserField | null>(null);
-    const {setCurrentUser } = useCurrentUserContext();
+  useEffect(() => {
+    const sessionCheck = async () => {
+      const response = await getSessionData();
+      setCurrentUser(response?.data.user);
+    };
+    sessionCheck();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    useEffect(() => {
-        const sessionCheck = async() => {
-            const response = await getSessionData();
-            setCurrentUser(response?.data.user);
-        }
-        sessionCheck();
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const fetchTicketDetails = async () => {
+      const response = await axios.get(
+        `http://localhost:1913/api/ticket/getbyticketnumber/${ticketNumber}`,
+      );
+      setTicketDetails(response.data.ticket);
+      setClient(response.data.client);
+    };
+    if (ticketNumber) {
+      fetchTicketDetails();
+    }
+  }, [ticketNumber]);
 
-    useEffect(() => {
-        const fetchTicketDetails = async() => {
-            const response = await axios.get(`http://localhost:1913/api/ticket/getbyticketnumber/${ticketNumber}`)
-            setTicketDetails(response.data.ticket);
-            setClient(response.data.client);
-        }
-        if(ticketNumber){
-            fetchTicketDetails()
-        }
-    }, [ticketNumber])
+  return (
+    <div id="ticket-details-main">
+      <ClientDetails ticketDetails={ticketDetails} client={client} />
 
-    return <div id="ticket-details-main">
-            
-            <ClientDetails ticketDetails={ticketDetails} client={client} />
-            
-            <div id="ticket-content" className="min-h-[25vh] min-w-[25vw] border border-green-300">
-                <TicketContent />
-            </div>
+      <div
+        id="ticket-content"
+        className="min-h-[25vh] min-w-[25vw] border border-green-300"
+      >
+        <TicketContent />
+      </div>
     </div>
-}
+  );
+};
 
 export default TicketDetails;

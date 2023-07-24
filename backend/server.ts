@@ -25,7 +25,7 @@ app.use(
   cors({
     credentials: true,
     origin: `http://localhost:${process.env.CLIENT_PORT}`,
-  })
+  }),
 );
 
 const chatServer = http.createServer(app);
@@ -34,14 +34,12 @@ new ChatServerSocket(chatServer);
 
 function main() {
   mongoose
-    .connect(
-      process.env.MONGO_URI!
-    )
+    .connect(process.env.MONGO_URI!)
     .then(() => {
       app.listen(process.env.SERVER_PORT, () =>
         console.log(
-          `Connected to the database and my server is running in port ${process.env.SERVER_PORT}`
-        )
+          `Connected to the database and my server is running in port ${process.env.SERVER_PORT}`,
+        ),
       );
     })
     .catch((error) => {
@@ -54,7 +52,6 @@ function main() {
   categoryRoutes(app);
   ticketRoutes(app);
   searchRoutes(app);
-  
 }
 
 main();

@@ -19,7 +19,7 @@ export async function createSessionHandler(req: Request, res: Response) {
   // create access token
   const accessToken = signJWT(
     { email: user.email, name: user.fullName, sessionId: session.sessionId },
-    "5s"
+    "5s",
   );
 
   const refreshToken = signJWT({ sessionId: session.sessionId }, "1y");
