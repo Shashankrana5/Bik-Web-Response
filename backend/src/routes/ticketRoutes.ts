@@ -4,6 +4,7 @@ import {
   getTicketByTicketNumber,
   getTicketByAssignedTo,
   createTicketMessage,
+  updateTicket,
 } from "../controllers/ticketController";
 
 function ticketRoutes(app: Express) {
@@ -14,6 +15,7 @@ function ticketRoutes(app: Express) {
   );
   app.post("/api/ticket/getbyassignee", getTicketByAssignedTo);
   app.post("/api/ticket/createticketmessage", createTicketMessage);
+  app.post("/api/ticket/updateticket", updateTicket);
 }
 
 export default ticketRoutes;

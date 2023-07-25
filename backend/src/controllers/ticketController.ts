@@ -76,3 +76,41 @@ export const createTicketMessage = async (req: Request, res: Response) => {
     return res.status(400).json({ errorMessage: error });
   }
 };
+
+export const updateTicket = async (req: Request, res: Response) => {
+  interface UpdateTicketType {
+    email?: string;
+    clientName?: string;
+    assignedTo?: Object;
+    subject?: string;
+    status?: string;
+    client?: string;
+  }
+  const { ticketNumber, email, clientName, assignedTo, subject, status, client } =
+    req.body;
+
+  const updatedValues: UpdateTicketType = {};
+
+  if (email) updatedValues.email = email;
+
+  if (clientName) updatedValues.clientName = clientName;
+
+  if (assignedTo) updatedValues.assignedTo = assignedTo;
+
+  if (subject) updatedValues.subject = subject;
+
+  if (status) updatedValues.status = status;
+
+  if(client) updatedValues.client = client;
+
+  try {
+    const ticket = await Ticket.findOneAndUpdate(
+      { ticketNumber },
+      updatedValues,
+    );
+
+    return res.status(200).json(ticket);
+  } catch (error) {
+    return res.status(400).json({ errorMessage: error });
+  }
+};

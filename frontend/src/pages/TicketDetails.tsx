@@ -19,7 +19,7 @@ import { getSessionData } from "../utils/getSessionData";
 const TicketDetails = () => {
   const { ticketNumber } = useParams();
   const [ticketDetails, setTicketDetails] = useState<Ticket | null>(null);
-  const [client, setClient] = useState<UserField | null>(null);
+  const [client, setClient] = useState<UserField>({_id: "", email: "", fullName: "", role: ""});
   const { setCurrentUser } = useCurrentUserContext();
 
   useEffect(() => {
@@ -45,8 +45,13 @@ const TicketDetails = () => {
 
   return (
     <div id="ticket-details-main">
-      <ClientDetails ticketDetails={ticketDetails} client={client} />
-
+      <div id="client-details-container" className="p-3">
+        <ClientDetails
+          ticketDetails={ticketDetails}
+          currentClient={client}
+          setCurrentClient={setClient}
+        />
+      </div>
       <div
         id="ticket-content"
         className="min-h-[25vh] min-w-[25vw] border border-green-300"
