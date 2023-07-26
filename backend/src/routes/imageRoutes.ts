@@ -10,7 +10,10 @@ const storage = new GridFsStorage({
   file: (req, file) => {
     //If it is an image, save to photos bucket
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+      console.log(file)
+      console.log(req)
       return {
+        shashank: "rana",
         bucketName: "photos",
         filename: `${Date.now()}_${file.originalname}`,
       }
@@ -23,8 +26,9 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 
+
 export default function imageRoutes(app: Express) {
-  app.post("/api/image/uploadavatar", upload.single("avatar"),uploadAvatar);
+  app.post("/api/image/uploadavatar", uploadAvatar);
   app.get("/api/image/getallimages", getAllImages);
   app.get("/api/image/getbyfilename/:filename", getImageByFilename)
 }

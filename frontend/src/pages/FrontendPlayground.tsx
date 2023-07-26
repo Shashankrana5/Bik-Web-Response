@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState } from "react";
 import { TiEdit } from "react-icons/ti";
 import "../css/frontendplayground.css"
