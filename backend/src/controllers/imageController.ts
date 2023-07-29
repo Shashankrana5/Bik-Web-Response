@@ -1,11 +1,18 @@
 import { Request, Response } from "express";
-import { MongoClient, GridFSBucket } from "mongodb";
+import { MongoClient, GridFSBucket, ObjectId } from "mongodb";
 import multer from "multer";
 import { GridFsStorage } from "multer-gridfs-storage";
+import User from "../models/User";
+
+
+const mongoClient = new MongoClient(
+  "mongodb+srv://shashankrana316:1234@ticketdb.6ejh54s.mongodb.net/?retryWrites=true&w=majority",
+);
 
 const storage = new GridFsStorage({
   url: "mongodb+srv://shashankrana316:1234@ticketdb.6ejh54s.mongodb.net/?retryWrites=true&w=majority",
   file: (req, file) => {
+ 
     //If it is an image, save to photos bucket
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
       return {
@@ -19,11 +26,34 @@ const storage = new GridFsStorage({
   },
 });
 
+
 const upload = multer({ storage }).single("file");
 
+
+
 export const uploadAvatar = async (req: Request, res: Response) => {
-  upload(req, res, (err) => {
+  
+  upload(req, res, async(err) => {
+    const clientId = req.body.clientId;
     const file = req.file;
+
+    const user = await User.findOne({_id: clientId});
+    await mongoClient.connect();
+
+    if(user && user.avatarId){
+      const database = mongoClient.db("test");
+      const imageBucket = new GridFSBucket(database, {
+      bucketName: "photos",
+    });
+      await imageBucket.delete(new ObjectId(user.avatarId));
+
+    }
+    if(user && file) {
+      await User.findOneAndUpdate({_id: user._id}, 
+      // @ts-ignore
+      {avatarId: file.id})
+
+    }
 
     res.send({
       message: "Uploaded",
@@ -35,9 +65,7 @@ export const uploadAvatar = async (req: Request, res: Response) => {
     });
   });
 };
-const mongoClient = new MongoClient(
-  "mongodb+srv://shashankrana316:1234@ticketdb.6ejh54s.mongodb.net/?retryWrites=true&w=majority",
-);
+
 
 export const getAllImages = async (req: Request, res: Response) => {
   try {

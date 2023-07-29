@@ -29,6 +29,7 @@ export interface UserType {
   fullName: string;
   email: string;
   role: string;
+  avatarId?: string;
 }
 
 export interface UserShortHandType {

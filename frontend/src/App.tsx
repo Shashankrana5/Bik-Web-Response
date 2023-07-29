@@ -11,6 +11,7 @@ import Ticket from "./pages/Ticket";
 import TicketDetails from "./pages/TicketDetails";
 import { FrontendPlayground } from "./pages/FrontendPlayground";
 import { FrontendPlayground2 } from "./pages/FrontendPlayground2";
+import { Profile } from "./pages/Profile";
 
 function App() {
   const [currentUser, setCurrentUser] = useState<UserField | null>(null);
@@ -29,6 +30,7 @@ function App() {
               <Route path="/chat" element={<Chat />} />
               <Route path="/ticket" element={<Ticket />} />
               <Route path="/ticket/:ticketNumber" element={<TicketDetails />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </CurrentUserContext.Provider>
         </div>
