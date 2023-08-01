@@ -8,4 +8,5 @@ export interface UserField {
   fullName: string;
   email: string;
   role: string;
+  avatarId?: string;
 }

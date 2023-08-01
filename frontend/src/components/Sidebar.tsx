@@ -312,7 +312,7 @@ export const Sidebar = (props: SidebarProps) => {
               </div>
               {showChat === true && (
                 <div id="chatbox-container" className="p-0">
-                  <div className="left-[24.9%] absolute top-[6rem] bg-orange-100 drop-shadow-2xl rounded-lg">
+                  <div className="left-[24.9%] absolute top-[6rem] bg-orange-50 drop-shadow-2xl rounded-lg">
                     <ChatBox />
                   </div>
                   <div className="show-left-arrow right-[75%] absolute after:drop-shadow-2xl" />

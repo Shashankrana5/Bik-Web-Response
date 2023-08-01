@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UserField } from "../utils/ChatTypes/UserTypes";
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { Group } from "../utils/ChatTypes/GroupChatTypes";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 import { useActiveChatsContext } from "../hooks/useActiveChatsContext";
+import { Buffer } from "buffer";
 
 interface DisplayChatProps {
   selectedChat: SelectedChat | null;
@@ -19,6 +20,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
   const { currentUser } = useCurrentUserContext();
   const { chats, displayChatDispatch } = useDisplayChatContext();
   const { activeChats } = useActiveChatsContext();
+  const [ avatarPicture, setAvatarPicture ] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchAllChats() {
@@ -29,6 +31,17 @@ export const DisplayChat = (props: DisplayChatProps) => {
         displayChatDispatch({ type: "SET_CHAT", payload: response.data });
       }
     }
+    const fetchImage = async() => {
+      if(selectedChat && selectedChat.selected && selectedChat.selected.avatarId){
+        const response = await axios.get("http://localhost:1913/api/image/getbyid/"+selectedChat.selected.avatarId, {responseType: "arraybuffer"});
+        let base64ImageString = Buffer.from(response.data, "binary").toString(
+          "base64",
+        );
+    
+        setAvatarPicture(base64ImageString);
+      }
+    }
+    fetchImage();
     fetchAllChats();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
@@ -53,18 +66,30 @@ export const DisplayChat = (props: DisplayChatProps) => {
       className="w-[100%] h-[100%] flex flex-col items-center gap-1"
     >
       {chats &&
-        Object.keys(chats["AllChats"]).map((key) => (
+        Object.keys(chats["AllChats"]).map((key) => { 
+          console.log(chats["AllChats"].length)
+          return (
           <div
             id="display-chat-allchats"
-            className="border flex w-[75%] h-[10%] rounded-lg border-black relative"
+            className="border flex w-[75%] h-[5vh] rounded-lg border-black relative"
             key={chats["AllChats"][Number(key)]._id}
           >
             <div className="profile-picture-status-container h-[100%] maxh-h-[100%]">
-              <img
+              {/* <img
                 alt=""
                 className="profile-picture-img h-[100%]"
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAf9JREFUaEPtmP0xRTEQxc+rgBKoABWgAqMCVIAOqIAO0AEVoAJUQAlUwByTO/Pwkmx2D5k77s7cP95Mknd+2Y8kO8PIbTZy/ZgAenvwNzywBWAPwHr6yPiYvisAd0poJQAFnwEgQMkIcJyAwiwqAIq/BbBsVPQKYFsBoQBoFT8wSiAUANz5WtjkHMNwoifcFgWgcAJEjADuxI4CXKaKEwFgZdr3LhAFeJgrlV4NLLEb3slRgHfvH3+b59bhnpgEjB6A7l8LeuEpEoZRD4w+iUdfRhk9rOGbzjC6DxyCn38ZDSGuwasEIZYaId6SeOaR2xQAHgiJeJUHht2jJ84N4cSwOVLcRNUAAwgTm1cDAg0llqWSocKq5b73LIozVQi5Yzg6cQKI7mB0/r/3ABN1J9Vzvof522JMaD4pmdA3kYrk9QDbJicAVixqDWNeUqfi2jD2y5BWAAq+iB7/BZH0yAEAApmsBcDbfTAJmRvU1K2wAlA8n49/aXxmVu9JFgCGDcVbm1YqSHqCEMVwsgBE+j5RmGrfqAbAOw2TtqftAshWpxrAs7BUejeBIbSam1wC6JG4OZ3ZhC4B8G5/6N028bzTdHD+WLYEEHnrivUj+3YuASjahiqQbPuxBKDquqkgFmqdAFTba1in2QOGNfsPqR1k/RVWFEwAvV00eaC3Bz4ALkdQMYEpwEIAAAAASUVORK5CYII="
-              />
+              /> */}
+                {/* {avatarPicture ?<img src={`data:image/jpeg;base64,${avatarPicture}`} className="profile-picture-img h-[100%]"/>:                  <img
+    src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
+    className="h-[100%] rounded-full shadow-lg"
+    alt="Avatar" />} */}
+              {chats["AllChats"][Number(key)].avatarId ? <></>:
+                <img
+                src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
+                className="h-[100%] rounded-full shadow-lg"
+                alt="Avatar" />
+              }
               {activeChats &&
                 activeChats
                   .filter(
@@ -90,7 +115,9 @@ export const DisplayChat = (props: DisplayChatProps) => {
                   chats["AllChats"][Number(key)].fullName}
             </button>
           </div>
-        ))}
+        )
+                }
+        )}
     </div>
   );
 };

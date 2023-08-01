@@ -5,4 +5,5 @@ export interface Group {
   users: User[];
   admins: User[];
   groupName: string;
+  avatarId?: string;
 }

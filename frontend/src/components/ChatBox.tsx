@@ -59,20 +59,18 @@ const ChatBox = () => {
   }, [personalChatSocket]);
 
   return (
-    <div className="chatbox-main max-w-4xl w-[35vw]">
+    <div className="chatbox-main max-w-4xl w-[35vw] flex flex-col">
       <ChatNavbar
         selectedChat={selectedChat}
         setSelectedChat={setSelectedChat}
       />
-      <div>
-        <div>
+        {/* <div>
           {activeChats &&
             Array.from(activeChats).map((key) => {
-              return <div>{key.fullName}</div>;
+              return <div key = {key._id}>{key.fullName}</div>;
             })}
-        </div>
-      </div>
-      <div id="display-container" className="h-[100%]">
+      </div> */}
+      <div id="display-container" className="h-[85%] w-[100%]">
         {selectedChat !== null ? (
           <DisplayMessage
             selectedChat={selectedChat}
