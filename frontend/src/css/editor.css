@@ -1,3 +1,18 @@
 .tox-statusbar__branding{
     display:none
 }
+/* li {
+    display: list-item;
+    list-style-position: inside;
+  } */
+
+ol {
+    list-style-position: inside;
+
+    list-style-type: decimal;
+}
+ul {
+    list-style-position: inside;
+    list-style-type:disc;
+
+}

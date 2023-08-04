@@ -54,12 +54,15 @@ const TicketContent = () => {
           ticketContent.map((ticket) => {
             return (
               <div key={ticket._id}>
-                <span>{ticket.senderName}</span>
-                <span>{ticket.content}</span>
+                {/* <span>{ticket.senderName}</span>
+                <div dangerouslySetInnerHTML={{__html: ticket.content}}/> */}
+                <div>{ticket.senderName}</div>
+              <div dangerouslySetInnerHTML={{__html: ticket.content}}/>
               </div>
             );
           })}
       </div>
+      
       <SendTicketMessage ticketSocket={ticketSocket} />
     </div>
   );

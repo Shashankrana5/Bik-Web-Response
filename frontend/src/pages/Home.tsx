@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getSessionData } from "../utils/getSessionData";
 import Sidebar from "../components/Sidebar";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
-// import { TicketCreationForm } from "../components/TicketCreationForm";
+import { TicketCreationForm } from "../components/TicketCreationForm";
 import "../css/home.css";
 
 const Home = () => {
@@ -66,10 +66,10 @@ const Home = () => {
                         </button>
                       </div>
                     </div>
-                    {/* <TicketCreationForm
+                    <TicketCreationForm
                     // createTicket={createTicket}
                     // setCreateTicket={setCreateTicket}
-                    /> */}
+                    />
                   </div>
                   {/* <UserSearchBar /> */}
                   {/* <div className="show-tickets">
