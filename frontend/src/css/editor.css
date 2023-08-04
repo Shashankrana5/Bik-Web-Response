@@ -1,5 +1,5 @@
-.tox-statusbar__branding{
-    display:none
+.tox-statusbar__branding {
+  display: none;
 }
 /* li {
     display: list-item;
@@ -7,12 +7,11 @@
   } */
 
 ol {
-    list-style-position: inside;
+  list-style-position: inside;
 
-    list-style-type: decimal;
+  list-style-type: decimal;
 }
 ul {
-    list-style-position: inside;
-    list-style-type:disc;
-
+  list-style-position: inside;
+  list-style-type: disc;
 }

@@ -3,18 +3,14 @@ import { MongoClient, GridFSBucket, ObjectId } from "mongodb";
 import multer from "multer";
 import { GridFsStorage } from "multer-gridfs-storage";
 import User from "../models/User";
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 dotenv.config();
 
-
-const mongoClient = new MongoClient(
-  process.env.MONGO_URI!,
-);
-mongoClient.connect()
+const mongoClient = new MongoClient(process.env.MONGO_URI!);
+mongoClient.connect();
 const storage = new GridFsStorage({
   url: process.env.MONGO_URI!,
   file: (req, file) => {
- 
     //If it is an image, save to photos bucket
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
       return {
@@ -28,33 +24,29 @@ const storage = new GridFsStorage({
   },
 });
 
-
 const upload = multer({ storage }).single("file");
 
-
-
 export const uploadAvatar = async (req: Request, res: Response) => {
-  
-  upload(req, res, async(err) => {
+  upload(req, res, async (err) => {
     const clientId = req.body.clientId;
     const file = req.file;
 
-    const user = await User.findOne({_id: clientId});
+    const user = await User.findOne({ _id: clientId });
     await mongoClient.connect();
 
-    if(user && user.avatarId){
+    if (user && user.avatarId) {
       const database = mongoClient.db("test");
       const imageBucket = new GridFSBucket(database, {
-      bucketName: "photos",
-    });
+        bucketName: "photos",
+      });
       await imageBucket.delete(new ObjectId(user.avatarId));
-
     }
-    if(user && file) {
-      await User.findOneAndUpdate({_id: user._id}, 
-      // @ts-ignore
-      {avatarId: file.id})
-
+    if (user && file) {
+      await User.findOneAndUpdate(
+        { _id: user._id },
+        // @ts-ignore
+        { avatarId: file.id },
+      );
     }
 
     res.send({
@@ -67,7 +59,6 @@ export const uploadAvatar = async (req: Request, res: Response) => {
     });
   });
 };
-
 
 export const getAllImages = async (req: Request, res: Response) => {
   try {
@@ -133,8 +124,7 @@ export const getImageByFilename = async (req: Request, res: Response) => {
   }
 };
 
-export const getImageById = async(req: Request, res: Response) => {
-
+export const getImageById = async (req: Request, res: Response) => {
   try {
     // await mongoClient.connect()
     const database = mongoClient.db("test");
@@ -143,7 +133,7 @@ export const getImageById = async(req: Request, res: Response) => {
     });
 
     let downloadStream = imageBucket.openDownloadStream(
-        new ObjectId(req.params._id)
+      new ObjectId(req.params._id),
     );
 
     downloadStream.on("data", function (data) {
@@ -164,5 +154,4 @@ export const getImageById = async(req: Request, res: Response) => {
       error,
     });
   }
-  
-}
+};

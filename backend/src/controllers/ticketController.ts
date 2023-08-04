@@ -86,8 +86,15 @@ export const updateTicket = async (req: Request, res: Response) => {
     status?: string;
     client?: string;
   }
-  const { ticketNumber, email, clientName, assignedTo, subject, status, client } =
-    req.body;
+  const {
+    ticketNumber,
+    email,
+    clientName,
+    assignedTo,
+    subject,
+    status,
+    client,
+  } = req.body;
 
   const updatedValues: UpdateTicketType = {};
 
@@ -101,7 +108,7 @@ export const updateTicket = async (req: Request, res: Response) => {
 
   if (status) updatedValues.status = status;
 
-  if(client) updatedValues.client = client;
+  if (client) updatedValues.client = client;
 
   try {
     const ticket = await Ticket.findOneAndUpdate(

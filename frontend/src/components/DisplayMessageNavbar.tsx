@@ -13,44 +13,64 @@ interface DisplayMessageNavbarProps {
 }
 export const DisplayMessageNavbar = (props: DisplayMessageNavbarProps) => {
   const { selectedChat, setSelectedChat } = props;
-  const [ avatarPicture, setAvatarPicture ] = useState<string | null>(null);
+  const [avatarPicture, setAvatarPicture] = useState<string | null>(null);
   useEffect(() => {
-    const fetchImage = async() => {
-    if(selectedChat && selectedChat.selected && selectedChat.selected.avatarId){
-      const response = await axios.get("http://localhost:1913/api/image/getbyid/"+selectedChat.selected.avatarId, {responseType: "arraybuffer"});
-      let base64ImageString = Buffer.from(response.data, "binary").toString(
-        "base64",
-      );
-  
-      setAvatarPicture(base64ImageString);
-    }
-  }
-  fetchImage();
-  }, [selectedChat])
+    const fetchImage = async () => {
+      if (
+        selectedChat &&
+        selectedChat.selected &&
+        selectedChat.selected.avatarId
+      ) {
+        const response = await axios.get(
+          "http://localhost:1913/api/image/getbyid/" +
+            selectedChat.selected.avatarId,
+          { responseType: "arraybuffer" },
+        );
+        let base64ImageString = Buffer.from(response.data, "binary").toString(
+          "base64",
+        );
+
+        setAvatarPicture(base64ImageString);
+      }
+    };
+    fetchImage();
+  }, [selectedChat]);
   const handleClickBack = () => {
     setSelectedChat(null);
   };
   return (
     <div className="flex sm:items-center justify-between border-b-2 border-gray-200 h-[20%] w-[90%] p-2">
       <div className="flex gap-2 items-center h-[100%]">
-        <button onClick = {handleClickBack}>
+        <button onClick={handleClickBack}>
           <FaAngleLeft className="h-9 w-9 text-gray-700 font-medium p-0" />
         </button>
         <div className="relative flex items-center space-x-4 h-[100%]">
           <div className="relative h-[100%]">
-            {avatarPicture ?<img src={`data:image/jpeg;base64,${avatarPicture}`} className="profile-picture-img h-[100%]"/>:<img
-              src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-              alt=""
-              // className="w-8 sm:w-16 h-8 sm:h-16 rounded-full"
-              className="profile-picture-img h-[100%]"
-            />}
+            {avatarPicture ? (
+              <img
+                src={`data:image/jpeg;base64,${avatarPicture}`}
+                className="profile-picture-img h-[100%]"
+                alt="user's avatar"
+              />
+            ) : (
+              <img
+                src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
+                alt="user's avatar"
+                // className="w-8 sm:w-16 h-8 sm:h-16 rounded-full"
+                className="profile-picture-img h-[100%]"
+              />
+            )}
 
             <div className="status-circle active"></div>
           </div>
           <div className="flex flex-col leading-tight">
             <div className="text-2xl mt-1 flex items-center">
               {/* TODO: status and picture for group type. */}
-              <span className="text-gray-700 mr-3">{selectedChat?.chatType === "Personal" ? selectedChat?.selected.fullName: null}</span>
+              <span className="text-gray-700 mr-3">
+                {selectedChat?.chatType === "Personal"
+                  ? selectedChat?.selected.fullName
+                  : null}
+              </span>
             </div>
             {/* <span className="text-lg text-gray-600">Junior Developer</span> */}
           </div>

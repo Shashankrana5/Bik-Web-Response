@@ -39,7 +39,7 @@ const Login = () => {
             <img
               src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
               className="w-full"
-              alt="Sample image"
+              alt="default-display"
             />
           </div>
 
@@ -125,7 +125,7 @@ const Login = () => {
               <TEInput
                 type="password"
                 label="Password"
-                id = "loginPasswordField"
+                id="loginPasswordField"
                 className="mb-6"
                 size="lg"
               ></TEInput>

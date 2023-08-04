@@ -19,7 +19,12 @@ import { getSessionData } from "../utils/getSessionData";
 const TicketDetails = () => {
   const { ticketNumber } = useParams();
   const [ticketDetails, setTicketDetails] = useState<Ticket | null>(null);
-  const [client, setClient] = useState<UserField>({_id: "", email: "", fullName: "", role: ""});
+  const [client, setClient] = useState<UserField>({
+    _id: "",
+    email: "",
+    fullName: "",
+    role: "",
+  });
   const { setCurrentUser } = useCurrentUserContext();
 
   useEffect(() => {
@@ -44,19 +49,20 @@ const TicketDetails = () => {
   }, [ticketNumber]);
 
   return (
-    <div id="ticket-details-main">
-      <div id="client-details-container" className="p-3">
-        <ClientDetails
-          ticketDetails={ticketDetails}
-          currentClient={client}
-          setCurrentClient={setClient}
-        />
+    <div id="ticket-details-main" className="flex flex-row">
+      <div id="left-container" className="min-w-[30vw] max-w-[35vw]">
+        <div id="client-details-container" className="p-3">
+          <ClientDetails
+            ticketDetails={ticketDetails}
+            currentClient={client}
+            setCurrentClient={setClient}
+          />
+        </div>
       </div>
-      <div
-        id="ticket-content"
-        className="min-h-[25vh] min-w-[25vw] border border-green-300"
-      >
-        <TicketContent />
+      <div id="right-container" className="flex-grow">
+        <div id="ticket-content" className="w-fill">
+          {ticketDetails && <TicketContent ticketDetails={ticketDetails} />}
+        </div>
       </div>
     </div>
   );

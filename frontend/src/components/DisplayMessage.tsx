@@ -106,13 +106,14 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
                     </div>
                     {avatarPicture ? (
                       <img
+                        alt="user's avatar"
                         src={`data:image/jpeg;base64,${avatarPicture}`}
                         className="w-6 h-6 rounded-full order-2"
                       />
                     ) : (
                       <img
                         src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-                        alt="default-picture"
+                        alt="default-avatar"
                         className="w-6 h-6 rounded-full order-2"
                       />
                     )}
@@ -141,13 +142,14 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
                     {selectedChatAvatarPicture ? (
                       <img
                         src={`data:image/jpeg;base64,${selectedChatAvatarPicture}`}
-                         className="w-6 h-6 rounded-full order-1"
+                        className="w-6 h-6 rounded-full order-1"
+                        alt="user's avatar"
                       />
                     ) : (
                       <img
                         src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-                        alt="default-picture"
-                         className="w-6 h-6 rounded-full order-1"
+                        alt="default-avatar"
+                        className="w-6 h-6 rounded-full order-1"
                       />
                     )}
                   </div>

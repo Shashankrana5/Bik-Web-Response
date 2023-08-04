@@ -25,8 +25,8 @@ const userSchema = new Schema(
     },
     avatarId: {
       type: String,
-      require: false
-    }
+      require: false,
+    },
   },
   { timestamps: true },
 );

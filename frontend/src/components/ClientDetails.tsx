@@ -4,6 +4,7 @@ import { Ticket } from "../utils/TicketTypes/Ticket";
 import axios from "axios";
 import { TiEdit } from "react-icons/ti";
 import { useParams } from "react-router-dom";
+import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 
 interface ClientDetailsProps {
   currentClient: UserField;
@@ -13,11 +14,13 @@ interface ClientDetailsProps {
 
 export const ClientDetails = (props: ClientDetailsProps) => {
   const { currentClient, setCurrentClient } = props;
-  const [ currentSelectedClient, setCurrentSelectedClient ] = useState<UserField | null>(null);
+  const [currentSelectedClient, setCurrentSelectedClient] =
+    useState<UserField | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dropdownOpenName, setDropdownOpenName] = useState(false);
   const [dropDownOpenEmail, setDropDownOpenEmail] = useState(false);
   const [searchResult, setSearchResult] = useState<UserField[] | null>(null);
+  const { currentUser } = useCurrentUserContext();
   const { ticketNumber } = useParams();
 
   let domNode = useClickOutside(() => {
@@ -30,21 +33,26 @@ export const ClientDetails = (props: ClientDetailsProps) => {
       setCurrentSelectedClient(user);
       setDropdownOpenName(false);
       setDropDownOpenEmail(false);
-      let emailInput = document.getElementById("edit-email") as HTMLInputElement;
+      let emailInput = document.getElementById(
+        "edit-email",
+      ) as HTMLInputElement;
       let nameInput = document.querySelector("#edit-name") as HTMLInputElement;
       emailInput.value = user.email;
       nameInput.value = user.fullName;
     }
   };
 
-  const handleUpdate = async() => {
-    if(currentSelectedClient){
+  const handleUpdate = async () => {
+    if (currentSelectedClient) {
       setCurrentClient(currentSelectedClient!);
-      await axios.post("http://localhost:1913/api/ticket/updateticket", { client: currentSelectedClient._id, clientName: currentSelectedClient.fullName, email: currentSelectedClient.email, ticketNumber })
-
+      await axios.post("http://localhost:1913/api/ticket/updateticket", {
+        client: currentSelectedClient._id,
+        clientName: currentSelectedClient.fullName,
+        email: currentSelectedClient.email,
+        ticketNumber,
+      });
     }
-
-  }
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -74,18 +82,20 @@ export const ClientDetails = (props: ClientDetailsProps) => {
   };
 
   return (
-    <div className="h-[35vh] w-[30vw] rounded-md shadow-lg">
+    <div className="h-[35vh] rounded-md shadow-lg">
       <div className="container mx-auto bg-white">
         <div className="flex items-center justify-end pr-4 pt-4">
-          <button
-            onClick={openModal}
-            className="bg-orange-400 hover:bg-orange-600 active:bg-orange-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-orange-500 px-4 py-2 text-white font-semibold text- tracking-wider uppercase rounded-md"
-          >
-            <div id="icon-edit-container" className="flex gap-1">
-              <TiEdit className="h-6 w-6 text-white"></TiEdit>
-              <div>Edit</div>
-            </div>
-          </button>
+          {currentUser?.role !== "ADMIN" ? null : (
+            <button
+              onClick={openModal}
+              className="bg-orange-400 hover:bg-orange-600 active:bg-orange-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-orange-500 px-4 py-2 text-white font-semibold text- tracking-wider uppercase rounded-md"
+            >
+              <div id="icon-edit-container" className="flex gap-1">
+                <TiEdit className="h-6 w-6 text-white"></TiEdit>
+                <div>Edit</div>
+              </div>
+            </button>
+          )}
         </div>
         <div className="mt-2">
           <div className="text-sm text-gray-500">

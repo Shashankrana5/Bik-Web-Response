@@ -15,7 +15,7 @@ const ChatBox = () => {
   const [groupChatSocket, setGroupChatSocket] = useState<Socket>();
   const { currentUser } = useCurrentUserContext();
   const { chats } = useDisplayChatContext();
-  const { activeChats, activeChatsDispatch } = useActiveChatsContext();
+  const { activeChatsDispatch } = useActiveChatsContext();
 
   useEffect(() => {
     if (currentUser) {
@@ -64,7 +64,7 @@ const ChatBox = () => {
         selectedChat={selectedChat}
         setSelectedChat={setSelectedChat}
       />
-        {/* <div>
+      {/* <div>
           {activeChats &&
             Array.from(activeChats).map((key) => {
               return <div key = {key._id}>{key.fullName}</div>;

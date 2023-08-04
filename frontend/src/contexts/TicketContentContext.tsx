@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-import { Ticket, TicketMessage } from "../utils/TicketTypes/Ticket";
+import { TicketMessage } from "../utils/TicketTypes/Ticket";
 
 type ActionType = {
   type: "SET_TICKET_CONTENT" | "CREATE_TICKET_CONTENT";

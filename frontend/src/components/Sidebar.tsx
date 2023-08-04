@@ -1,5 +1,6 @@
 import ChatBox from "./ChatBox";
 import "../css/sidebar.css";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   minimizeSidebar: boolean;
@@ -8,9 +9,16 @@ interface SidebarProps {
 }
 export const Sidebar = (props: SidebarProps) => {
   const { minimizeSidebar, showChat, setShowChat } = props;
+  const navigate = useNavigate();
 
   const handleChatsOnClick = () => {
     setShowChat((prev) => !prev);
+  };
+  const handleDoubleClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    destination: string,
+  ) => {
+    navigate(destination);
   };
   // return (
   //     <div id = "sidebar-main">
@@ -224,6 +232,7 @@ export const Sidebar = (props: SidebarProps) => {
             <div
               id="ticket-left-navbar"
               className="flex justify-start w-fit cursor-pointer"
+              onDoubleClick={(e) => handleDoubleClick(e, "/ticket")}
             >
               <svg
                 className="h-8"
@@ -284,6 +293,7 @@ export const Sidebar = (props: SidebarProps) => {
                 id="chat-left-navbar-content"
                 className="cursor-pointer flex justify-start w-fit "
                 onClick={handleChatsOnClick}
+                onDoubleClick={(e) => handleDoubleClick(e, "/chat")}
               >
                 <svg
                   className="h-8"
