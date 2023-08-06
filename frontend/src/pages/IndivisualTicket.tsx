@@ -7,6 +7,7 @@ import TicketContent from "../components/TicketContent";
 import { ClientDetails } from "../components/ClientDetails";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { getSessionData } from "../utils/getSessionData";
+import TicketDetails from "../components/TicketDetails";
 
 // ticketdetails (main page)
 //      clientDetails
@@ -16,7 +17,7 @@ import { getSessionData } from "../utils/getSessionData";
 //          send ticket message.
 
 //ticket/:id page
-const TicketDetails = () => {
+const IndivisualTicket = () => {
   const { ticketNumber } = useParams();
   const [ticketDetails, setTicketDetails] = useState<Ticket | null>(null);
   const [client, setClient] = useState<UserField>({
@@ -58,6 +59,12 @@ const TicketDetails = () => {
             setCurrentClient={setClient}
           />
         </div>
+        <div id="ticket-details-container" className = "p3">
+          <TicketDetails 
+                      ticketDetails={ticketDetails}
+                      currentClient={client}
+                      setCurrentClient={setClient}/>
+        </div>
       </div>
       <div id="right-container" className="flex-grow">
         <div id="ticket-content" className="w-fill">
@@ -68,4 +75,4 @@ const TicketDetails = () => {
   );
 };
 
-export default TicketDetails;
+export default IndivisualTicket;

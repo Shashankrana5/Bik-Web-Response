@@ -8,7 +8,7 @@ import { CurrentUserContext } from "./contexts/CurrentUserContext";
 import { useState } from "react";
 import { UserField } from "./utils/ChatTypes/UserTypes";
 import Ticket from "./pages/Ticket";
-import TicketDetails from "./pages/TicketDetails";
+import IndivisualTicket from "./pages/IndivisualTicket";
 import { FrontendPlayground } from "./pages/FrontendPlayground";
 import { FrontendPlayground2 } from "./pages/FrontendPlayground2";
 import { Profile } from "./pages/Profile";
@@ -29,7 +29,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/ticket" element={<Ticket />} />
-              <Route path="/ticket/:ticketNumber" element={<TicketDetails />} />
+              <Route path="/ticket/:ticketNumber" element={<IndivisualTicket />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
           </CurrentUserContext.Provider>
