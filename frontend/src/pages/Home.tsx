@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { getSessionData } from "../utils/getSessionData";
 import Sidebar from "../components/Sidebar";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
-import { TicketCreationForm } from "../components/TicketCreationForm";
+// import { TicketCreationForm } from "../components/TicketCreationForm";
 import "../css/home.css";
+import TicketWidget from "../components/TicketWidget";
+import SortableTable from "../components/SortableTable";
 
 const Home = () => {
   const { currentUser, setCurrentUser } = useCurrentUserContext();
@@ -66,11 +68,13 @@ const Home = () => {
                         </button>
                       </div>
                     </div>
-                    <TicketCreationForm
+                    {/* <TicketCreationForm
                     // createTicket={createTicket}
                     // setCreateTicket={setCreateTicket}
-                    />
+                    /> */}
                   </div>
+                  <TicketWidget />
+                  < SortableTable />
                   {/* <UserSearchBar /> */}
                   {/* <div className="show-tickets">
                   {tickets &&

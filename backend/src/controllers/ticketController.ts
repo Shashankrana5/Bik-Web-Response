@@ -85,7 +85,12 @@ export const updateTicket = async (req: Request, res: Response) => {
     subject?: string;
     status?: string;
     client?: string;
+    category?: CategoryType
   }
+     type CategoryType = {
+      _id: string,
+      category: string
+     }
   const {
     ticketNumber,
     email,
@@ -94,6 +99,7 @@ export const updateTicket = async (req: Request, res: Response) => {
     subject,
     status,
     client,
+    category
   } = req.body;
 
   const updatedValues: UpdateTicketType = {};
@@ -110,6 +116,7 @@ export const updateTicket = async (req: Request, res: Response) => {
 
   if (client) updatedValues.client = client;
 
+  if (category) updatedValues.category = category;
   try {
     const ticket = await Ticket.findOneAndUpdate(
       { ticketNumber },
@@ -121,3 +128,16 @@ export const updateTicket = async (req: Request, res: Response) => {
     return res.status(400).json({ errorMessage: error });
   }
 };
+
+
+export const getAllTickets = async(req: Request, res: Response) => {
+
+  try {
+
+    const response = await Ticket.find({});
+    return res.status(200).json(response);
+  }
+  catch(error){
+    return res.status(400).json({errorMessage: error})
+  }
+}

@@ -1,78 +1,148 @@
 /* eslint-disable */
-
-import { useState } from "react";
+import { Fragment, useEffect } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Editor } from "@tinymce/tinymce-react";
 import "../css/editor.css";
+import axios from "axios";
+import { Category, Ticket } from "../utils/TicketTypes/Ticket";
+import { MouseEventHandler, useCallback, useState } from "react";
 
 export const FrontendPlayground = () => {
-  const [value, setValue] = useState<string>("");
-  const [text, setText] = useState("");
-  const [html, setHtml] = useState("");
-  const log = () => {
-    if (text) {
-      console.log(text);
-    }
-    if (value) {
-      console.log(value);
-      setHtml(value);
-    }
-  };
+  const [tickets, setTickets] = useState<Ticket[]>();
+  type Data = Ticket[];
+  type SortKeys = keyof Ticket;
+  type SortOrder = "ascn" | "desc";
 
-  return (
-    <>
-      <Editor
-        id="tiny-editor"
-        apiKey="7rr86g3nuclc0x1y5gvq47ysqdt7gp8j2onq8aygur66m5yj"
-        // eslint-disable-next-line
-        onInit={(event, editor) => {
-          setText(editor.getContent({ format: "text" }));
-        }}
-        value={value}
-        init={{
-          height: 500,
-          menubar: false,
-          plugins: [
-            "advlist",
-            "autolink",
-            "lists",
-            "link",
-            "image",
-            "charmap",
-            "preview",
-            "anchor",
-            "searchreplace",
-            "visualblocks",
-            "code",
-            "fullscreen",
-            "insertdatetime",
-            "media",
-            "table",
-            "code",
-            "help",
-            "wordcount",
-          ],
-          toolbar:
-            "undo redo | " +
-            "bold italic forecolor | alignleft aligncenter " +
-            "alignright alignjustify | bullist numlist outdent indent | " +
-            "removeformat | help",
-          content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-        }}
-        onEditorChange={(newValue, editor) => {
-          setValue(newValue);
-          setText(editor.getContent({ format: "text" }));
-        }}
-      />
+  useEffect(() => {
+    const fetchTickets = async () => {
+      const response = await axios.get(
+        "http://localhost:1913/api/ticket/getall",
+      );
+      setTickets(response.data);
+    };
+    fetchTickets();
+  }, []);
 
-      <button onClick={log}>Log editor content</button>
-      <div>
-        {html && html.length > 0 ? (
-          <p className="Features" dangerouslySetInnerHTML={{ __html: html }} />
-        ) : (
-          <></>
-        )}
-      </div>
-    </>
-  );
+  function sortData({
+    tableData,
+    sortKey,
+    reverse,
+  }: {
+    tableData: Data;
+    sortKey: SortKeys;
+    reverse: boolean;
+  }) {
+    if (!sortKey) return tableData;
+
+    if (tickets) {
+      const sortedData = tickets.sort((a, b) => {
+        return a[sortKey] > b[sortKey] ? 1 : -1;
+      });
+
+      if (reverse) {
+        return sortedData.reverse();
+      }
+
+      return sortedData;
+    }
+
+    function SortButton({
+      sortOrder,
+      columnKey,
+      sortKey,
+      onClick,
+    }: {
+      sortOrder: SortOrder;
+      columnKey: SortKeys;
+      sortKey: SortKeys;
+      onClick: MouseEventHandler<HTMLButtonElement>;
+    }) {
+      return (
+        <button
+          onClick={onClick}
+          className={`${
+            sortKey === columnKey && sortOrder === "desc"
+              ? "sort-button sort-reverse"
+              : "sort-button"
+          }`}
+        >
+          ▲
+        </button>
+      );
+    }
+
+    function SortableTable() {
+      const [sortKey, setSortKey] = useState<SortKeys>("ticketNumber");
+      const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
+
+      const headers: { key: SortKeys; label: string }[] = [
+        { key: "_id", label: "ID" },
+        { key: "ticketNumber", label: "Ticket Number" },
+        { key: "clientName", label: "Client Name" },
+        { key: "email", label: "Email" },
+        { key: "status", label: "Status" },
+        { key: "subject", label: "Subject" },
+      ];
+
+      // const sortedData = useCallback(() => {
+      //   if (tickets)
+      //     sortData({
+      //       tableData: tickets,
+      //       sortKey,
+      //       reverse: sortOrder === "desc",
+      //     }),
+      //       [tickets, sortKey, sortOrder];
+      // });
+
+        const sortedData = useCallback(
+    () => sortData({ tableData: tickets!, sortKey, reverse: sortOrder === "desc" }), [tickets, sortKey, sortOrder]);
+      function changeSort(key: SortKeys) {
+        setSortOrder(sortOrder === "ascn" ? "desc" : "ascn");
+
+        setSortKey(key);
+      }
+
+      return (
+        <table>
+          <thead>
+            <tr>
+              {headers.map((row) => {
+                return (
+                  <td key={row.key}>
+                    {row.label}{" "}
+                    <SortButton
+                      columnKey={row.key}
+                      onClick={() => changeSort(row.key)}
+                      {...{
+                        sortOrder,
+                        sortKey,
+                      }}
+                    />
+                  </td>
+                );
+              })}
+            </tr>
+          </thead>
+
+          <tbody>
+            {sortedData()!.map((person) => {
+              return (
+                <tr key={person._id}>
+                  <td>{person._id}</td>
+                  <td>{person.clientName}</td>
+                  {/* <td>{person.first_name}</td>
+                  <td>{person.last_name}</td>
+                  <td>{person.email}</td>
+                  <td>{person.gender}</td>
+                  <td>{person.ip_address}</td> */}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      );
+    }
+  }
+  return <></>;
 };

@@ -48,7 +48,7 @@ export const SendTicketMessage = (props: SendTicketMessageProps) => {
     <form
       id="submit-ticket-message-main"
       onSubmit={handleSubmit}
-      className="p-4 pr-10"
+      className="p-4 pr-10 z-"
     >
       <Editor
         id="tiny-editor"

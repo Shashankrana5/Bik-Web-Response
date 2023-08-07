@@ -32,3 +32,5 @@ export interface TicketMessage {
   ticketNumber: string;
   invisible: boolean;
 }
+
+export type StatusType = "New"| "Assigned"| "In Progress"| "Updated By Client"| "Waiting for Client Resopnse"| "Completed";

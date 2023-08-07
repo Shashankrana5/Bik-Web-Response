@@ -15,3 +15,7 @@ ul {
   list-style-position: inside;
   list-style-type: disc;
 }
+
+.tox.tox-tinymce{
+  z-index: -1;
+}

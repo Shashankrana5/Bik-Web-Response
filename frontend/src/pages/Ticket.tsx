@@ -17,7 +17,6 @@ const Ticket = () => {
 
   return (
     <div>
-      Ticket page
       <DisplayTicket />
     </div>
   );

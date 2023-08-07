@@ -19,7 +19,7 @@ import TicketDetails from "../components/TicketDetails";
 //ticket/:id page
 const IndivisualTicket = () => {
   const { ticketNumber } = useParams();
-  const [ticketDetails, setTicketDetails] = useState<Ticket | null>(null);
+  const [ticketInfo, setTicketInfo] = useState<Ticket | null>(null);
   const [client, setClient] = useState<UserField>({
     _id: "",
     email: "",
@@ -41,7 +41,7 @@ const IndivisualTicket = () => {
       const response = await axios.get(
         `http://localhost:1913/api/ticket/getbyticketnumber/${ticketNumber}`,
       );
-      setTicketDetails(response.data.ticket);
+      setTicketInfo(response.data.ticket);
       setClient(response.data.client);
     };
     if (ticketNumber) {
@@ -54,21 +54,21 @@ const IndivisualTicket = () => {
       <div id="left-container" className="min-w-[30vw] max-w-[35vw]">
         <div id="client-details-container" className="p-3">
           <ClientDetails
-            ticketDetails={ticketDetails}
+            ticketDetails={ticketInfo}
             currentClient={client}
             setCurrentClient={setClient}
           />
         </div>
         <div id="ticket-details-container" className = "p3">
           <TicketDetails 
-                      ticketDetails={ticketDetails}
+                      ticketInfo={ticketInfo}
                       currentClient={client}
                       setCurrentClient={setClient}/>
         </div>
       </div>
       <div id="right-container" className="flex-grow">
         <div id="ticket-content" className="w-fill">
-          {ticketDetails && <TicketContent ticketDetails={ticketDetails} />}
+          {ticketInfo && <TicketContent ticketDetails={ticketInfo} />}
         </div>
       </div>
     </div>
