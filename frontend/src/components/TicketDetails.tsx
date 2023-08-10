@@ -68,8 +68,6 @@ const TicketDetails = (props: TicketDetailsProps) => {
         setDisplayStatus(ticketInfo.status)
     }
   }, [ticketInfo]);
-  //email: status
-  //name: assigned
 
   let domNode = useClickOutside(() => {
 
@@ -191,7 +189,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
       </div>
 
       <div
-        className={`fixed z-1 inset-0 overflow-y-auto ${
+        className={`fixed z-[2] inset-0 overflow-y-auto ${
           isModalOpen ? "" : "hidden"
         }`}
       >
@@ -241,6 +239,9 @@ const TicketDetails = (props: TicketDetailsProps) => {
                             className="relative inline-block text-left w-[100%]"
                           >
                             <div>
+                              <div className="pt-6 pl-2 font-semibold">
+                                Status
+                              </div>
                               <Menu.Button
                                 id="category-menu-button"
                                 className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -267,7 +268,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
                               <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div className="py-1">
                                   {
-                                    ([ "New", "Assigned", "In Progress", "Updated By Client", "Waiting for Client Resopnse", "Completed"] as StatusType[]).map((statusType: StatusType, key: Number) => {
+                                    ([ "New", "Assigned", "In Progress", "Updated By Client", "Waiting for Client Response", "Completed"] as StatusType[]).map((statusType: StatusType, key: Number) => {
                                       return (
                                         <Menu.Item key= {statusType}>
                                           {({ active }) => (
@@ -300,6 +301,9 @@ const TicketDetails = (props: TicketDetailsProps) => {
                             className="relative inline-block text-left w-[100%]"
                           >
                             <div>
+                            <div className="pt-6 pl-2 font-semibold">
+                                Assigned To:
+                              </div>
                               <Menu.Button
                                 id="category-menu-button"
                                 className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -359,6 +363,9 @@ const TicketDetails = (props: TicketDetailsProps) => {
                             className="relative inline-block text-left w-[100%]"
                           >
                             <div>
+                            <div className="pt-6 pl-2 font-semibold">
+                                Category:
+                              </div>
                               <Menu.Button
                                 id="category-menu-button"
                                 className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"

@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { GroupType } from "../utils/ChatType/ChatType";
 
 const groupSchema = new Schema(
   {

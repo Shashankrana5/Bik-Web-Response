@@ -159,7 +159,7 @@ export const ClientDetails = (props: ClientDetailsProps) => {
       </div>
 
       <div
-        className={`fixed z-1 inset-0 overflow-y-auto ${
+        className={`fixed z-[2] inset-0 overflow-y-auto ${
           isModalOpen ? "" : "hidden"
         }`}
       >

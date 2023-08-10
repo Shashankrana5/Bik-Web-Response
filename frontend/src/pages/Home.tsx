@@ -7,6 +7,7 @@ import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import "../css/home.css";
 import TicketWidget from "../components/TicketWidget";
 import SortableTable from "../components/SortableTable";
+import TodoContainer from "../components/TodoList/TodoContainer";
 
 const Home = () => {
   const { currentUser, setCurrentUser } = useCurrentUserContext();
@@ -75,6 +76,7 @@ const Home = () => {
                   </div>
                   <TicketWidget />
                   < SortableTable />
+                  <TodoContainer />
                   {/* <UserSearchBar /> */}
                   {/* <div className="show-tickets">
                   {tickets &&

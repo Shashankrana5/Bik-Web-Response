@@ -14,6 +14,7 @@ import ticketRoutes from "./src/routes/ticketRoutes";
 import * as dotenv from "dotenv";
 import searchRoutes from "./src/routes/searchRoutes";
 import imageRoutes from "./src/routes/imageRoutes";
+import todoRoutes from "./src/routes/todoRoutes";
 dotenv.config();
 
 const app = express();
@@ -54,6 +55,8 @@ function main() {
   ticketRoutes(app);
   searchRoutes(app);
   imageRoutes(app);
+  todoRoutes(app);
+
 }
 
 main();
