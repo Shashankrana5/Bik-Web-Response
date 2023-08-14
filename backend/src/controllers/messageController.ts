@@ -21,6 +21,7 @@ export async function sendMessage(req: Request, res: Response) {
         senderName: senderUser.fullName,
         senderEmail: senderUser.email,
         content,
+        read: false,
       });
 
       await Group.findOneAndUpdate(
@@ -37,6 +38,7 @@ export async function sendMessage(req: Request, res: Response) {
         receiverName: selectedChat.selected.fullName,
         messageType: "personal",
         content,
+        read: false,
       });
       return res.status(200).json(message);
     } else {
@@ -213,6 +215,45 @@ export const getMessageByTicketNumber = async (req: Request, res: Response) => {
       createdAt: 1,
     });
 
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json({ errorMessage: error });
+  }
+};
+
+export const getUnreadMessagesByEmail = async (req: Request, res: Response) => {
+  const { email } = req.params;
+
+  try {
+    let users = new Set();
+    let response = new Array<Object>();
+
+    const messages = await Message.find({
+      receiverEmail: email,
+      read: false,
+    }).sort({ updatedAt: -1 });
+
+    for (let message of messages) {
+      if (!users.has(message.senderEmail)) {
+        users.add(message.senderEmail);
+        response.push(message);
+      }
+    }
+
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json({ errorMessage: error });
+  }
+};
+
+export const setAllMessagesToRead = async (req: Request, res: Response) => {
+  const { receiverEmail, senderEmail } = req.body;
+
+  try {
+    const response = await Message.updateMany(
+      { receiverEmail, senderEmail },
+      { read: true },
+    );
     return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json({ errorMessage: error });

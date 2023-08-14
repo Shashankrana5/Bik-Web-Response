@@ -56,7 +56,6 @@ function main() {
   searchRoutes(app);
   imageRoutes(app);
   todoRoutes(app);
-
 }
 
 main();

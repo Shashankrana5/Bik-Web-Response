@@ -44,10 +44,17 @@ const TodoContainer = () => {
         title,
         completed: false,
       };
-      await axios.put("http://localhost:1913/api/todo/updatetodo", {
-        tasks: [...todos, newTodo],
-        userId: currentUser._id,
-      });
+      if (todos && todos.length === 0) {
+        await axios.post("http://localhost:1913/api/todo/createtodo", {
+          tasks: [...todos, newTodo],
+          userId: currentUser._id,
+        });
+      } else {
+        await axios.put("http://localhost:1913/api/todo/updatetodo", {
+          tasks: [...todos, newTodo],
+          userId: currentUser._id,
+        });
+      }
       setTodos([...todos, newTodo]);
     }
   };
@@ -76,7 +83,7 @@ const TodoContainer = () => {
         const response = await axios.get(
           "http://localhost:1913/api/todo/gettodo/" + currentUser._id,
         );
-        if (response) {
+        if (response && response.data && response.data.tasks) {
           setTodos(response.data.tasks);
         }
       };

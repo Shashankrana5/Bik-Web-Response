@@ -16,6 +16,10 @@ ul {
   list-style-type: disc;
 }
 
-.tox.tox-tinymce{
+/* .tox.tox-tinymce{
   z-index: -1;
+} */
+
+.tox .tox-editor-header {
+  z-index: 1 !important;
 }

@@ -101,7 +101,6 @@ const TicketContent = (props: TicketContentProps) => {
                 }`}
                 className="avatar p-2 "
                 alt="user's avatar"
-                
               />
             ) : (
               <img
@@ -124,14 +123,14 @@ const TicketContent = (props: TicketContentProps) => {
         </div>
         {ticketContent &&
           ticketContent.map((ticket, index) =>
-          // <div key = {index}></div>
+            // <div key = {index}></div>
             ticket.invisible === true ? (
               currentUser?.role !== "ADMIN" ? null : (
                 <div
                   className="block rounded-lg bg-gray-50 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
                   key={index}
                 >
-                  <div className="flex border-b-2 border-neutral-100 px-6 py-3 dark:border-neutral-600 dark:text-neutral-50" >
+                  <div className="flex border-b-2 border-neutral-100 px-6 py-3 dark:border-neutral-600 dark:text-neutral-50">
                     {avatarPictures &&
                     Object.keys(avatarPictures).length > 0 &&
                     avatarPictures[ticket.senderEmail] &&
@@ -163,8 +162,7 @@ const TicketContent = (props: TicketContentProps) => {
                   ></div>
                 </div>
               )
-            ) : 
-            (
+            ) : (
               <div
                 className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
                 key={index}
@@ -201,8 +199,7 @@ const TicketContent = (props: TicketContentProps) => {
                 ></div>
               </div>
             ),
-          )
-          }
+          )}
       </div>
 
       <SendTicketMessage ticketSocket={ticketSocket} />

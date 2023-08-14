@@ -59,7 +59,10 @@ const ChatBox = () => {
   }, [personalChatSocket]);
 
   return (
-    <div className="chatbox-main max-w-4xl w-[35vw] flex flex-col">
+    <div
+      className="chatbox-main max-w-4xl w-[35vw] flex flex-col"
+      onFocus={() => console.log("focused")}
+    >
       <ChatNavbar
         selectedChat={selectedChat}
         setSelectedChat={setSelectedChat}

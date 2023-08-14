@@ -6,24 +6,27 @@ import { DisplayChatContextProvider } from "./contexts/DisplayChatContext";
 import { ActiveChatsContextProvider } from "./contexts/ActiveChatsContext";
 import { TicketContextProvider } from "./contexts/TicketContext";
 import { TicketContentContextProvider } from "./contexts/TicketContentContext";
+import { NotificationContextProvider } from "./contexts/NotificationContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 root.render(
   // <React.StrictMode>
-  <ActiveChatsContextProvider>
-    <DisplayChatContextProvider>
-      <DisplayMessageContextProvider>
-        <TicketContextProvider>
-          <TicketContentContextProvider>
-            <App />
-          </TicketContentContextProvider>
-        </TicketContextProvider>
-      </DisplayMessageContextProvider>
-    </DisplayChatContextProvider>
-  </ActiveChatsContextProvider>,
-
+  <NotificationContextProvider>
+    <ActiveChatsContextProvider>
+      <DisplayChatContextProvider>
+        <DisplayMessageContextProvider>
+          <TicketContextProvider>
+            <TicketContentContextProvider>
+              <App />
+            </TicketContentContextProvider>
+          </TicketContextProvider>
+        </DisplayMessageContextProvider>
+      </DisplayChatContextProvider>
+    </ActiveChatsContextProvider>
+    ,
+  </NotificationContextProvider>,
   // </React.StrictMode>
 );
 

@@ -29,7 +29,5 @@ export const DisplayTicket = () => {
     // eslint-disable-next-line
   }, [currentUser]);
 
-  return (
-    <SortableTable />
-  );
+  return <SortableTable />;
 };

@@ -29,7 +29,10 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/ticket" element={<Ticket />} />
-              <Route path="/ticket/:ticketNumber" element={<IndivisualTicket />} />
+              <Route
+                path="/ticket/:ticketNumber"
+                element={<IndivisualTicket />}
+              />
               <Route path="/profile" element={<Profile />} />
             </Routes>
           </CurrentUserContext.Provider>

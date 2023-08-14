@@ -1,8 +1,4 @@
 const TicketWidget = () => {
-
-    return (
-
-        <></>
-    )
-}
-export default TicketWidget
+  return <></>;
+};
+export default TicketWidget;

@@ -164,15 +164,13 @@ export const getImagesByTicketContent = async (req: Request, res: Response) => {
     const imageBucket = new GridFSBucket(database, {
       bucketName: "photos",
     });
-    for(const ticket of ticketContent) {
-      const user = await User.findOne({email: ticket.senderEmail});
-      if(user ){
+    for (const ticket of ticketContent) {
+      const user = await User.findOne({ email: ticket.senderEmail });
+      if (user) {
         val[user.email] = user.email;
       }
-
-
     }
-    res.send(JSON.stringify(val))
+    res.send(JSON.stringify(val));
     // let valueToReturn: { [key: string]: string } = {};
 
     //   for (const ticket of ticketContent) {
@@ -201,7 +199,6 @@ export const getImagesByTicketContent = async (req: Request, res: Response) => {
     //   console.log(valueToReturn)
     //   return valueToReturn;
     // };
-
 
     return res.end();
   } catch (error) {
@@ -247,7 +244,7 @@ export const getImagesByTicketContent = async (req: Request, res: Response) => {
 //       console.log(valueToReturn)
 //       return valueToReturn;
 //     };
-    
+
 //     nestedFunction();
 //     return res.end(200);
 //   } catch (error) {

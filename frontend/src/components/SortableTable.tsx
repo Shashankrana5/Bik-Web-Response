@@ -144,10 +144,7 @@ function SortableTable() {
     }
   };
 
-  const handleDoubleClick = (
-   ticketNumber: string
-  ) => {
-  
+  const handleDoubleClick = (ticketNumber: string) => {
     navigate(`/ticket/${ticketNumber}`);
   };
   return (
@@ -163,8 +160,7 @@ function SortableTable() {
         <CardBody className="overflow-scroll px-0">
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
-              <tr className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
-              >
+              <tr className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
                 {TABLE_HEAD.map((head, index) => (
                   <th
                     key={head}
@@ -215,12 +211,11 @@ function SortableTable() {
                       : "p-4 border-b border-blue-gray-50";
                     return (
                       <tr
-                        id= {"row" + index}
+                        id={"row" + index}
                         key={ticketNumber}
                         className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-gray-100"
                         // onClick={(e) => console.log(ticketNumber)}
                         onDoubleClick={() => handleDoubleClick(ticketNumber)}
-
                       >
                         <td className={classes}>
                           <Typography

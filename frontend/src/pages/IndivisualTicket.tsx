@@ -59,11 +59,12 @@ const IndivisualTicket = () => {
             setCurrentClient={setClient}
           />
         </div>
-        <div id="ticket-details-container" className = "p3">
-          <TicketDetails 
-                      ticketInfo={ticketInfo}
-                      currentClient={client}
-                      setCurrentClient={setClient}/>
+        <div id="ticket-details-container" className="p3">
+          <TicketDetails
+            ticketInfo={ticketInfo}
+            currentClient={client}
+            setCurrentClient={setClient}
+          />
         </div>
       </div>
       <div id="right-container" className="flex-grow">

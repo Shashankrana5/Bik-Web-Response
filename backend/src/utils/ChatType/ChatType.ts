@@ -14,6 +14,7 @@ export interface MessageType {
   receiverEmail?: string;
   ticketNumber?: string;
   content: string;
+  read?: boolean;
 }
 
 export interface GroupType {

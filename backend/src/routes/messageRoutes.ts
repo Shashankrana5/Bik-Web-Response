@@ -5,6 +5,8 @@ import {
   getMessagesByEmails,
   getGroupMessage,
   getMessageByTicketNumber,
+  getUnreadMessagesByEmail,
+  setAllMessagesToRead,
 } from "../controllers/messageController";
 
 export default function messageRoutes(app: Express) {
@@ -19,4 +21,6 @@ export default function messageRoutes(app: Express) {
     "/api/message/getmessagebyticketnumber/:ticketNumber",
     getMessageByTicketNumber,
   );
+  app.get("/api/message/getunreadbyemail/:email", getUnreadMessagesByEmail);
+  app.put("/api/message/setread", setAllMessagesToRead);
 }

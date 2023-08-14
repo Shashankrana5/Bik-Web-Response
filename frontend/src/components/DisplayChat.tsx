@@ -8,7 +8,7 @@ import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 import { useActiveChatsContext } from "../hooks/useActiveChatsContext";
 import { Buffer } from "buffer";
-import "../css/userActive.css"
+import "../css/userActive.css";
 
 interface DisplayChatProps {
   selectedChat: SelectedChat | null;

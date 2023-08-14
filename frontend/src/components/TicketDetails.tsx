@@ -19,20 +19,17 @@ const TicketDetails = (props: TicketDetailsProps) => {
   const { ticketInfo } = props;
   const { currentUser } = useCurrentUserContext();
   const { ticketNumber } = useParams();
-  
-  const [categories, setCategories] = useState<Category[]>();
-  const [ admins, setAdmins ] = useState<UserField[]>();
 
-   
-  const [ currentStatus, setCurrentStatus ] = useState<StatusType>("New")
+  const [categories, setCategories] = useState<Category[]>();
+  const [admins, setAdmins] = useState<UserField[]>();
+
+  const [currentStatus, setCurrentStatus] = useState<StatusType>("New");
   const [currentCategory, setCurrentCategory] = useState<Category | null>(null);
   const [currentAssignedTo, setCurrentAssignedTo] = useState<UserField>();
 
-  const [ displayStatus, setDisplayStatus ] = useState<StatusType>("New")
+  const [displayStatus, setDisplayStatus] = useState<StatusType>("New");
   const [displayCategory, setDisplayCategory] = useState<Category | null>(null);
   const [displayAssignedTo, setDisplayAssignedTo] = useState<UserField>();
-
-
 
   function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
@@ -45,10 +42,12 @@ const TicketDetails = (props: TicketDetailsProps) => {
       );
       setCategories(response.data);
     };
-    const fetchAdmins = async() => {
-        const response = await axios.get("http://localhost:1913/api/user/getadmins");
-        setAdmins(response.data)
-    }
+    const fetchAdmins = async () => {
+      const response = await axios.get(
+        "http://localhost:1913/api/user/getadmins",
+      );
+      setAdmins(response.data);
+    };
     fetchAdmins();
 
     fetchCategories();
@@ -63,15 +62,13 @@ const TicketDetails = (props: TicketDetailsProps) => {
       setCurrentCategory(ticketInfo.category);
       setDisplayCategory(ticketInfo.category);
     }
-    if (ticketInfo && ticketInfo.status){
-        setCurrentStatus(ticketInfo.status)
-        setDisplayStatus(ticketInfo.status)
+    if (ticketInfo && ticketInfo.status) {
+      setCurrentStatus(ticketInfo.status);
+      setDisplayStatus(ticketInfo.status);
     }
   }, [ticketInfo]);
 
-  let domNode = useClickOutside(() => {
-
-  });
+  let domNode = useClickOutside(() => {});
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -80,21 +77,17 @@ const TicketDetails = (props: TicketDetailsProps) => {
     setIsModalOpen(false);
   };
 
-  const handleUpdate = async() => {
-    setDisplayAssignedTo(currentAssignedTo)
-    setDisplayCategory(currentCategory)
-    setDisplayStatus(currentStatus)
-    await axios.post("http://localhost:1913/api/ticket/updateticket",
-    {
-        category: currentCategory,
-        status: currentStatus,
-        assignedTo: currentAssignedTo,
-        ticketNumber: ticketNumber
-
-    }
-      );
-  }
-
+  const handleUpdate = async () => {
+    setDisplayAssignedTo(currentAssignedTo);
+    setDisplayCategory(currentCategory);
+    setDisplayStatus(currentStatus);
+    await axios.post("http://localhost:1913/api/ticket/updateticket", {
+      category: currentCategory,
+      status: currentStatus,
+      assignedTo: currentAssignedTo,
+      ticketNumber: ticketNumber,
+    });
+  };
 
   return (
     <div className="h-[35vh] rounded-md shadow-lg">
@@ -152,7 +145,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
                     placeholder="Assigned To"
                     autoComplete="off"
                     disabled={true}
-                    value={displayAssignedTo?.fullName || ''}
+                    value={displayAssignedTo?.fullName || ""}
                   />
                   <label
                     htmlFor="assigned"
@@ -160,7 +153,6 @@ const TicketDetails = (props: TicketDetailsProps) => {
                   >
                     Assigned To
                   </label>
-
                 </div>
 
                 <div className="mt-10 relative">
@@ -180,7 +172,6 @@ const TicketDetails = (props: TicketDetailsProps) => {
                   >
                     Category
                   </label>
-   
                 </div>
               </form>
             </div>
@@ -234,7 +225,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
                         className="block max-w-sm rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
                       >
                         <form>
-                        <Menu
+                          <Menu
                             as="div"
                             className="relative inline-block text-left w-[100%]"
                           >
@@ -246,7 +237,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
                                 id="category-menu-button"
                                 className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                               >
-                                {currentStatus 
+                                {currentStatus
                                   ? currentStatus
                                   : "Select a status"}
                                 <ChevronDownIcon
@@ -267,10 +258,19 @@ const TicketDetails = (props: TicketDetailsProps) => {
                             >
                               <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div className="py-1">
-                                  {
-                                    ([ "New", "Assigned", "In Progress", "Updated By Client", "Waiting for Client Response", "Completed"] as StatusType[]).map((statusType: StatusType, key: Number) => {
+                                  {(
+                                    [
+                                      "New",
+                                      "Assigned",
+                                      "In Progress",
+                                      "Updated By Client",
+                                      "Waiting for Client Response",
+                                      "Completed",
+                                    ] as StatusType[]
+                                  ).map(
+                                    (statusType: StatusType, key: Number) => {
                                       return (
-                                        <Menu.Item key= {statusType}>
+                                        <Menu.Item key={statusType}>
                                           {({ active }) => (
                                             <div
                                               className={classNames(
@@ -279,18 +279,17 @@ const TicketDetails = (props: TicketDetailsProps) => {
                                                   : "text-gray-700",
                                                 "block px-4 py-2 text-sm cursor-pointer",
                                               )}
-                                              onClick={
-                                                () => {
-                                                  setCurrentStatus(statusType);
-                                                }
-                                              }
+                                              onClick={() => {
+                                                setCurrentStatus(statusType);
+                                              }}
                                             >
                                               {statusType}
                                             </div>
                                           )}
                                         </Menu.Item>
                                       );
-                                    })}
+                                    },
+                                  )}
                                 </div>
                               </Menu.Items>
                             </Transition>
@@ -301,14 +300,14 @@ const TicketDetails = (props: TicketDetailsProps) => {
                             className="relative inline-block text-left w-[100%]"
                           >
                             <div>
-                            <div className="pt-6 pl-2 font-semibold">
+                              <div className="pt-6 pl-2 font-semibold">
                                 Assigned To:
                               </div>
                               <Menu.Button
                                 id="category-menu-button"
                                 className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                               >
-                                {currentAssignedTo 
+                                {currentAssignedTo
                                   ? currentAssignedTo.fullName
                                   : "Select an operator"}
                                 <ChevronDownIcon
@@ -332,7 +331,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
                                   {admins &&
                                     admins.map((admin) => {
                                       return (
-                                        <Menu.Item key= {admin._id}>
+                                        <Menu.Item key={admin._id}>
                                           {({ active }) => (
                                             <div
                                               className={classNames(
@@ -341,11 +340,9 @@ const TicketDetails = (props: TicketDetailsProps) => {
                                                   : "text-gray-700",
                                                 "block px-4 py-2 text-sm cursor-pointer",
                                               )}
-                                              onClick={
-                                                () => {
-                                                  setCurrentAssignedTo(admin);
-                                                }
-                                              }
+                                              onClick={() => {
+                                                setCurrentAssignedTo(admin);
+                                              }}
                                             >
                                               {admin.fullName}
                                             </div>
@@ -363,7 +360,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
                             className="relative inline-block text-left w-[100%]"
                           >
                             <div>
-                            <div className="pt-6 pl-2 font-semibold">
+                              <div className="pt-6 pl-2 font-semibold">
                                 Category:
                               </div>
                               <Menu.Button
@@ -394,7 +391,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
                                   {categories &&
                                     categories.map((category) => {
                                       return (
-                                        <Menu.Item key = {category._id}>
+                                        <Menu.Item key={category._id}>
                                           {({ active }) => (
                                             <div
                                               className={classNames(
@@ -403,11 +400,9 @@ const TicketDetails = (props: TicketDetailsProps) => {
                                                   : "text-gray-700",
                                                 "block px-4 py-2 text-sm cursor-pointer",
                                               )}
-                                              onClick={
-                                                () => {
-                                                  setCurrentCategory(category);
-                                                }
-                                              }
+                                              onClick={() => {
+                                                setCurrentCategory(category);
+                                              }}
                                             >
                                               {category.category}
                                             </div>
@@ -430,7 +425,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
               <button
                 onClick={() => {
                   closeModal();
-                    handleUpdate();
+                  handleUpdate();
                 }}
                 type="button"
                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:ml-3 sm:w-auto sm:text-sm"

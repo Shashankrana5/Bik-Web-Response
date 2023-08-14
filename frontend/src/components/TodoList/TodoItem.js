@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { FaTrash } from 'react-icons/fa';
-import styles from './TodoItem.module.css';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { FaTrash } from "react-icons/fa";
+import styles from "./TodoItem.module.css";
 
 const TodoItem = (props) => {
   const [editing, setEditing] = useState(false);
@@ -14,24 +14,24 @@ const TodoItem = (props) => {
     setEditing(true);
   };
   const handleUpdatedDone = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       setEditing(false);
     }
   };
 
   const completedStyle = {
-    fontStyle: 'italic',
-    color: '#595959',
+    fontStyle: "italic",
+    color: "#595959",
     opacity: 0.4,
-    textDecoration: 'line-through',
+    textDecoration: "line-through",
   };
 
   const viewMode = {};
   const editMode = {};
   if (editing) {
-    viewMode.display = 'none';
+    viewMode.display = "none";
   } else {
-    editMode.display = 'none';
+    editMode.display = "none";
   }
 
   return (
@@ -43,8 +43,12 @@ const TodoItem = (props) => {
           checked={completed}
           onChange={() => handleChangeProps(id)}
         />
-        <button className = "flex justify-center items-center" type="button" onClick={() => deleteTodoProps(id)}>
-          <FaTrash style={{ color: 'orangered', fontSize: '16px' }} />
+        <button
+          className="flex justify-center items-center"
+          type="button"
+          onClick={() => deleteTodoProps(id)}
+        >
+          <FaTrash style={{ color: "orangered", fontSize: "16px" }} />
         </button>
         <span style={completed ? completedStyle : null}>{title}</span>
       </div>

@@ -1,6 +1,7 @@
 import ChatBox from "./ChatBox";
 import "../css/sidebar.css";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 interface SidebarProps {
   minimizeSidebar: boolean;
@@ -334,7 +335,8 @@ export const Sidebar = (props: SidebarProps) => {
               id="search-left-navbar"
               className="flex justify-start w-fit cursor-pointer"
             >
-              <svg
+              <SearchBar />
+              {/* <svg
                 className="h-8"
                 viewBox="0 0 24 24"
                 fill="none"
@@ -355,7 +357,7 @@ export const Sidebar = (props: SidebarProps) => {
                     fill="#ffae3d"
                   ></path>{" "}
                 </g>
-              </svg>
+              </svg> */}
               <div className="search-nav">Search</div>
             </div>
             <div className="bookmark-left-navbar flex justify-start w-fit cursor-pointer">

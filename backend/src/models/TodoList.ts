@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 type Task = {
-id: string;
+  id: string;
   title: string;
   completed: boolean;
 };

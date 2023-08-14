@@ -75,7 +75,7 @@ const Home = () => {
                     /> */}
                   </div>
                   <TicketWidget />
-                  < SortableTable />
+                  <SortableTable />
                   <TodoContainer />
                   {/* <UserSearchBar /> */}
                   {/* <div className="show-tickets">

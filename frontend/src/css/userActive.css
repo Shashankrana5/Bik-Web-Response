@@ -60,17 +60,17 @@ border-radius: 50%;
     background: #aaa;
   } */
 
- .avatar {
-    width:  3vh;
-    object-fit: cover;
-    height: 3vh;
-    position:relative;
-    border-radius: 50%;
+.avatar {
+  width: 3vh;
+  object-fit: cover;
+  height: 3vh;
+  position: relative;
+  border-radius: 50%;
 }
-.avatar-sm{
-  width:  2vh;
+.avatar-sm {
+  width: 2vh;
   object-fit: cover;
   height: 2vh;
-  position:relative;
+  position: relative;
   border-radius: 50%;
 }

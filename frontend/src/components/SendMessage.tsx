@@ -19,6 +19,7 @@ const SendMessage = (props: SendMessageProps) => {
   useEffect(() => {
     if (personalChatSocket) {
       personalChatSocket.on("receive-personal-message", (data) => {
+        console.log(data);
         dispatch({ type: "CREATE_MESSAGE", payload: data });
       });
     }
@@ -75,7 +76,14 @@ const SendMessage = (props: SendMessageProps) => {
       e.target.sendMessageInput.value = "";
     }
   }
-
+  const handleFocus = async () => {
+    if (currentUser && selectedChat && selectedChat.chatType === "Personal") {
+      await axios.put("http://localhost:1913/api/message/setread", {
+        senderEmail: selectedChat.selected.email,
+        receiverEmail: currentUser.email,
+      });
+    }
+  };
   return (
     <form onSubmit={handleSubmit} className="h-[15%]">
       <div className="border-t-2 border-gray-200 px-3 py-3 mb-2 sm:mb-0 h -[100%]">
@@ -108,6 +116,7 @@ const SendMessage = (props: SendMessageProps) => {
             placeholder="Write your message!"
             autoComplete="off"
             className="w-full h-[100%] focus:outline-none focus:placeholder-gray-200 text-gray-400 placeholder-gray-400 pl-4 bg-gray-50 rounded-md py-3"
+            onFocus={handleFocus}
           />
           <div className="absolute right-0 items-center px-2 py-1 inset-y-0 hidden sm:flex h-[100%]">
             <button
