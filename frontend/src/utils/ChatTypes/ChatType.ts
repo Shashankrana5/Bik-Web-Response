@@ -1,21 +1,21 @@
 import { Group } from "./GroupChatTypes";
-import { UserField } from './UserTypes';
+import { UserField } from "./UserTypes";
 
 export interface Chat {
-    Group: Group[];
-    Personal: UserField[]; 
-    User: UserField;
-    AllChats: (Group | UserField)[];
+  Group: Group[];
+  Personal: UserField[];
+  User: UserField;
+  AllChats: (Group | UserField)[];
 }
 
 export type SelectedChat = selectedGroupChat | selectedPersonalChat;
 
 interface selectedGroupChat {
-    chatType: "Group";
-    selected: Group;
+  chatType: "Group";
+  selected: Group;
 }
 
 interface selectedPersonalChat {
-    chatType: "Personal";
-    selected: UserField
+  chatType: "Personal";
+  selected: UserField;
 }

@@ -12,6 +12,9 @@ import http from "http";
 import categoryRoutes from "./src/routes/categoryRoutes";
 import ticketRoutes from "./src/routes/ticketRoutes";
 import * as dotenv from "dotenv";
+import searchRoutes from "./src/routes/searchRoutes";
+import imageRoutes from "./src/routes/imageRoutes";
+import todoRoutes from "./src/routes/todoRoutes";
 dotenv.config();
 
 const app = express();
@@ -24,7 +27,7 @@ app.use(
   cors({
     credentials: true,
     origin: `http://localhost:${process.env.CLIENT_PORT}`,
-  })
+  }),
 );
 
 const chatServer = http.createServer(app);
@@ -33,14 +36,12 @@ new ChatServerSocket(chatServer);
 
 function main() {
   mongoose
-    .connect(
-      process.env.MONGO_URI!
-    )
+    .connect(process.env.MONGO_URI!)
     .then(() => {
       app.listen(process.env.SERVER_PORT, () =>
         console.log(
-          `Connected to the database and my server is running in port ${process.env.SERVER_PORT}`
-        )
+          `Connected to the database and my server is running in port ${process.env.SERVER_PORT}`,
+        ),
       );
     })
     .catch((error) => {
@@ -52,6 +53,9 @@ function main() {
   groupRoutes(app);
   categoryRoutes(app);
   ticketRoutes(app);
+  searchRoutes(app);
+  imageRoutes(app);
+  todoRoutes(app);
 }
 
 main();

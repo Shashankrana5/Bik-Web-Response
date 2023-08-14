@@ -1,32 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ChatBox from "../components/ChatBox";
 import { getSessionData } from "../utils/getSessionData";
-import { UserField } from "../utils/ChatTypes/UserTypes";
+
+import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
+import Navbar from "../components/Navbar";
 
 const Chat = () => {
+  const { setCurrentUser } = useCurrentUserContext();
 
-    const [ currentUser, setCurrentUser] = useState<UserField>();
+  useEffect(() => {
+    const sessionCheck = async () => {
+      const response = await getSessionData();
+      setCurrentUser(response?.data.user);
+    };
+    sessionCheck();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    useEffect(() => {
-        const sessionCheck = async() => {
-            const response = await getSessionData();
-            setCurrentUser(response?.data.user);
-        }
-        sessionCheck();
-    }, [])
-    
-    return(
-        <div id = "chat-page" className="flex">
-            {/* <Navbar currentUser={currentUser!}
+  return (
+    <div id="chat-page" className="flex">
+      <Navbar />
+      {/* <Navbar currentUser={currentUser!}
             setMinimizeSidebar={setMinimizeSidebar}
             // minimizeLeftNavbar={minimizeLeftNavbar}
             // setMinimizeLeftNavbar={setMinimizeLeftNavbar}
           /> */}
 
-            <ChatBox currentUser = {currentUser!}/>
-        </div>
-    )
-
-}
+      <ChatBox />
+    </div>
+  );
+};
 
 export default Chat;

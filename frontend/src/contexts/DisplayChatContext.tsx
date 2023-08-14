@@ -1,75 +1,62 @@
 import { createContext, useReducer } from "react";
-
-type Message = personalMessage | groupMessage;
-
-interface personalMessage {
-    _id: string;
-    senderEmail: string;
-    senderName: string;
-    receiverEmail: string;
-    messageType: "personal";
-    content: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
-interface groupMessage {
-    _id: string;
-    senderEmail: string;
-    senderName: string;
-    messageType: "group";
-    content: string;
-    groupId: string;
-    createdAt: string;
-    updatedAt: string;
-}
+import { Chat } from "../utils/ChatTypes/ChatType";
 
 type ActionType = {
-    type: "SET_MESSAGE" | "CREATE_MESSAGE" | "CLEAR_MESSAGE";
-    payload?: any;
+  type: "SET_CHAT" | "CREATE_CHAT";
+  payload: any;
+};
+
+interface ContextType {
+  chats: Chat;
+  displayChatDispatch: React.Dispatch<ActionType>;
+}
+interface DisplayChatType {
+  chats: Chat;
 }
 
 const initialState = {
-    messages: [],
-    currentUser: "",
-    chatType: "Personal"
-}
+  chats: {
+    Personal: [],
+    Group: [],
+    User: { _id: "", email: "", fullName: "", role: "" },
+    AllChats: [],
+  },
+};
 
-interface DisplayChatType{
-    messages: Message[];
-    currentUser: string;
-    chatType: "Personal" | "Group"
-}
+export const DisplayChatContext = createContext<ContextType>({
+  ...initialState,
+  displayChatDispatch: () => null,
+});
 
-interface contextType{
-    messages: Message[];
-    dispatch: React.Dispatch<ActionType>;
-    currentUser: string;
-}
+export const reducer = (
+  state: DisplayChatType,
+  action: ActionType,
+): DisplayChatType => {
+  // TODO: add CREATE_CHAT action type
+  switch (action.type) {
+    case "SET_CHAT":
+      return { chats: action.payload };
 
-export const DisplayChatContext = createContext<contextType>({...initialState, dispatch: () => null});
+    default:
+      throw state;
+  }
+};
 
-export function reducer (state: DisplayChatType, action: ActionType):DisplayChatType {
+export const DisplayChatContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element => {
+  const [displayChatState, displayChatDispatch] = useReducer(
+    reducer,
+    initialState,
+  );
 
-
-        switch(action.type){
-            case("CLEAR_MESSAGE"):
-                return {...state, messages: []}
-            case('SET_MESSAGE'):
-                return {currentUser: action.payload.currentUser, chatType: action.payload.chatType, messages: action.payload.messages};
-            case("CREATE_MESSAGE"):
-                return {...state, messages : [...state.messages, action.payload]}
-            default:
-                throw state;
-        }
-}
-export function DisplayChatContextProvider ({children}: {children: React.ReactNode}): JSX.Element{
-
-    const[state, dispatch] = useReducer(reducer, {messages: [], currentUser: "", chatType: "Personal"});
-
-    return (
-        <DisplayChatContext.Provider value = {{...state, dispatch}}>
-            {children}
-        </DisplayChatContext.Provider>
-    )
-}
+  return (
+    <DisplayChatContext.Provider
+      value={{ ...displayChatState, displayChatDispatch }}
+    >
+      {children}
+    </DisplayChatContext.Provider>
+  );
+};
