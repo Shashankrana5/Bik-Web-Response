@@ -26,7 +26,7 @@ jobs:
 
       - name: Push Image
         run: |
-        aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 231285429685.dkr.ecr.us-east-2.amazonaws.com
+          aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 231285429685.dkr.ecr.us-east-2.amazonaws.com
         
       
 
