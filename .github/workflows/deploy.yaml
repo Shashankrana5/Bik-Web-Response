@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Build docker image
         run: |
-          docker compose up
+          docker-compose up
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
