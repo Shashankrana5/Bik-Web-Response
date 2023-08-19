@@ -28,7 +28,7 @@ jobs:
         run: |
           docker images
           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 231285429685.dkr.ecr.us-east-2.amazonaws.com
-          docker tag bik-web-response 231285429685.dkr.ecr.us-east-2.amazonaws.com/bik-web-response-docker-images:latest
+          docker tag bik-web-response_frontend 231285429685.dkr.ecr.us-east-2.amazonaws.com/bik-web-response-docker-images:latest
           docker push 231285429685.dkr.ecr.us-east-2.amazonaws.com/bik-web-response-docker-images:latest
       
 
