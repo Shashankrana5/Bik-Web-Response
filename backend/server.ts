@@ -40,7 +40,7 @@ function main() {
     .then(() => {
       app.listen(process.env.SERVER_PORT, () =>
         console.log(
-          `Connected to the database and my server is running in port ${process.env.SERVER_PORT}`,
+          `DB and server running on: ${process.env.SERVER_PORT}`,
         ),
       );
     })

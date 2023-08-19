@@ -25,7 +25,6 @@ export async function getUserById(req: Request, res: Response) {
 
 export async function getUserByEmail(req: Request, res: Response) {
   const { email } = req.params;
-  console.log(email);
   try {
     const user = await User.findOne({ email });
     return res.status(200).json(user);

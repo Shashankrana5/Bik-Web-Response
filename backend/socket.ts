@@ -19,7 +19,7 @@ export class ChatServerSocket {
       },
     });
     this.startListeners(this.io);
-    chatServer.listen(1914, () => console.log("Chat server is up and running"));
+    chatServer.listen(process.env.CHAT_PORT, () => console.log(`Chat server running: ${process.env.CHAT_PORT}`));
   }
 
   startListeners(io: Server) {

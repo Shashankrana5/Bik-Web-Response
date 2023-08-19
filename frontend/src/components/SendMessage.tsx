@@ -19,7 +19,6 @@ const SendMessage = (props: SendMessageProps) => {
   useEffect(() => {
     if (personalChatSocket) {
       personalChatSocket.on("receive-personal-message", (data) => {
-        console.log(data);
         dispatch({ type: "CREATE_MESSAGE", payload: data });
       });
     }

@@ -171,86 +171,11 @@ export const getImagesByTicketContent = async (req: Request, res: Response) => {
       }
     }
     res.send(JSON.stringify(val));
-    // let valueToReturn: { [key: string]: string } = {};
-
-    //   for (const ticket of ticketContent) {
-    //     const user = await User.findOne({ email: ticket.senderEmail });
-
-    //     if (user?.avatarId) {
-    //       let downloadStream = imageBucket.openDownloadStream(
-    //         new ObjectId(user.avatarId),
-    //       );
-
-    //       downloadStream.on("data", function (data) {
-    //         if (!Object.keys(valueToReturn).includes(ticket.senderEmail)) {
-    //           valueToReturn[ticket.senderEmail] = data;
-    //           res.write("shashank");
-    //         }
-    //       });
-    //       downloadStream.on("error", function (data) {
-    //         return res.status(404).send({ error: "Image not found" });
-    //       });
-
-    //       // downloadStream.on("end", () => {
-    //       //   return res.end();
-    //       // });
-    //     }
-    //   }
-    //   console.log(valueToReturn)
-    //   return valueToReturn;
-    // };
-
     return res.end();
   } catch (error) {
     return res.status(400).json(error);
   }
 };
-
-// export const getImagesByTicketContent = async (req: Request, res: Response) => {
-//   const { ticketContent } = req.body;
-
-//   try {
-//     await mongoClient.connect();
-//     const database = mongoClient.db("test");
-//     const imageBucket = new GridFSBucket(database, {
-//       bucketName: "photos",
-//     });
-//     const nestedFunction = async () => {
-//     let valueToReturn: { [key: string]: string } = {};
-
-//       for (const ticket of ticketContent) {
-//         const user = await User.findOne({ email: ticket.senderEmail });
-
-//         if (user?.avatarId) {
-//           let downloadStream = imageBucket.openDownloadStream(
-//             new ObjectId(user.avatarId),
-//           );
-
-//           downloadStream.on("data", function (data) {
-//             if (!Object.keys(valueToReturn).includes(ticket.senderEmail)) {
-//               valueToReturn[ticket.senderEmail] = data;
-//               res.write("shashank");
-//             }
-//           });
-//           downloadStream.on("error", function (data) {
-//             return res.status(404).send({ error: "Image not found" });
-//           });
-
-//           // downloadStream.on("end", () => {
-//           //   return res.end();
-//           // });
-//         }
-//       }
-//       console.log(valueToReturn)
-//       return valueToReturn;
-//     };
-
-//     nestedFunction();
-//     return res.end(200);
-//   } catch (error) {
-//     return res.status(400).json(error);
-//   }
-// };
 
 export const getImageById = async (req: Request, res: Response) => {
   try {

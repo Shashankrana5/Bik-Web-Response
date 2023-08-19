@@ -23,7 +23,6 @@ const Login = () => {
         { withCredentials: true },
       );
       if (response.status === 200) {
-        console.log(response.data);
         window.history.back();
       }
     } catch (error) {

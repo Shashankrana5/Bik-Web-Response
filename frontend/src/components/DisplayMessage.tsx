@@ -29,9 +29,6 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
         return;
       }
       lastScrollTop = element.scrollTop <= 0 ? 0 : element.scrollTop;
-      if (element.scrollTop + element.offsetHeight >= element.scrollHeight) {
-        console.log("End");
-      }
     };
   }
   useEffect(() => {
