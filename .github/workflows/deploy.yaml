@@ -11,9 +11,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Build docker image
-        run: |
-          docker-compose up
+      # - name: Build docker image
+      #   run: |
+      #     docker-compose up
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker-compose up -d
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
