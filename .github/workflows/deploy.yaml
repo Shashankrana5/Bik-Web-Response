@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - name: Build docker images
-      #   run: docker-compose up -d
+      - name: Build docker images
+        run: docker-compose up -d
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -30,6 +30,12 @@ jobs:
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y4o7w7w7
           # aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y4o7w7w7
           # docker tag bik-web-response_frontend 231285429685.dkr.ecr.us-east-2.amazonaws.com/bik-web-response-docker-images:frontend
+          # docker tag bik-web-response_frontend public.ecr.aws/y4o7w7w7/bik-web-response:frontend
+          docker tag bik-web-response_backend public.ecr.aws/y4o7w7w7/bik-web-response:backend
+          docker push public.ecr.aws/y4o7w7w7/bik-web-response:backend
+
+
+
           # docker tag bik-web-response_backend 231285429685.dkr.ecr.us-east-2.amazonaws.com/bik-web-response-docker-images:backend
           # docker push 231285429685.dkr.ecr.us-east-2.amazonaws.com/bik-web-response-docker-images:frontend
           # docker push 231285429685.dkr.ecr.us-east-2.amazonaws.com/bik-web-response-docker-images:backend
