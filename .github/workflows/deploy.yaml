@@ -5,6 +5,21 @@ on:
     branches: [ main ]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Backend linting
+        run: |
+          cd ./backend
+          npx eslint
+          npx prettier -c .
+          cd
+      - name: Frontend linting
+        run: |
+          cd ./frontend
+          npx eslint .
+          npx prettier -c .
+          cd
   deploy:
     runs-on: ubuntu-latest
     steps:
