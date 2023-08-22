@@ -35,7 +35,7 @@
     "start": "PORT=1912 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "production": "react-scripts build && serve -s build -l 1912",
+    "production-start": "serve -s build -l 1912",
     "eject": "react-scripts eject"
   },
   "browserslist": {

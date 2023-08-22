@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 1912
 
-CMD ["npm", "run", "production"]
+RUN npm run build
+
+CMD ["npm", "run", "production-start"]
