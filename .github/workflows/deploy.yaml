@@ -15,11 +15,10 @@ jobs:
           npx eslint
           npx prettier -c .
       - name: Frontend linting
+        working-directory: ./frontend
         run: |
-          cd frontend/
-          npx eslint .
+          npx eslint
           npx prettier -c .
-          cd
   deploy:
     runs-on: ubuntu-latest
     steps:
