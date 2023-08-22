@@ -23,6 +23,7 @@
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.1",
     "react-scripts": "5.0.1",
+    "serve": "^14.2.1",
     "socket.io-client": "^4.7.1",
     "tailwindcss": "^3.3.2",
     "tw-elements": "^1.0.0-beta2",
@@ -34,6 +35,7 @@
     "start": "PORT=1912 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "production": "react-scripts build && serve -s build -l 1912",
     "eject": "react-scripts eject"
   },
   "browserslist": {
