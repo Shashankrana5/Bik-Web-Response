@@ -12,13 +12,13 @@ jobs:
         run: |
           pwd
           ls
-          cd ./backend
+          cd backend/
           npx eslint
           npx prettier -c .
           cd
       - name: Frontend linting
         run: |
-          cd ./frontend
+          cd frontend/
           npx eslint .
           npx prettier -c .
           cd
