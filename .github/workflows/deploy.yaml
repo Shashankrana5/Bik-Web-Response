@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ docker-and-build-change ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
