@@ -10,6 +10,8 @@ jobs:
     steps: 
       - name: Backend linting
         run: |
+          pwd
+          ls
           cd ./backend
           npx eslint
           npx prettier -c .
