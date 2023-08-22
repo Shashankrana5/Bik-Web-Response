@@ -7,5 +7,5 @@ import { UserField } from "../utils/ChatTypes/UserTypes";
 import axios from "axios";
 
 export function FrontendPlayground() {
-  return<></>
+  return <></>;
 }

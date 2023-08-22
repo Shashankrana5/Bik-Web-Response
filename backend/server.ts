@@ -39,9 +39,7 @@ function main() {
     .connect(process.env.MONGO_URI!)
     .then(() => {
       app.listen(process.env.SERVER_PORT, () =>
-        console.log(
-          `DB and server running on: ${process.env.SERVER_PORT}`,
-        ),
+        console.log(`DB and server running on: ${process.env.SERVER_PORT}`),
       );
     })
     .catch((error) => {

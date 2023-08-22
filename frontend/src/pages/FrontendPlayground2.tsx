@@ -7,8 +7,7 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-export const FrontendPlayground2 = () => {;
-
+export const FrontendPlayground2 = () => {
   const currentUser = {
     _id: "63c2a594b1d5914df517bb42",
     fullName: "Shashank Rana",
@@ -43,5 +42,5 @@ export const FrontendPlayground2 = () => {;
       avatarId: "64c416bb20be2bbe6ee34633",
     },
   ];
-  return <></>
+  return <></>;
 };
