@@ -19,7 +19,9 @@ export class ChatServerSocket {
       },
     });
     this.startListeners(this.io);
-    chatServer.listen(process.env.CHAT_PORT, () => console.log(`Chat server running: ${process.env.CHAT_PORT}`));
+    chatServer.listen(process.env.CHAT_PORT, () =>
+      console.log(`Chat server running: ${process.env.CHAT_PORT}`),
+    );
   }
 
   startListeners(io: Server) {
