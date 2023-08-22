@@ -9,13 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Backend linting
+        working-directory: ./backend
         run: |
-          pwd
-          ls
-          cd backend/
           npx eslint
           npx prettier -c .
-          cd
       - name: Frontend linting
         run: |
           cd frontend/
