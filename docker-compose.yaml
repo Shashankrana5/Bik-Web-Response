@@ -1,4 +1,5 @@
 version: '3.8'
+name: bik-web-response
 services:
   backend:
     build: ./backend
