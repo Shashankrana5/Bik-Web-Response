@@ -32,10 +32,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=1912 react-scripts start",
+    "start": "PORT=80 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "production-start": "serve -s build -l 1912",
+    "production-start": "serve -s build -l 80",
     "eject": "react-scripts eject"
   },
   "browserslist": {

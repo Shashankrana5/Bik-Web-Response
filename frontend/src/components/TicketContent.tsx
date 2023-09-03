@@ -88,7 +88,7 @@ const TicketContent = (props: TicketContentProps) => {
     <div id="ticket-content-main" className="pb-8">
       <div id="ticket-content" className="p-4 pr-10 flex flex-col gap-3">
         <div className="border-b-2 border-neutral-100 block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-          <div className="flex border-b-2 border-neutral-100 px-4 py-3 dark:border-neutral-600 dark:text-neutral-50">
+          <div className="flex border-b-2 border-neutral-100 px-4 py-3 dark:border-neutral-600 dark:text-neutral-50  items-center">
             {avatarPictures &&
             Object.keys(avatarPictures).length > 0 &&
             avatarPictures[ticketDetails.email] &&
@@ -99,14 +99,14 @@ const TicketContent = (props: TicketContentProps) => {
                 src={`data:image/jpeg;base64,${
                   avatarPictures[ticketDetails.email]
                 }`}
-                className="avatar p-2 "
+                className="h-8 w-8 rounded-full"
                 alt="user's avatar"
               />
             ) : (
               <img
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAf9JREFUaEPtmP0xRTEQxc+rgBKoABWgAqMCVIAOqIAO0AEVoAJUQAlUwByTO/Pwkmx2D5k77s7cP95Mknd+2Y8kO8PIbTZy/ZgAenvwNzywBWAPwHr6yPiYvisAd0poJQAFnwEgQMkIcJyAwiwqAIq/BbBsVPQKYFsBoQBoFT8wSiAUANz5WtjkHMNwoifcFgWgcAJEjADuxI4CXKaKEwFgZdr3LhAFeJgrlV4NLLEb3slRgHfvH3+b59bhnpgEjB6A7l8LeuEpEoZRD4w+iUdfRhk9rOGbzjC6DxyCn38ZDSGuwasEIZYaId6SeOaR2xQAHgiJeJUHht2jJ84N4cSwOVLcRNUAAwgTm1cDAg0llqWSocKq5b73LIozVQi5Yzg6cQKI7mB0/r/3ABN1J9Vzvof522JMaD4pmdA3kYrk9QDbJicAVixqDWNeUqfi2jD2y5BWAAq+iB7/BZH0yAEAApmsBcDbfTAJmRvU1K2wAlA8n49/aXxmVu9JFgCGDcVbm1YqSHqCEMVwsgBE+j5RmGrfqAbAOw2TtqftAshWpxrAs7BUejeBIbSam1wC6JG4OZ3ZhC4B8G5/6N028bzTdHD+WLYEEHnrivUj+3YuASjahiqQbPuxBKDquqkgFmqdAFTba1in2QOGNfsPqR1k/RVWFEwAvV00eaC3Bz4ALkdQMYEpwEIAAAAASUVORK5CYII="
                 alt="user's avatar"
-                className="avatar p-2"
+                className="h-8 w-8 rounded-full"
               />
             )}
 
@@ -141,7 +141,7 @@ const TicketContent = (props: TicketContentProps) => {
                         src={`data:image/jpeg;base64,${
                           avatarPictures[ticket.senderEmail]
                         }`}
-                        className="avatar p-2 "
+                        className="h-8 w-8 rounded-full"
                         alt="user's avatar"
                       />
                     ) : (
@@ -178,14 +178,14 @@ const TicketContent = (props: TicketContentProps) => {
                       src={`data:image/jpeg;base64,${
                         avatarPictures[ticket.senderEmail]
                       }`}
-                      className="avatar p-2 "
+                      className="h-8 w-8 rounded-full"
                       alt="user's avatar"
                     />
                   ) : (
                     <img
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAf9JREFUaEPtmP0xRTEQxc+rgBKoABWgAqMCVIAOqIAO0AEVoAJUQAlUwByTO/Pwkmx2D5k77s7cP95Mknd+2Y8kO8PIbTZy/ZgAenvwNzywBWAPwHr6yPiYvisAd0poJQAFnwEgQMkIcJyAwiwqAIq/BbBsVPQKYFsBoQBoFT8wSiAUANz5WtjkHMNwoifcFgWgcAJEjADuxI4CXKaKEwFgZdr3LhAFeJgrlV4NLLEb3slRgHfvH3+b59bhnpgEjB6A7l8LeuEpEoZRD4w+iUdfRhk9rOGbzjC6DxyCn38ZDSGuwasEIZYaId6SeOaR2xQAHgiJeJUHht2jJ84N4cSwOVLcRNUAAwgTm1cDAg0llqWSocKq5b73LIozVQi5Yzg6cQKI7mB0/r/3ABN1J9Vzvof522JMaD4pmdA3kYrk9QDbJicAVixqDWNeUqfi2jD2y5BWAAq+iB7/BZH0yAEAApmsBcDbfTAJmRvU1K2wAlA8n49/aXxmVu9JFgCGDcVbm1YqSHqCEMVwsgBE+j5RmGrfqAbAOw2TtqftAshWpxrAs7BUejeBIbSam1wC6JG4OZ3ZhC4B8G5/6N028bzTdHD+WLYEEHnrivUj+3YuASjahiqQbPuxBKDquqkgFmqdAFTba1in2QOGNfsPqR1k/RVWFEwAvV00eaC3Bz4ALkdQMYEpwEIAAAAASUVORK5CYII="
                       alt="user's avatar"
-                      className="avatar p-2"
+                      className="h-8 w-8 rounded-full"
                     />
                   )}
 

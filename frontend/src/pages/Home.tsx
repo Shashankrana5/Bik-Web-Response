@@ -3,17 +3,18 @@ import { useEffect, useState } from "react";
 import { getSessionData } from "../utils/getSessionData";
 import Sidebar from "../components/Sidebar";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
-// import { TicketCreationForm } from "../components/TicketCreationForm";
+import { TicketCreationForm } from "../components/TicketCreationForm";
 import "../css/home.css";
 import TicketWidget from "../components/TicketWidget";
 import SortableTable from "../components/SortableTable";
 import TodoContainer from "../components/TodoList/TodoContainer";
+import Loading from "../components/Loading";
 
 const Home = () => {
   const { currentUser, setCurrentUser } = useCurrentUserContext();
   const [minimizeSidebar, setMinimizeSidebar] = useState<boolean>(false);
   const [showChat, setShowChat] = useState<boolean>(false);
-
+  const [showTicketCreation, setShowTicketCreation] = useState<boolean>(false);
   useEffect(() => {
     const sessionCheck = async () => {
       const response = await getSessionData();
@@ -27,16 +28,12 @@ const Home = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const handleClick = async () => {
-    const sessionData = await getSessionData();
-    console.log(sessionData);
-  };
   return (
     <>
       {isLoading === true ? (
-        <>This should be a blank page when the person isn't authenticated.</>
+        <Loading />
       ) : (
-        <div className="main-homepage-container flex h-screen w-screen">
+        <div className="main-homepage-container flex flex-1  min-h-screen">
           <Sidebar
             minimizeSidebar={minimizeSidebar}
             showChat={showChat}
@@ -59,7 +56,7 @@ const Home = () => {
                       className="ticket-creation-nav 
                   flex ml-auto cursor-pointer rounded-md p-2  bg-orange-100 border
                   text-gray-700 md:border-orange-200 md:border-2 hover:bg-orange-300 hover:text-white transition ease-out duration-500"
-                      // onClick={handleCreateTicket}
+                      onClick={() => setShowTicketCreation((prev) => !prev)}
                     >
                       <div className="">New Ticket</div>
                       <div className=" w-6 h-6 relative">
@@ -69,10 +66,12 @@ const Home = () => {
                         </button>
                       </div>
                     </div>
-                    {/* <TicketCreationForm
-                    // createTicket={createTicket}
-                    // setCreateTicket={setCreateTicket}
-                    /> */}
+                    {showTicketCreation && (
+                      <TicketCreationForm
+                      // createTicket={createTicket}
+                      // setCreateTicket={setCreateTicket}
+                      />
+                    )}
                   </div>
                   <TicketWidget />
                   <SortableTable />
@@ -94,7 +93,7 @@ const Home = () => {
           </div>
         </div>
       )}
-      <button onClick={handleClick}>Get session data</button>
+      {/* <button onClick={handleClick}>Get session data</button> */}
     </>
   );
 };

@@ -32,7 +32,7 @@ const Notification = () => {
   }, []);
 
   return (
-    <Menu as="div" className="relative inline-block text-left pt-2">
+    <Menu as="div" className="relative inline-block text-left pt-1">
       <div>
         <Menu.Button className="relative inline-flex w-[90%]">
           {notifications && notifications.length > 0 ? (
@@ -42,7 +42,7 @@ const Notification = () => {
           ) : null}
 
           <div
-            className="inline-block rounded-2xl bg-orange p-1 text-2xl font-medium uppercase leading-normal bg-orange-400 text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-orange-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-orange-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-orange-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+            className="inline-block rounded-2xl bg-orange p-1 text-2xl font-medium uppercase leading-normal  bg-transparent text-orange-400 transition duration-150 ease-in-out hover:bg-orange-200 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-orange-600 focus:outline-none focus:ring-0 active:bg-orange-700 "
             data-te-ripple-init
             data-te-ripple-color="light"
           >

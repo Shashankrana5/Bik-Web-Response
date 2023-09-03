@@ -14,7 +14,7 @@ export class ChatServerSocket {
 
     this.io = new Server(chatServer, {
       cors: {
-        origin: `http://localhost:${process.env.CLIENT_PORT}`,
+        origin: `http://localhost`,
         methods: ["GET", "POST"],
       },
     });

@@ -1,7 +1,10 @@
 import ChatBox from "./ChatBox";
 import "../css/sidebar.css";
 import { useNavigate } from "react-router-dom";
-import SearchBar from "./SearchBar";
+import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Buffer } from "buffer";
 
 interface SidebarProps {
   minimizeSidebar: boolean;
@@ -11,10 +14,34 @@ interface SidebarProps {
 export const Sidebar = (props: SidebarProps) => {
   const { minimizeSidebar, showChat, setShowChat } = props;
   const navigate = useNavigate();
+  const { currentUser } = useCurrentUserContext();
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   const handleChatsOnClick = () => {
     setShowChat((prev) => !prev);
   };
+
+  const fetchImage = async (id: string) => {
+    const response = await axios.get(
+      "http://localhost:1913/api/image/getbyid/" + id,
+      { responseType: "arraybuffer" },
+    );
+    let base64ImageString = Buffer.from(response.data, "binary").toString(
+      "base64",
+    );
+
+    setAvatar(base64ImageString);
+  };
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (currentUser && currentUser.avatarId) {
+        fetchImage(currentUser.avatarId);
+      }
+    };
+    fetch();
+  }, [currentUser]);
+
   const handleDoubleClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     destination: string,
@@ -37,29 +64,42 @@ export const Sidebar = (props: SidebarProps) => {
     return (
       <div className="left-navigation-bar">
         <div className="user-wrapper h-14 flex items-center">
-          <svg
-            className="h-10"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              {" "}
-              <path
-                d="M18 18.7023C18 15.6706 14.5 15 12 15C9.5 15 6 15.6706 6 18.7023M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9Z"
-                stroke="#000000"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></path>{" "}
-            </g>
-          </svg>
+          {currentUser && currentUser.avatarId && avatar ? (
+            <div>
+              <img
+                src={`data:image/jpeg;base64,${avatar}`}
+                // className="h-[100%] rounded-full shadow-lg max-h-[100%]"
+                className="avatar"
+                alt="user's avatar"
+              />
+            </div>
+          ) : (
+            <div className="title-wrapper px-6">
+              <svg
+                className="h-10"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  {" "}
+                  <path
+                    d="M18 18.7023C18 15.6706 14.5 15 12 15C9.5 15 6 15.6706 6 18.7023M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9Z"
+                    stroke="#000000"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>{" "}
+                </g>
+              </svg>
+            </div>
+          )}
         </div>
         <div className="dashboard-left-navigation-minimized">
           <svg
@@ -192,19 +232,54 @@ export const Sidebar = (props: SidebarProps) => {
     );
   } else {
     return (
-      <div className="left-navigation-bar border border-gray-200 w-[25%]">
-        <div className="title-wrapper px-6">
-          {/* / Bik-Web Response */}
-          <div className="title flex font-bold uppercase border-b border-gray-400 hover:text-gray-700 h-14 items-center">
-            {" "}
-            users's picture
+      <div className="left-navigation-bar border border-gray-200 w-[20%]">
+        {currentUser && currentUser.avatarId && avatar ? (
+          <div className="flex flex-col justify-center items-center title  font-bold uppercase  ">
+            <img
+              src={`data:image/jpeg;base64,${avatar}`}
+              className="h-32 w-32 rounded-full py-3"
+              alt="user's avatar"
+            />
+            {currentUser?.fullName}
+
+            <div className="border-b border-gray-400 hover:text-gray-700 w-[80%]"></div>
           </div>
-        </div>
-        <div className="flex">
+        ) : (
+          <div className="flex flex-col justify-center items-center title  font-bold uppercase  ">
+            <svg
+              className="h-32 w-32 rounded-full py-3"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                {" "}
+                <path
+                  d="M18 18.7023C18 15.6706 14.5 15 12 15C9.5 15 6 15.6706 6 18.7023M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9Z"
+                  stroke="#000000"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>{" "}
+              </g>
+            </svg>
+
+            {currentUser?.fullName}
+            <div className="border-b border-gray-400 hover:text-gray-700 w-[80%]"></div>
+          </div>
+        )}
+
+        <div className="flex pt-4">
           <div className="navbar-sub-navgiation-spacing w-[25%]"></div>
           <div className="navbar-sub-navigation flex flex-col">
             <div
-              id="dashboard-left-navbar"
+              id="dashboard-left-navbar "
               className="flex justify-start w-fit cursor-pointer"
             >
               <svg
@@ -228,7 +303,9 @@ export const Sidebar = (props: SidebarProps) => {
                   ></path>{" "}
                 </g>
               </svg>
-              <div className="dashboard-nav">Dashboard</div>
+              <div className="dashboard-nav flex justify-center items-center">
+                Dashboard
+              </div>
             </div>
             <div
               id="ticket-left-navbar"
@@ -287,7 +364,9 @@ export const Sidebar = (props: SidebarProps) => {
                   ></path>{" "}
                 </g>
               </svg>
-              <div className="tickets-nav">Tickets</div>
+              <div className="tickets-nav flex justify-center items-center">
+                Tickets
+              </div>
             </div>
             <div id="chat-left-navbar" className="flex justify-start w-fit ">
               <div
@@ -319,49 +398,18 @@ export const Sidebar = (props: SidebarProps) => {
                     ></path>{" "}
                   </g>
                 </svg>
-                <div className="chats-nav relative">Chats</div>
+                <div className="chats-nav relative flex justify-center items-center">
+                  Chats
+                </div>
               </div>
               {showChat === true && (
                 <div id="chatbox-container" className="p-0">
-                  <div className="left-[24.9%] absolute top-[6rem] bg-orange-50 drop-shadow-2xl rounded-lg">
+                  <div className="left-[19.9%] absolute top-[6rem] bg-orange-50 drop-shadow-2xl rounded-lg z-[1]">
                     <ChatBox />
                   </div>
-                  <div className="show-left-arrow right-[75%] absolute after:drop-shadow-2xl" />
+                  <div className="show-left-arrow right-[80%] absolute z-[2]after:drop-shadow-2xl after:z-[2]" />
                 </div>
               )}
-            </div>
-
-            <div
-              id="search-left-navbar"
-              className="flex justify-start w-fit cursor-pointer"
-            >
-              <SearchBar />
-              {/* <svg
-                className="h-8"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                ></g>
-                <g id="SVGRepo_iconCarrier">
-                  {" "}
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M4 11C4 7.13401 7.13401 4 11 4C14.866 4 18 7.13401 18 11C18 14.866 14.866 18 11 18C7.13401 18 4 14.866 4 11ZM11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C13.125 20 15.078 19.2635 16.6177 18.0319L20.2929 21.7071C20.6834 22.0976 21.3166 22.0976 21.7071 21.7071C22.0976 21.3166 22.0976 20.6834 21.7071 20.2929L18.0319 16.6177C19.2635 15.078 20 13.125 20 11C20 6.02944 15.9706 2 11 2Z"
-                    fill="#ffae3d"
-                  ></path>{" "}
-                </g>
-              </svg> */}
-              <div className="search-nav">Search</div>
-            </div>
-            <div className="bookmark-left-navbar flex justify-start w-fit cursor-pointer">
-              <div className="bookmar-nav">Bookmark</div>
             </div>
           </div>
         </div>

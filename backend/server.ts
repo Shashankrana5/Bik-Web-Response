@@ -26,7 +26,7 @@ app.use(deserializeUser);
 app.use(
   cors({
     credentials: true,
-    origin: `http://localhost:${process.env.CLIENT_PORT}`,
+    origin: `http://localhost`,
   }),
 );
 

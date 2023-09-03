@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, Fragment } from "react";
 import { UserField } from "../utils/ChatTypes/UserTypes";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog } from "@headlessui/react";
 import { Ticket } from "../utils/TicketTypes/Ticket";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-// type SearchResult = (UserField | Ticket | null)
+import { AiOutlineSearch } from "react-icons/ai";
+import { Menu, Transition } from "@headlessui/react";
 
 const SearchBar = () => {
   const [searchResult, setSearchResult] = useState<
@@ -55,30 +55,21 @@ const SearchBar = () => {
 
   return (
     <div>
-      <button onClick={() => setOpenModal((prev) => !prev)}>
-        <svg
-          className="h-8"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+      <Menu as="div" className="relative inline-block text-left pt-1">
+        <Menu.Button
+          className="relative inline-flex w-[90%]"
+          onClick={() => setOpenModal((prev) => !prev)}
         >
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            {" "}
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M4 11C4 7.13401 7.13401 4 11 4C14.866 4 18 7.13401 18 11C18 14.866 14.866 18 11 18C7.13401 18 4 14.866 4 11ZM11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C13.125 20 15.078 19.2635 16.6177 18.0319L20.2929 21.7071C20.6834 22.0976 21.3166 22.0976 21.7071 21.7071C22.0976 21.3166 22.0976 20.6834 21.7071 20.2929L18.0319 16.6177C19.2635 15.078 20 13.125 20 11C20 6.02944 15.9706 2 11 2Z"
-              fill="#ffae3d"
-            ></path>{" "}
-          </g>
-        </svg>
-      </button>
+          <div
+            className="inline-block rounded-2xl bg-orange p-1 text-2xl font-medium uppercase leading-normal  bg-transparent text-orange-400 transition duration-150 ease-in-out hover:bg-orange-200 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-orange-600 focus:outline-none focus:ring-0 active:bg-orange-700 "
+            data-te-ripple-init
+            data-te-ripple-color="light"
+          >
+            <AiOutlineSearch />
+          </div>
+        </Menu.Button>
+      </Menu>
+
       <Transition.Root show={openModal} as={Fragment}>
         <Dialog
           as="div"

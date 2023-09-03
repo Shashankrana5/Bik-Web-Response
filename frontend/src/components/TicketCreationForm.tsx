@@ -96,7 +96,10 @@ export const TicketCreationForm = () => {
 
   return (
     <div className="ticket-creation-form-main drop-shadow-2xl rounded-xl bg-white p-5">
-      <form onSubmit={(e) => handleFormSubmit(e)}>
+      <form
+        onSubmit={(e) => handleFormSubmit(e)}
+        className="flex flex-col justify-center"
+      >
         <div className="flex gap-4 p-2">
           <div className="ticket-creation-client-name flex flex-col w-[50%]">
             <label className="text-gray-400 mr-auto">Client Name</label>

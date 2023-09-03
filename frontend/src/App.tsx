@@ -12,6 +12,7 @@ import IndivisualTicket from "./pages/IndivisualTicket";
 import { FrontendPlayground } from "./pages/FrontendPlayground";
 import { FrontendPlayground2 } from "./pages/FrontendPlayground2";
 import { Profile } from "./pages/Profile";
+import Register from "./pages/Register";
 
 function App() {
   const [currentUser, setCurrentUser] = useState<UserField | null>(null);
@@ -19,7 +20,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <div className="pages">
+        <div className="pages flex">
           <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
             <Routes>
               <Route path="/logintest" element={<TestLogin />} />
@@ -29,6 +30,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/ticket" element={<Ticket />} />
+              <Route path="/register" element={<Register />} />
               <Route
                 path="/ticket/:ticketNumber"
                 element={<IndivisualTicket />}

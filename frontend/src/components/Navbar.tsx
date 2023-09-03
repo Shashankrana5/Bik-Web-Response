@@ -14,7 +14,7 @@ function classNames(...classes) {
 }
 
 interface NavbarProps {
-  currentUser?: UserField;
+  currentUser: UserField;
   setMinimizeSidebar?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -39,8 +39,8 @@ const Navbar = (props: NavbarProps) => {
 
   return (
     <div className="navbar-main flex justify-between h-14 items-center border-b border-gray-400">
-      <div className="navbar-main-left-elements flex">
-        <Link to="/" className="cursor-pointer ">
+      <div className="navbar-main-left-elements flex gap-8">
+        <button className="cursor-pointer ">
           <svg
             className="h-8"
             viewBox="0 0 24 24"
@@ -65,8 +65,8 @@ const Navbar = (props: NavbarProps) => {
               ></path>{" "}
             </g>{" "}
           </svg>
-        </Link>
-        <Link to="/" className="text-gray-700 text-lg font-semibold pl-8">
+        </button>
+        <Link to="/" className="text-gray-700 text-lg font-semibold">
           <h3>Bik-Web Response</h3>
         </Link>
       </div>
@@ -76,7 +76,7 @@ const Navbar = (props: NavbarProps) => {
 
         <Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm  hover:bg-orange-100">
               <img
                 alt=""
                 className="h-6"
@@ -106,8 +106,10 @@ const Navbar = (props: NavbarProps) => {
                     <button
                       onClick={handleProfileClick}
                       className={classNames(
-                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                        "block px-4 py-2 text-sm",
+                        active
+                          ? "bg-gray-100 text-gray-900 w-[100%]"
+                          : "text-gray-700",
+                        "block px-4 py-2 text-sm w-[100%]",
                       )}
                     >
                       Sign Out
