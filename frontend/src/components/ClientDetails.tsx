@@ -5,6 +5,7 @@ import axios from "axios";
 import { TiEdit } from "react-icons/ti";
 import { useParams } from "react-router-dom";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
+import { host_ip } from "..";
 
 interface ClientDetailsProps {
   currentClient: UserField;
@@ -45,7 +46,7 @@ export const ClientDetails = (props: ClientDetailsProps) => {
   const handleUpdate = async () => {
     if (currentSelectedClient) {
       setCurrentClient(currentSelectedClient!);
-      await axios.post("http://localhost:1913/api/ticket/updateticket", {
+      await axios.post(`http://${host_ip}:1913/api/ticket/updateticket`, {
         client: currentSelectedClient._id,
         clientName: currentSelectedClient.fullName,
         email: currentSelectedClient.email,
@@ -75,7 +76,7 @@ export const ClientDetails = (props: ClientDetailsProps) => {
     }
 
     const response = await axios.post(
-      "http://localhost:1913/api/search/searchuser",
+      `http://${host_ip}:1913/api/search/searchuser`,
       valueToPass,
     );
     setSearchResult(response.data);

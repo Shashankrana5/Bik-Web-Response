@@ -6,6 +6,7 @@ import { Group } from "../utils/ChatTypes/GroupChatTypes";
 import { useDisplayMessageContext } from "../hooks/useDisplayMessageContext";
 import "../css/userActive.css";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
+import { host_ip } from "..";
 
 export type ChatNavbarProps = {
   selectedChat: SelectedChat | null;
@@ -24,7 +25,7 @@ export const ChatNavbar = (chatNavbarProps: ChatNavbarProps) => {
     async function fetchChats() {
       if (currentUser) {
         const response = await axios.get(
-          `http://localhost:1913/api/message/getchatsbyemail/${currentUser.email}`,
+          `http://${host_ip}:1913/api/message/getchatsbyemail/${currentUser.email}`,
         );
         setChats(response.data);
       }

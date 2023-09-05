@@ -1,5 +1,6 @@
 import axios from "axios";
 import { TEInput, TERipple } from "tw-elements-react";
+import { host_ip } from "..";
 
 const Login = () => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
@@ -18,7 +19,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:1913/api/session",
+        `http://${host_ip}:1913/api/session`,
         { email, password },
         { withCredentials: true },
       );

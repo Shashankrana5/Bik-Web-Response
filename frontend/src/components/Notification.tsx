@@ -5,6 +5,7 @@ import { useNotificationContext } from "../hooks/useNotificationContext";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import axios from "axios";
 import { Typography } from "@material-tailwind/react";
+import { host_ip } from "..";
 
 //@ts-ignore
 function classNames(...classes) {
@@ -19,7 +20,7 @@ const Notification = () => {
     const fetchUnreadMessages = async () => {
       if (currentUser) {
         const response = await axios.get(
-          "http://localhost:1913/api/message/getunreadbyemail/" +
+          `http://${host_ip}:1913/api/message/getunreadbyemail/` +
             currentUser.email,
         );
         notificationsDispatch({

@@ -5,6 +5,7 @@ import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Buffer } from "buffer";
+import { host_ip } from "..";
 
 interface SidebarProps {
   minimizeSidebar: boolean;
@@ -23,7 +24,7 @@ export const Sidebar = (props: SidebarProps) => {
 
   const fetchImage = async (id: string) => {
     const response = await axios.get(
-      "http://localhost:1913/api/image/getbyid/" + id,
+      `http://${host_ip}:1913/api/image/getbyid/` + id,
       { responseType: "arraybuffer" },
     );
     let base64ImageString = Buffer.from(response.data, "binary").toString(

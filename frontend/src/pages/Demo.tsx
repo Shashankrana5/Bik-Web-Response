@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect } from "react";
+import { host_ip } from "..";
 
 const Demo = () => {
   const logDemo = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:1913/api/session",
+        `http://${host_ip}:1913/api/session`,
         { email: "demo@bik-web-response.com", password: "DemoUserPW" },
         { withCredentials: true },
       );

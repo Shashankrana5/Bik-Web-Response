@@ -9,6 +9,7 @@ import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 import { useActiveChatsContext } from "../hooks/useActiveChatsContext";
 import { Buffer } from "buffer";
 import "../css/userActive.css";
+import { host_ip } from "..";
 
 interface DisplayChatProps {
   selectedChat: SelectedChat | null;
@@ -29,7 +30,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
     async function fetchAllChats() {
       if (currentUser) {
         const response = await axios.get(
-          `http://localhost:1913/api/message/getchatsbyemail/${currentUser.email}`,
+          `http://${host_ip}:1913/api/message/getchatsbyemail/${currentUser.email}`,
         );
         displayChatDispatch({ type: "SET_CHAT", payload: response.data });
       }
@@ -48,7 +49,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
             avatarPictures[index] === ""
           ) {
             const response = await axios.get(
-              "http://localhost:1913/api/image/getbyid/" +
+              `http://${host_ip}:1913/api/image/getbyid/` +
                 chats["AllChats"][index].avatarId,
               { responseType: "arraybuffer" },
             );

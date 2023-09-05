@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Buffer } from "buffer";
 import "../css/userActive.css";
+import { host_ip } from "..";
 
 interface DisplayMessageNavbarProps {
   selectedChat: SelectedChat | null;
@@ -24,7 +25,7 @@ export const DisplayMessageNavbar = (props: DisplayMessageNavbarProps) => {
         selectedChat.selected.avatarId
       ) {
         const response = await axios.get(
-          "http://localhost:1913/api/image/getbyid/" +
+          `http://${host_ip}:1913/api/image/getbyid/` +
             selectedChat.selected.avatarId,
           { responseType: "arraybuffer" },
         );

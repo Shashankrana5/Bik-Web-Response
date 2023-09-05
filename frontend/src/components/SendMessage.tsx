@@ -4,6 +4,7 @@ import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import { Socket } from "socket.io-client";
 import { useEffect } from "react";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
+import { host_ip } from "..";
 
 interface SendMessageProps {
   selectedChat: SelectedChat | null;
@@ -50,7 +51,7 @@ const SendMessage = (props: SendMessageProps) => {
     //@ts-ignore
     if (e.target.sendMessageInput.value.length !== 0 && selectedChat !== null) {
       const response = await axios.post(
-        `http://localhost:1913/api/message/sendmessage`,
+        `http://${host_ip}:1913/api/message/sendmessage`,
         {
           selectedChat,
           currentUser,
@@ -77,7 +78,7 @@ const SendMessage = (props: SendMessageProps) => {
   }
   const handleFocus = async () => {
     if (currentUser && selectedChat && selectedChat.chatType === "Personal") {
-      await axios.put("http://localhost:1913/api/message/setread", {
+      await axios.put(`http://${host_ip}:1913/api/message/setread`, {
         senderEmail: selectedChat.selected.email,
         receiverEmail: currentUser.email,
       });

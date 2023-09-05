@@ -1,12 +1,13 @@
 import axios from "axios";
 import { TEInput, TERipple } from "tw-elements-react";
+import { host_ip } from "..";
 
 export default function Register(): JSX.Element {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     const response = await axios.post(
-      "http://localhost:1913/api/user/adduser",
+      `http://${host_ip}:1913/api/user/adduser`,
       {
         fullName:
           //@ts-ignore

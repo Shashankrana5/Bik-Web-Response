@@ -8,6 +8,7 @@ import { Socket, io } from "socket.io-client";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { useDisplayChatContext } from "../hooks/useDisplayChatContext";
 import { useActiveChatsContext } from "../hooks/useActiveChatsContext";
+import { host_ip } from "..";
 
 const ChatBox = () => {
   const [selectedChat, setSelectedChat] = useState<SelectedChat | null>(null);
@@ -20,12 +21,12 @@ const ChatBox = () => {
   useEffect(() => {
     if (currentUser) {
       setPersonalChatSocket(
-        io(`http://localhost:1914/personalchat`, {
+        io(`http://${host_ip}:1914/personalchat`, {
           query: { currentUser: JSON.stringify(currentUser) },
         }),
       );
       setGroupChatSocket(
-        io(`http://localhost:1914/groupchat`, {
+        io(`http://${host_ip}:1914/groupchat`, {
           query: { currentUser: JSON.stringify(currentUser) },
         }),
       );

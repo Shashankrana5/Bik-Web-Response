@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { getSessionData } from "../utils/getSessionData";
 import axios from "axios";
+import { host_ip } from "..";
 
 export const Profile = () => {
   const { currentUser, setCurrentUser } = useCurrentUserContext();
@@ -23,7 +24,7 @@ export const Profile = () => {
       formData.append("file", file);
       formData.append("clientId", currentUser!._id);
       await axios.post(
-        "http://localhost:1913/api/image/uploadavatar",
+        `http://${host_ip}:1913/api/image/uploadavatar`,
         formData,
       );
     }

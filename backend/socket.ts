@@ -14,7 +14,11 @@ export class ChatServerSocket {
 
     this.io = new Server(chatServer, {
       cors: {
-        origin: `http://localhost`,
+        origin: [
+          "http://3.19.150.105",
+          "http://bik-web.com",
+          "http://localhost",
+        ],
         methods: ["GET", "POST"],
       },
     });

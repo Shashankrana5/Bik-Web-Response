@@ -8,6 +8,7 @@ import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { host_ip } from "..";
 
 interface TicketDetailsProps {
   currentClient: UserField;
@@ -38,13 +39,13 @@ const TicketDetails = (props: TicketDetailsProps) => {
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await axios.get(
-        "http://localhost:1913/api/category/getall",
+        `http://${host_ip}:1913/api/category/getall`,
       );
       setCategories(response.data);
     };
     const fetchAdmins = async () => {
       const response = await axios.get(
-        "http://localhost:1913/api/user/getadmins",
+        `http://${host_ip}:1913/api/user/getadmins`,
       );
       setAdmins(response.data);
     };
@@ -81,7 +82,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
     setDisplayAssignedTo(currentAssignedTo);
     setDisplayCategory(currentCategory);
     setDisplayStatus(currentStatus);
-    await axios.post("http://localhost:1913/api/ticket/updateticket", {
+    await axios.post(`http://${host_ip}:1913/api/ticket/updateticket`, {
       category: currentCategory,
       status: currentStatus,
       assignedTo: currentAssignedTo,

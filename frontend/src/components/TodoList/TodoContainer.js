@@ -4,6 +4,7 @@ import InputTodo from "./InputTodo";
 import TodoList from "./TodoList";
 import { useCurrentUserContext } from "../../hooks/useCurrentUserContext";
 import axios from "axios";
+import { host_ip } from "../..";
 
 const TodoContainer = () => {
   const [todos, setTodos] = useState([]);
@@ -21,7 +22,7 @@ const TodoContainer = () => {
     });
 
     setTodos(newState);
-    await axios.put("http://localhost:1913/api/todo/updatetodo", {
+    await axios.put(`http://${host_ip}:1913/api/todo/updatetodo`, {
       tasks: newState,
       userId: currentUser._id,
     });
@@ -29,7 +30,7 @@ const TodoContainer = () => {
 
   const delTodo = async (id) => {
     if (id && currentUser) {
-      await axios.put("http://localhost:1913/api/todo/updatetodo", {
+      await axios.put(`http://${host_ip}:1913/api/todo/updatetodo`, {
         tasks: [...todos.filter((todo) => todo.id !== id)],
         userId: currentUser._id,
       });
@@ -45,12 +46,12 @@ const TodoContainer = () => {
         completed: false,
       };
       if (todos && todos.length === 0) {
-        await axios.post("http://localhost:1913/api/todo/createtodo", {
+        await axios.post(`http://${host_ip}:1913/api/todo/createtodo`, {
           tasks: [...todos, newTodo],
           userId: currentUser._id,
         });
       } else {
-        await axios.put("http://localhost:1913/api/todo/updatetodo", {
+        await axios.put(`http://${host_ip}:1913/api/todo/updatetodo`, {
           tasks: [...todos, newTodo],
           userId: currentUser._id,
         });
@@ -70,7 +71,7 @@ const TodoContainer = () => {
       });
 
       setTodos(newTodos);
-      await axios.put("http://localhost:1913/api/todo/updatetodo", {
+      await axios.put(`http://${host_ip}:1913/api/todo/updatetodo`, {
         tasks: newTodos,
         userId: currentUser._id,
       });
@@ -81,7 +82,7 @@ const TodoContainer = () => {
     if (currentUser) {
       const fetchUserTodos = async () => {
         const response = await axios.get(
-          "http://localhost:1913/api/todo/gettodo/" + currentUser._id,
+          `http://${host_ip}:1913/api/todo/gettodo/` + currentUser._id,
         );
         if (response && response.data && response.data.tasks) {
           setTodos(response.data.tasks);

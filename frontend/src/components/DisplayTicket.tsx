@@ -3,6 +3,7 @@ import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import axios from "axios";
 import { useTicketContext } from "../hooks/useTicketContext";
 import SortableTable from "./SortableTable";
+import { host_ip } from "..";
 
 export const DisplayTicket = () => {
   const { currentUser } = useCurrentUserContext();
@@ -19,7 +20,7 @@ export const DisplayTicket = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       const response = await axios.post(
-        "http://localhost:1913/api/ticket/getbyassignee",
+        `http://${host_ip}:1913/api/ticket/getbyassignee`,
         { assignedTo: currentUser },
       );
       ticketsDispatch({ type: "SET_Ticket", payload: response.data });

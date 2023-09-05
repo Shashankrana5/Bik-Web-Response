@@ -6,6 +6,7 @@ import { Socket } from "socket.io-client";
 import { Editor } from "@tinymce/tinymce-react";
 import "../css/editor.css";
 import { useState } from "react";
+import { host_ip } from "..";
 
 interface SendTicketMessageProps {
   ticketSocket: Socket | null;
@@ -22,7 +23,7 @@ export const SendTicketMessage = (props: SendTicketMessageProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:1913/api/ticket/createticketmessage",
+      `http://${host_ip}:1913/api/ticket/createticketmessage`,
       {
         currentUser,
         ticketNumber,

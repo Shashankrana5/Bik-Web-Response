@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Ticket } from "../utils/TicketTypes/Ticket";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { host_ip } from "..";
 
 type TicketField =
   | "ticketNumber"
@@ -39,7 +40,7 @@ function SortableTable() {
   useEffect(() => {
     const fetchTickets = async () => {
       const response = await axios.get(
-        "http://localhost:1913/api/ticket/getall",
+        `http://${host_ip}:1913/api/ticket/getall`,
       );
       setTickets(response.data);
     };

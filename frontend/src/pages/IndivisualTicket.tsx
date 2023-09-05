@@ -11,6 +11,7 @@ import TicketDetails from "../components/TicketDetails";
 import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import { host_ip } from "..";
 
 // ticketdetails (main page)
 //      clientDetails
@@ -46,7 +47,7 @@ const IndivisualTicket = () => {
   useEffect(() => {
     const fetchTicketDetails = async () => {
       const response = await axios.get(
-        `http://localhost:1913/api/ticket/getbyticketnumber/${ticketNumber}`,
+        `http://${host_ip}:1913/api/ticket/getbyticketnumber/${ticketNumber}`,
       );
       setTicketInfo(response.data.ticket);
       setClient(response.data.client);

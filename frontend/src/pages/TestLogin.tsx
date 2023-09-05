@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "../App.css";
+import { host_ip } from "..";
 
 const TestLogin = () => {
   const [loginData, setLoginData] = useState();
@@ -19,7 +20,7 @@ const TestLogin = () => {
 
     axios
       .post(
-        `http://localhost:1913/api/session`,
+        `http://${host_ip}:1913/api/session`,
         { email, password },
         {
           withCredentials: true,
@@ -34,7 +35,7 @@ const TestLogin = () => {
 
   async function getSessionData() {
     axios
-      .get(`http://localhost:1913/api/session`, {
+      .get(`http://${host_ip}:1913/api/session`, {
         withCredentials: true,
       })
       .then((res) => setSessionData(res.data))
@@ -43,7 +44,7 @@ const TestLogin = () => {
 
   async function logout() {
     axios
-      .delete(`http://localhost:1913/api/session`, {
+      .delete(`http://${host_ip}:1913/api/session`, {
         withCredentials: true,
       })
       .then((res) => setLogoutData(res.data))

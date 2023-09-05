@@ -7,6 +7,7 @@ import SearchBar from "./SearchBar";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { host_ip } from "..";
 
 //@ts-ignore
 function classNames(...classes) {
@@ -24,7 +25,7 @@ const Navbar = (props: NavbarProps) => {
 
   const handleProfileClick = async () => {
     try {
-      axios.delete(`http://localhost:1913/api/session`, {
+      axios.delete(`http://${host_ip}:1913/api/session`, {
         withCredentials: true,
       });
       window.location.href = "/login";

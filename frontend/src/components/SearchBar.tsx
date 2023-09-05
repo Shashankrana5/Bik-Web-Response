@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Menu, Transition } from "@headlessui/react";
+import { host_ip } from "..";
 
 const SearchBar = () => {
   const [searchResult, setSearchResult] = useState<
@@ -31,13 +32,13 @@ const SearchBar = () => {
     }
 
     if (searchOption && searchOption === "Ticket") {
-      const response = await axios.post("http://localhost:1913/api/search/", {
+      const response = await axios.post(`http://${host_ip}:1913/api/search/`, {
         searchParams: v,
         searchType: "ticket",
       });
       setSearchResult(response.data.searchResult);
     } else if (searchOption && searchOption === "User") {
-      const response = await axios.post("http://localhost:1913/api/search/", {
+      const response = await axios.post(`http://${host_ip}:1913/api/search/`, {
         searchParams: v,
         searchType: "user",
       });

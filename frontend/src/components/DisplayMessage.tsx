@@ -5,6 +5,7 @@ import { SelectedChat } from "../utils/ChatTypes/ChatType";
 import { DisplayMessageNavbar } from "./DisplayMessageNavbar";
 import { useCurrentUserContext } from "../hooks/useCurrentUserContext";
 import { Buffer } from "buffer";
+import { host_ip } from "..";
 
 interface DisplayChatProps {
   selectedChat: SelectedChat | null;
@@ -35,7 +36,7 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
     async function fetchChats() {
       if (selectedChat?.chatType === "Personal") {
         const personalMessage = await axios.get(
-          `http://localhost:1913/api/message/getmessagebyemails/${currentUser?.email}/to/${selectedChat.selected.email}`,
+          `http://${host_ip}:1913/api/message/getmessagebyemails/${currentUser?.email}/to/${selectedChat.selected.email}`,
         );
         const pass = {
           messages: personalMessage.data,
@@ -46,7 +47,7 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
         dispatch({ type: "SET_MESSAGE", payload: pass });
       } else if (selectedChat?.chatType === "Group") {
         const groupMessage = await axios.get(
-          `http://localhost:1913/api/message/getgroupmessage/${selectedChat?.selected._id}/user/${currentUser?.email}`,
+          `http://${host_ip}:1913/api/message/getgroupmessage/${selectedChat?.selected._id}/user/${currentUser?.email}`,
         );
         const paramsToPass = {
           messages: groupMessage.data,
@@ -64,7 +65,7 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
         selectedChat.selected.avatarId
       ) {
         const response = await axios.get(
-          "http://localhost:1913/api/image/getbyid/" +
+          `http://${host_ip}:1913/api/image/getbyid/` +
             selectedChat.selected.avatarId,
           { responseType: "arraybuffer" },
         );
@@ -76,7 +77,7 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
       }
       if (currentUser && currentUser.avatarId) {
         const response = await axios.get(
-          "http://localhost:1913/api/image/getbyid/" + currentUser.avatarId,
+          `http://${host_ip}:1913/api/image/getbyid/` + currentUser.avatarId,
           { responseType: "arraybuffer" },
         );
         let base64ImageString = Buffer.from(response.data, "binary").toString(
@@ -96,7 +97,7 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
       selectedChat &&
       selectedChat.chatType === "Personal"
     ) {
-      await axios.put("http://localhost:1913/api/message/setread", {
+      await axios.put(`http://${host_ip}:1913/api/message/setread`, {
         senderEmail: selectedChat.selected.email,
         receiverEmail: currentUser.email,
       });

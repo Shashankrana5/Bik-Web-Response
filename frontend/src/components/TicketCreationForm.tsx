@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { UserField } from "../utils/ChatTypes/UserTypes";
 import axios from "axios";
+import { host_ip } from "..";
 
 type Category = {
   _id: string;
@@ -19,7 +20,7 @@ export const TicketCreationForm = () => {
   const [admins, setAdmins] = useState<UserField[]>([]);
 
   const getCategoryOptions = async () => {
-    const response = await fetch("http://localhost:1913/api/category/getall");
+    const response = await fetch(`http://${host_ip}:1913/api/category/getall`);
     const json = await response.json();
     setCategories(json);
     const categorySelect = document.querySelector(
@@ -42,7 +43,7 @@ export const TicketCreationForm = () => {
   };
 
   const getAdminOptions = async () => {
-    const admins = await fetch("http://localhost:1913/api/user/getadmins");
+    const admins = await fetch(`http://${host_ip}:1913/api/user/getadmins`);
     const adminJson = await admins.json();
     setAdmins(adminJson);
     const adminSelector = document.querySelector(
@@ -86,7 +87,7 @@ export const TicketCreationForm = () => {
     };
     try {
       await axios.post(
-        "http://localhost:1913/api/ticket/createticket",
+        `http://${host_ip}:1913/api/ticket/createticket`,
         paramsToPass,
       );
     } catch (error) {
