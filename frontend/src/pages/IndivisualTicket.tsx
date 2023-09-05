@@ -87,7 +87,7 @@ const IndivisualTicket = () => {
                         setCurrentClient={setClient}
                       />
                     </div>
-                    <div id="ticket-details-container" className="p3">
+                    <div id="ticket-details-container" className="p-3">
                       <TicketDetails
                         ticketInfo={ticketInfo}
                         currentClient={client}

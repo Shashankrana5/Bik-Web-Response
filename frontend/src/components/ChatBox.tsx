@@ -59,7 +59,7 @@ const ChatBox = () => {
   }, [personalChatSocket]);
 
   return (
-    <div className="chatbox-main max-w-4xl w-[35vw] flex flex-col">
+    <div className="chatbox-main max-w-4xl w-[35vw] flex flex-col py-10">
       <ChatNavbar
         selectedChat={selectedChat}
         setSelectedChat={setSelectedChat}

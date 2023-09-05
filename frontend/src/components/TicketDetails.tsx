@@ -92,7 +92,8 @@ const TicketDetails = (props: TicketDetailsProps) => {
   return (
     <div className="rounded-md shadow-lg flex">
       <div className="container mx-auto bg-white flex-1">
-        <div className="flex items-center justify-end pr-4 pt-4">
+        <div className="flex items-center justify-between pr-4 pt-4 pl-4">
+          Ticket Information:
           {currentUser?.role !== "ADMIN" ? null : (
             <button
               onClick={openModal}

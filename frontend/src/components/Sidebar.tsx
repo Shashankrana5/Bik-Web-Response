@@ -62,7 +62,7 @@ export const Sidebar = (props: SidebarProps) => {
 
   if (minimizeSidebar === true) {
     return (
-      <div className="left-navigation-bar">
+      <div className="left-navigation-bar flex flex-col items-center">
         <div className="user-wrapper h-14 flex items-center">
           {currentUser && currentUser.avatarId && avatar ? (
             <div>
@@ -280,7 +280,8 @@ export const Sidebar = (props: SidebarProps) => {
           <div className="navbar-sub-navigation flex flex-col">
             <div
               id="dashboard-left-navbar "
-              className="flex justify-start w-fit cursor-pointer"
+              className="flex justify-start w-fit cursor-pointer gap-1"
+              onDoubleClick={(e) => handleDoubleClick(e, "/")}
             >
               <svg
                 className="h-8"
@@ -309,7 +310,7 @@ export const Sidebar = (props: SidebarProps) => {
             </div>
             <div
               id="ticket-left-navbar"
-              className="flex justify-start w-fit cursor-pointer"
+              className="flex justify-start w-fit cursor-pointer gap-1"
               onDoubleClick={(e) => handleDoubleClick(e, "/ticket")}
             >
               <svg
@@ -371,7 +372,7 @@ export const Sidebar = (props: SidebarProps) => {
             <div id="chat-left-navbar" className="flex justify-start w-fit ">
               <div
                 id="chat-left-navbar-content"
-                className="cursor-pointer flex justify-start w-fit "
+                className="cursor-pointer flex justify-start w-fit gap-1"
                 onClick={handleChatsOnClick}
                 onDoubleClick={(e) => handleDoubleClick(e, "/chat")}
               >

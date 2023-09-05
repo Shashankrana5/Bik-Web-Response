@@ -92,15 +92,17 @@ const TodoContainer = () => {
   }, [currentUser]);
 
   return (
-    <div className="container bg-white p-8 rounded-lg shadow-lg">
-      <div className="inner">
-        <InputTodo addTodoProps={addTodoItem} />
-        <TodoList
-          todos={todos}
-          handleChangeProps={handleChange}
-          deleteTodoProps={delTodo}
-          setUpdate={setUpdate}
-        />
+    <div className="p-6">
+      <div className="container bg-white rounded-xl shadow-lg p-8">
+        <div className="inner">
+          <InputTodo addTodoProps={addTodoItem} />
+          <TodoList
+            todos={todos}
+            handleChangeProps={handleChange}
+            deleteTodoProps={delTodo}
+            setUpdate={setUpdate}
+          />
+        </div>
       </div>
     </div>
   );

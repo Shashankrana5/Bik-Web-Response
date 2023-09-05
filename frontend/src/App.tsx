@@ -13,6 +13,7 @@ import { FrontendPlayground } from "./pages/FrontendPlayground";
 import { FrontendPlayground2 } from "./pages/FrontendPlayground2";
 import { Profile } from "./pages/Profile";
 import Register from "./pages/Register";
+import Demo from "./pages/Demo";
 
 function App() {
   const [currentUser, setCurrentUser] = useState<UserField | null>(null);
@@ -31,6 +32,8 @@ function App() {
               <Route path="/chat" element={<Chat />} />
               <Route path="/ticket" element={<Ticket />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/demo" element={<Demo />} />
+
               <Route
                 path="/ticket/:ticketNumber"
                 element={<IndivisualTicket />}

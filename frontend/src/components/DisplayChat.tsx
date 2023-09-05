@@ -96,7 +96,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
           return (
             <div
               id="display-chat-allchats"
-              className="border flex w-[75%] h-[4vh] rounded-lg border-black relative items-center"
+              className="border flex w-[75%] h-[4vh] rounded-lg border-orange-100 bg-white relative items-center p-3"
               key={chats["AllChats"][Number(key)]._id}
             >
               <div className="profile-picture-status-container h-[100%] maxh-h-[100%] flex items-center">

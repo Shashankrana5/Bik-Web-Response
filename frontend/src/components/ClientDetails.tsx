@@ -84,7 +84,8 @@ export const ClientDetails = (props: ClientDetailsProps) => {
   return (
     <div className="rounded-md shadow-lg flex max-height-64">
       <div className="container mx-auto bg-white flex-1 flex flex-col">
-        <div className="flex items-center justify-end pr-4 pt-4">
+        <div className="flex items-center justify-between pr-4 pt-4 pl-4">
+          Client Information:
           {currentUser?.role !== "ADMIN" ? null : (
             <button
               onClick={openModal}

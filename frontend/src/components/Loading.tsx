@@ -15,7 +15,9 @@ function Loading() {
         />
       </svg>
 
-      <div className="text-2xl">Loading ...</div>
+      <div className="text-2xl">
+        Loading ... (refresh the page if it takes too long)
+      </div>
     </div>
   );
 }

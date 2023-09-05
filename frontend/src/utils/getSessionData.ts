@@ -5,6 +5,7 @@ export async function getSessionData() {
     const response = await axios.get("http://localhost:1913/api/session", {
       withCredentials: true,
     });
+
     return response;
   } catch (error) {
     //@ts-ignore
