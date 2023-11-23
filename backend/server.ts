@@ -26,7 +26,14 @@ app.use(deserializeUser);
 app.use(
   cors({
     credentials: true,
-    origin: ["http://3.19.150.105", "http://bik-web.com", "http://localhost"],
+    origin: [
+      "http://3.19.150.105",
+      "http://bik-web.com",
+      "http://localhost",
+      "http://3.19.150.105:1912",
+      "http://bik-web.com:1912",
+      "http://localhost:1912",
+    ],
   }),
 );
 

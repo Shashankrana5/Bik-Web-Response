@@ -9,6 +9,7 @@ export async function getSessionData() {
 
     return response;
   } catch (error) {
+    console.log(error);
     //@ts-ignore
     if (error.response.status === 403) {
       window.location.href = "/login";

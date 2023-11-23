@@ -8,7 +8,9 @@ import { TicketContextProvider } from "./contexts/TicketContext";
 import { TicketContentContextProvider } from "./contexts/TicketContentContext";
 import { NotificationContextProvider } from "./contexts/NotificationContext";
 
-export const host_ip = "bik-web.com";
+// export const host_ip = "bik-web.com";
+// export const host_ip = "127.0.0.1";
+export const host_ip = "localhost";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
