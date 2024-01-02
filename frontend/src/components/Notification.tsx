@@ -87,6 +87,7 @@ const Notification = () => {
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
+                              placeholder="sender-name"
                             >
                               {notification.senderName}
                             </Typography>
@@ -94,6 +95,7 @@ const Notification = () => {
                               variant="small"
                               color="blue-gray"
                               className="font-normal opacity-70"
+                              placeholder="content"
                             >
                               {notification.content}
                             </Typography>
