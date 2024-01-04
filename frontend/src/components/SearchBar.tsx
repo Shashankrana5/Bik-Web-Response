@@ -32,13 +32,13 @@ const SearchBar = () => {
     }
 
     if (searchOption && searchOption === "Ticket") {
-      const response = await axios.post(`http://${host_ip}:1913/api/search/`, {
+      const response = await axios.post(`${host_ip}/api/search/`, {
         searchParams: v,
         searchType: "ticket",
       });
       setSearchResult(response.data.searchResult);
     } else if (searchOption && searchOption === "User") {
-      const response = await axios.post(`http://${host_ip}:1913/api/search/`, {
+      const response = await axios.post(`${host_ip}/api/search/`, {
         searchParams: v,
         searchType: "user",
       });

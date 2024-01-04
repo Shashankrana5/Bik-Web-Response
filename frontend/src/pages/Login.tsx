@@ -19,7 +19,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        `http://${host_ip}:1913/api/session`,
+        `${host_ip}/api/session`,
         { email, password },
         { withCredentials: true },
       );

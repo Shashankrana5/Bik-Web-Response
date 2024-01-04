@@ -30,7 +30,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
     async function fetchAllChats() {
       if (currentUser) {
         const response = await axios.get(
-          `http://${host_ip}:1913/api/message/getchatsbyemail/${currentUser.email}`,
+          `${host_ip}/api/message/getchatsbyemail/${currentUser.email}`,
         );
         displayChatDispatch({ type: "SET_CHAT", payload: response.data });
       }
@@ -49,7 +49,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
             avatarPictures[index] === ""
           ) {
             const response = await axios.get(
-              `http://${host_ip}:1913/api/image/getbyid/` +
+              `${host_ip}/api/image/getbyid/` +
                 chats["AllChats"][index].avatarId,
               { responseType: "arraybuffer" },
             );

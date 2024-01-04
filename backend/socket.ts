@@ -29,7 +29,7 @@ export class ChatServerSocket {
   }
 
   startListeners(io: Server) {
-    io.of("/personalchat").on("connection", (socket) => {
+    io.of("/chatapi/personalchat").on("connection", (socket) => {
       const user = JSON.parse(socket.handshake.query.currentUser as string);
       if (this.activeUsers[user.email] === undefined) {
         this.activeUsers[user.email] = new Set([socket.id]);
@@ -82,7 +82,7 @@ export class ChatServerSocket {
       });
     });
 
-    io.of("/groupchat").on("connection", (socket) => {
+    io.of("/chatapi/groupchat").on("connection", (socket) => {
       socket.on("join-groupchat", (groupId) => {
         socket.join(groupId);
       });
@@ -91,7 +91,7 @@ export class ChatServerSocket {
       });
     });
 
-    io.of("/ticketchat").on("connection", (socket) => {
+    io.of("/chatapi/ticketchat").on("connection", (socket) => {
       socket.on("join-ticket", (data) => {
         socket.join(data);
       });

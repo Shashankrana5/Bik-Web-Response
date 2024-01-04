@@ -50,15 +50,12 @@ const SendMessage = (props: SendMessageProps) => {
 
     //@ts-ignore
     if (e.target.sendMessageInput.value.length !== 0 && selectedChat !== null) {
-      const response = await axios.post(
-        `http://${host_ip}:1913/api/message/sendmessage`,
-        {
-          selectedChat,
-          currentUser,
-          //@ts-ignore
-          content: e.target.sendMessageInput.value,
-        },
-      );
+      const response = await axios.post(`${host_ip}/api/message/sendmessage`, {
+        selectedChat,
+        currentUser,
+        //@ts-ignore
+        content: e.target.sendMessageInput.value,
+      });
 
       if (response) {
         dispatch({ type: "CREATE_MESSAGE", payload: response.data });
@@ -78,7 +75,7 @@ const SendMessage = (props: SendMessageProps) => {
   }
   const handleFocus = async () => {
     if (currentUser && selectedChat && selectedChat.chatType === "Personal") {
-      await axios.put(`http://${host_ip}:1913/api/message/setread`, {
+      await axios.put(`${host_ip}/api/message/setread`, {
         senderEmail: selectedChat.selected.email,
         receiverEmail: currentUser.email,
       });

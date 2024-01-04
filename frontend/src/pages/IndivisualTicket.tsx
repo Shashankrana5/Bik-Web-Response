@@ -47,7 +47,7 @@ const IndivisualTicket = () => {
   useEffect(() => {
     const fetchTicketDetails = async () => {
       const response = await axios.get(
-        `http://${host_ip}:1913/api/ticket/getbyticketnumber/${ticketNumber}`,
+        `${host_ip}/api/ticket/getbyticketnumber/${ticketNumber}`,
       );
       setTicketInfo(response.data.ticket);
       setClient(response.data.client);

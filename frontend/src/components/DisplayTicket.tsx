@@ -19,10 +19,9 @@ export const DisplayTicket = () => {
   // }
   useEffect(() => {
     const fetchTickets = async () => {
-      const response = await axios.post(
-        `http://${host_ip}:1913/api/ticket/getbyassignee`,
-        { assignedTo: currentUser },
-      );
+      const response = await axios.post(`${host_ip}/api/ticket/getbyassignee`, {
+        assignedTo: currentUser,
+      });
       ticketsDispatch({ type: "SET_Ticket", payload: response.data });
     };
 

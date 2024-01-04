@@ -23,7 +23,7 @@ export const SendTicketMessage = (props: SendTicketMessageProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await axios.post(
-      `http://${host_ip}:1913/api/ticket/createticketmessage`,
+      `${host_ip}/api/ticket/createticketmessage`,
       {
         currentUser,
         ticketNumber,

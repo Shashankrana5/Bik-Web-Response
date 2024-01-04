@@ -23,10 +23,7 @@ export const Profile = () => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("clientId", currentUser!._id);
-      await axios.post(
-        `http://${host_ip}:1913/api/image/uploadavatar`,
-        formData,
-      );
+      await axios.post(`${host_ip}/api/image/uploadavatar`, formData);
     }
   };
 

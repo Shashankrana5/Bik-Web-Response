@@ -22,7 +22,7 @@ const TodoContainer = () => {
     });
 
     setTodos(newState);
-    await axios.put(`http://${host_ip}:1913/api/todo/updatetodo`, {
+    await axios.put(`${host_ip}/api/todo/updatetodo`, {
       tasks: newState,
       userId: currentUser._id,
     });
@@ -30,7 +30,7 @@ const TodoContainer = () => {
 
   const delTodo = async (id) => {
     if (id && currentUser) {
-      await axios.put(`http://${host_ip}:1913/api/todo/updatetodo`, {
+      await axios.put(`${host_ip}/api/todo/updatetodo`, {
         tasks: [...todos.filter((todo) => todo.id !== id)],
         userId: currentUser._id,
       });
@@ -46,12 +46,12 @@ const TodoContainer = () => {
         completed: false,
       };
       if (todos && todos.length === 0) {
-        await axios.post(`http://${host_ip}:1913/api/todo/createtodo`, {
+        await axios.post(`${host_ip}/api/todo/createtodo`, {
           tasks: [...todos, newTodo],
           userId: currentUser._id,
         });
       } else {
-        await axios.put(`http://${host_ip}:1913/api/todo/updatetodo`, {
+        await axios.put(`${host_ip}/api/todo/updatetodo`, {
           tasks: [...todos, newTodo],
           userId: currentUser._id,
         });
@@ -71,7 +71,7 @@ const TodoContainer = () => {
       });
 
       setTodos(newTodos);
-      await axios.put(`http://${host_ip}:1913/api/todo/updatetodo`, {
+      await axios.put(`${host_ip}/api/todo/updatetodo`, {
         tasks: newTodos,
         userId: currentUser._id,
       });
@@ -82,7 +82,7 @@ const TodoContainer = () => {
     if (currentUser) {
       const fetchUserTodos = async () => {
         const response = await axios.get(
-          `http://${host_ip}:1913/api/todo/gettodo/` + currentUser._id,
+          `${host_ip}/api/todo/gettodo/` + currentUser._id,
         );
         if (response && response.data && response.data.tasks) {
           setTodos(response.data.tasks);

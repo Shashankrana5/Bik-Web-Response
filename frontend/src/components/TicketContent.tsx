@@ -7,7 +7,7 @@ import axios from "axios";
 import { Socket, io } from "socket.io-client";
 import { Ticket } from "../utils/TicketTypes/Ticket";
 import { Buffer } from "buffer";
-import { host_ip } from "..";
+import { host_ip, chat_ip } from "..";
 
 interface TicketContentProps {
   ticketDetails: Ticket;
@@ -25,7 +25,7 @@ const TicketContent = (props: TicketContentProps) => {
 
   useEffect(() => {
     if (currentUser) {
-      const socket = io(`http://${host_ip}:1914/ticketchat`, {
+      const socket = io(`${chat_ip}/chatapi/ticketchat`, {
         query: { currentUser: JSON.stringify(currentUser) },
       });
       if (socket) {
@@ -44,7 +44,7 @@ const TicketContent = (props: TicketContentProps) => {
     if (currentUser && ticketNumber) {
       const fetchTicketMessage = async () => {
         const response = await axios(
-          `http://${host_ip}:1913/api/message/getmessagebyticketnumber/${ticketNumber}`,
+          `${host_ip}/api/message/getmessagebyticketnumber/${ticketNumber}`,
         );
         ticketContentDispatch({
           type: "SET_TICKET_CONTENT",
@@ -62,7 +62,7 @@ const TicketContent = (props: TicketContentProps) => {
         for (const indivisualTicket of ticketContent) {
           if (!Object.keys(temp).includes(indivisualTicket.senderEmail)) {
             const response = await axios.get(
-              `http://${host_ip}:1913/api/image/getbyuseremail/` +
+              `${host_ip}/api/image/getbyuseremail/` +
                 indivisualTicket.senderEmail,
               { responseType: "arraybuffer" },
             );

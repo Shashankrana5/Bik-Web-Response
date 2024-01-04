@@ -38,15 +38,11 @@ const TicketDetails = (props: TicketDetailsProps) => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await axios.get(
-        `http://${host_ip}:1913/api/category/getall`,
-      );
+      const response = await axios.get(`${host_ip}/api/category/getall`);
       setCategories(response.data);
     };
     const fetchAdmins = async () => {
-      const response = await axios.get(
-        `http://${host_ip}:1913/api/user/getadmins`,
-      );
+      const response = await axios.get(`${host_ip}/api/user/getadmins`);
       setAdmins(response.data);
     };
     fetchAdmins();
@@ -82,7 +78,7 @@ const TicketDetails = (props: TicketDetailsProps) => {
     setDisplayAssignedTo(currentAssignedTo);
     setDisplayCategory(currentCategory);
     setDisplayStatus(currentStatus);
-    await axios.post(`http://${host_ip}:1913/api/ticket/updateticket`, {
+    await axios.post(`${host_ip}/api/ticket/updateticket`, {
       category: currentCategory,
       status: currentStatus,
       assignedTo: currentAssignedTo,

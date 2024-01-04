@@ -20,7 +20,7 @@ export const TicketCreationForm = () => {
   const [admins, setAdmins] = useState<UserField[]>([]);
 
   const getCategoryOptions = async () => {
-    const response = await fetch(`http://${host_ip}:1913/api/category/getall`);
+    const response = await fetch(`${host_ip}/api/category/getall`);
     const json = await response.json();
     setCategories(json);
     const categorySelect = document.querySelector(
@@ -43,7 +43,7 @@ export const TicketCreationForm = () => {
   };
 
   const getAdminOptions = async () => {
-    const admins = await fetch(`http://${host_ip}:1913/api/user/getadmins`);
+    const admins = await fetch(`${host_ip}/api/user/getadmins`);
     const adminJson = await admins.json();
     setAdmins(adminJson);
     const adminSelector = document.querySelector(
@@ -86,10 +86,7 @@ export const TicketCreationForm = () => {
       assignedTo,
     };
     try {
-      await axios.post(
-        `http://${host_ip}:1913/api/ticket/createticket`,
-        paramsToPass,
-      );
+      await axios.post(`${host_ip}/api/ticket/createticket`, paramsToPass);
     } catch (error) {
       console.log({ errorMessage: error });
     }

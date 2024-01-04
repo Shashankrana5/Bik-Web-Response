@@ -39,9 +39,7 @@ function SortableTable() {
 
   useEffect(() => {
     const fetchTickets = async () => {
-      const response = await axios.get(
-        `http://${host_ip}:1913/api/ticket/getall`,
-      );
+      const response = await axios.get(`${host_ip}/api/ticket/getall`);
       setTickets(response.data);
     };
     fetchTickets();
@@ -150,8 +148,10 @@ function SortableTable() {
   };
   return (
     <div id="sortable-table-main" className="p-6">
-                              
-      <Card className="h-full w-full p-6 shadow-lg" placeholder="card-container">
+      <Card
+        className="h-full w-full p-6 shadow-lg"
+        placeholder="card-container"
+      >
         {/* <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="w-full md:w-72">
@@ -159,7 +159,7 @@ function SortableTable() {
           </div>
         </div>
       </CardHeader> */}
-      
+
         <CardBody className="overflow-scroll px-0">
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
@@ -181,7 +181,6 @@ function SortableTable() {
                       color="blue-gray"
                       className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                       placeholder="N/A"
-
                     >
                       {head}{" "}
                       {index !== TABLE_HEAD.length - 1 && (
@@ -228,7 +227,6 @@ function SortableTable() {
                             color="blue-gray"
                             className="font-normal"
                             placeholder="tkt-number"
-
                           >
                             {ticketNumber}
                           </Typography>
@@ -241,8 +239,7 @@ function SortableTable() {
                                 variant="small"
                                 color="blue-gray"
                                 className="font-normal"
-                              placeholder="client-name"
-
+                                placeholder="client-name"
                               >
                                 {clientName}
                               </Typography>
@@ -250,8 +247,7 @@ function SortableTable() {
                                 variant="small"
                                 color="blue-gray"
                                 className="font-normal opacity-70"
-                              placeholder="email"
-
+                                placeholder="email"
                               >
                                 {email}
                               </Typography>
@@ -268,7 +264,6 @@ function SortableTable() {
                               color="blue-gray"
                               className="font-normal opacity-70"
                               placeholder="subject"
-
                             >
                               {subject}
                             </Typography>
@@ -280,7 +275,6 @@ function SortableTable() {
                             color="blue-gray"
                             className="font-normal"
                             placeholder="category"
-
                           >
                             {category.category}
                           </Typography>
@@ -291,7 +285,6 @@ function SortableTable() {
                             color="blue-gray"
                             className="font-normal"
                             placeholder="status"
-
                           >
                             {status}
                           </Typography>
@@ -302,7 +295,6 @@ function SortableTable() {
                             color="blue-gray"
                             className="font-normal"
                             placeholder="assignedTo"
-
                           >
                             {assignedTo.fullName}
                           </Typography>

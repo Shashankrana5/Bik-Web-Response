@@ -46,7 +46,7 @@ export const ClientDetails = (props: ClientDetailsProps) => {
   const handleUpdate = async () => {
     if (currentSelectedClient) {
       setCurrentClient(currentSelectedClient!);
-      await axios.post(`http://${host_ip}:1913/api/ticket/updateticket`, {
+      await axios.post(`${host_ip}/api/ticket/updateticket`, {
         client: currentSelectedClient._id,
         clientName: currentSelectedClient.fullName,
         email: currentSelectedClient.email,
@@ -76,7 +76,7 @@ export const ClientDetails = (props: ClientDetailsProps) => {
     }
 
     const response = await axios.post(
-      `http://${host_ip}:1913/api/search/searchuser`,
+      `${host_ip}/api/search/searchuser`,
       valueToPass,
     );
     setSearchResult(response.data);

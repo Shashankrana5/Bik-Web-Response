@@ -23,10 +23,9 @@ export const Sidebar = (props: SidebarProps) => {
   };
 
   const fetchImage = async (id: string) => {
-    const response = await axios.get(
-      `http://${host_ip}:1913/api/image/getbyid/` + id,
-      { responseType: "arraybuffer" },
-    );
+    const response = await axios.get(`${host_ip}/api/image/getbyid/` + id, {
+      responseType: "arraybuffer",
+    });
     let base64ImageString = Buffer.from(response.data, "binary").toString(
       "base64",
     );

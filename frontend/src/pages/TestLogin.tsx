@@ -20,7 +20,7 @@ const TestLogin = () => {
 
     axios
       .post(
-        `http://${host_ip}:1913/api/session`,
+        `${host_ip}/api/session`,
         { email, password },
         {
           withCredentials: true,
@@ -35,7 +35,7 @@ const TestLogin = () => {
 
   async function getSessionData() {
     axios
-      .get(`http://${host_ip}:1913/api/session`, {
+      .get(`${host_ip}/api/session`, {
         withCredentials: true,
       })
       .then((res) => setSessionData(res.data))
@@ -44,7 +44,7 @@ const TestLogin = () => {
 
   async function logout() {
     axios
-      .delete(`http://${host_ip}:1913/api/session`, {
+      .delete(`${host_ip}/api/session`, {
         withCredentials: true,
       })
       .then((res) => setLogoutData(res.data))

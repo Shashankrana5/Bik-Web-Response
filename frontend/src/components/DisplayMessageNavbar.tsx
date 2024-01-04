@@ -25,8 +25,7 @@ export const DisplayMessageNavbar = (props: DisplayMessageNavbarProps) => {
         selectedChat.selected.avatarId
       ) {
         const response = await axios.get(
-          `http://${host_ip}:1913/api/image/getbyid/` +
-            selectedChat.selected.avatarId,
+          `${host_ip}/api/image/getbyid/` + selectedChat.selected.avatarId,
           { responseType: "arraybuffer" },
         );
         let base64ImageString = Buffer.from(response.data, "binary").toString(

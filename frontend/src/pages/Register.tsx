@@ -6,21 +6,18 @@ export default function Register(): JSX.Element {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const response = await axios.post(
-      `http://${host_ip}:1913/api/user/adduser`,
-      {
-        fullName:
-          //@ts-ignore
-          e.target.registerFirstNameField.value +
-          " " +
-          //@ts-ignore
-          e.target.registerLastnameField.value,
+    const response = await axios.post(`${host_ip}/api/user/adduser`, {
+      fullName:
         //@ts-ignore
-        email: e.target.registerEmailField.value,
+        e.target.registerFirstNameField.value +
+        " " +
         //@ts-ignore
-        password: e.target.registerPasswordField.value,
-      },
-    );
+        e.target.registerLastnameField.value,
+      //@ts-ignore
+      email: e.target.registerEmailField.value,
+      //@ts-ignore
+      password: e.target.registerPasswordField.value,
+    });
     console.log(response);
   };
 

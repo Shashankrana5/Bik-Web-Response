@@ -20,8 +20,7 @@ const Notification = () => {
     const fetchUnreadMessages = async () => {
       if (currentUser) {
         const response = await axios.get(
-          `http://${host_ip}:1913/api/message/getunreadbyemail/` +
-            currentUser.email,
+          `${host_ip}/api/message/getunreadbyemail/` + currentUser.email,
         );
         notificationsDispatch({
           type: "SET_NOTIFICATION",

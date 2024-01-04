@@ -8,9 +8,18 @@ import { TicketContextProvider } from "./contexts/TicketContext";
 import { TicketContentContextProvider } from "./contexts/TicketContentContext";
 import { NotificationContextProvider } from "./contexts/NotificationContext";
 
-// export const host_ip = "bik-web.com";
+// export const host_ip = "https://bik-web.com";
+// export const chat_ip = "https://bik-web.com"
 // export const host_ip = "127.0.0.1";
-export const host_ip = "localhost";
+// export const host_ip = "localhost";
+
+// export const chat_ip = "http://localhost:1914"
+// export const host_ip = "http://localhost:1913";
+
+export const host_ip = "https://bik-web.com";
+export const chat_ip = "https://bik-web.com";
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,

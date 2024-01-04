@@ -25,7 +25,7 @@ export const ChatNavbar = (chatNavbarProps: ChatNavbarProps) => {
     async function fetchChats() {
       if (currentUser) {
         const response = await axios.get(
-          `http://${host_ip}:1913/api/message/getchatsbyemail/${currentUser.email}`,
+          `${host_ip}/api/message/getchatsbyemail/${currentUser.email}`,
         );
         setChats(response.data);
       }

@@ -3,9 +3,11 @@ import { host_ip } from "..";
 
 export async function getSessionData() {
   try {
-    const response = await axios.get(`http://${host_ip}:1913/api/session`, {
+    console.log(`${host_ip}/api/session`)
+    const response = await axios.get(`${host_ip}/api/session`, {
       withCredentials: true,
     });
+
 
     return response;
   } catch (error) {

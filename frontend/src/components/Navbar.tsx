@@ -25,7 +25,7 @@ const Navbar = (props: NavbarProps) => {
 
   const handleProfileClick = async () => {
     try {
-      axios.delete(`http://${host_ip}:1913/api/session`, {
+      axios.delete(`${host_ip}/api/session`, {
         withCredentials: true,
       });
       window.location.href = "/login";

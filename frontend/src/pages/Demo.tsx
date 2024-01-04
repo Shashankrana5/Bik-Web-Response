@@ -6,7 +6,7 @@ const Demo = () => {
   const logDemo = async () => {
     try {
       const response = await axios.post(
-        `http://${host_ip}:1913/api/session`,
+        `${host_ip}/api/session`,
         { email: "demo@bik-web-response.com", password: "DemoUserPW" },
         { withCredentials: true },
       );
