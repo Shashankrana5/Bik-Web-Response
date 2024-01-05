@@ -56,12 +56,17 @@ export async function getChatsByEmail(req: Request, res: Response) {
   try {
     const personalChatSet = new Set();
 
-    const personalResponse = await Message.find({
+    let personalResponse = await Message.find({
       messageType: "personal",
       $or: [{ senderEmail: email }, { receiverEmail: email }],
-    }).sort({ updatedAt: -1 });
+    }).sort({ createdAt: -1 });
+    personalResponse = personalResponse.sort(
+      (a: any, b: any) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+
     const groupResponse = await Group.find({ "users.email": email }).sort({
-      updatedAt: -1,
+      createdAtAt: -1,
     });
     const chats: ChatResponse = {
       Personal: [],
@@ -103,7 +108,7 @@ export async function getChatsByEmail(req: Request, res: Response) {
 
     while (ptr1 < personalResponse.length && ptr2 < groupResponse.length) {
       //@ts-ignore
-      if (personalResponse[ptr1].updatedAt > groupResponse[ptr2].updatedAt) {
+      if (personalResponse[ptr1].createdAt > groupResponse[ptr2].createdAt) {
         if (
           email !== personalResponse[ptr1]["receiverEmail"] &&
           !allChatPersonal.has(personalResponse[ptr1]["receiverEmail"])
@@ -177,7 +182,7 @@ export const getMessagesByEmails = async (req: Request, res: Response) => {
         { senderEmail: senderEmail, receiverEmail: receiverEmail },
         { senderEmail: receiverEmail, receiverEmail: senderEmail },
       ],
-    }).sort({ updatedAt: 1 });
+    }).sort({ createdAt: 1 });
     return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json({ error: error });
@@ -189,7 +194,7 @@ export async function getGroupMessage(req: Request, res: Response) {
 
   try {
     const messagesResult = await Message.find({ groupId: _id }).sort({
-      updatedAt: 1,
+      createdAt: 1,
     });
     const group: GroupType | null = await Group.findById(_id);
     const messages = new Array();

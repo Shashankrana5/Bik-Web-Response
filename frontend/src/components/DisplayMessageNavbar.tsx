@@ -1,5 +1,5 @@
 import { SelectedChat } from "../utils/ChatTypes/ChatType";
-import { User } from "../utils/ChatTypes/UserTypes";
+import { User, UserField } from "../utils/ChatTypes/UserTypes";
 import "../css/userActive.css";
 import { FaAngleLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import axios from "axios";
 import { Buffer } from "buffer";
 import "../css/userActive.css";
 import { host_ip } from "..";
+import { useActiveChatsContext } from "../hooks/useActiveChatsContext";
 
 interface DisplayMessageNavbarProps {
   selectedChat: SelectedChat | null;
@@ -16,6 +17,7 @@ interface DisplayMessageNavbarProps {
 export const DisplayMessageNavbar = (props: DisplayMessageNavbarProps) => {
   const { selectedChat, setSelectedChat } = props;
   const [avatarPicture, setAvatarPicture] = useState<string | null>(null);
+  const { activeChats } = useActiveChatsContext();
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -37,11 +39,13 @@ export const DisplayMessageNavbar = (props: DisplayMessageNavbarProps) => {
     };
     fetchImage();
   }, [selectedChat]);
+
   const handleClickBack = () => {
     setSelectedChat(null);
   };
+
   return (
-    <div className="flex sm:items-center justify-between border-b-2 border-gray-200 h-[20%] w-[90%] p-2">
+    <div className="flex sm:items-center justify-between border-b-2 border-gray-200 h-[20%] w-[100%] p-3">
       <div className="flex gap-2 items-center h-[100%]">
         <button onClick={handleClickBack}>
           <FaAngleLeft className="h-9 w-9 text-gray-700 font-medium p-0" />
@@ -62,7 +66,18 @@ export const DisplayMessageNavbar = (props: DisplayMessageNavbarProps) => {
               />
             )}
 
-            <div className="status-circle active"></div>
+            {activeChats &&
+              selectedChat?.chatType === "Personal" &&
+              activeChats
+                .filter((item) => item._id === selectedChat?.selected._id)
+                .map((activeUser: UserField) => {
+                  return (
+                    <div
+                      key={activeUser._id}
+                      className="status-circle active"
+                    ></div>
+                  );
+                })}
           </div>
           <div className="flex flex-col leading-tight">
             <div className="text-2xl mt-1 flex items-center">

@@ -104,10 +104,7 @@ export function DisplayMessage(displayChatProps: DisplayChatProps) {
   };
 
   return (
-    <div
-      id="displaymessage"
-      className="flex justify-center max-h-64 w-[100%] p-2"
-    >
+    <div id="displaymessage" className="flex justify-center max-h-64 w-[100%]">
       <div className="w-[100%] flex flex-col justify-center items-center">
         <DisplayMessageNavbar
           currentUser={currentUser!}

@@ -60,38 +60,34 @@ const ChatBox = () => {
   }, [personalChatSocket]);
 
   return (
-    <div className="chatbox-main max-w-4xl w-[35vw] flex flex-col py-10">
-      <ChatNavbar
-        selectedChat={selectedChat}
-        setSelectedChat={setSelectedChat}
-      />
-      {/* <div>
-          {activeChats &&
-            Array.from(activeChats).map((key) => {
-              return <div key = {key._id}>{key.fullName}</div>;
-            })}
-      </div> */}
-      <div id="display-container" className="h-[85%] w-[100%]">
-        {selectedChat !== null ? (
-          <DisplayMessage
+    <div className="chatbox-main max-w-4xl w-[35vw] min-h-[25rem] flex flex-col py-10 px-8">
+      <div id="chatbox-subcontainer" className="bg-white rounded-3xl shadow-xl">
+        <ChatNavbar
+          selectedChat={selectedChat}
+          setSelectedChat={setSelectedChat}
+        />
+        <div id="display-container" className="h-[85%] w-[100%]">
+          {selectedChat !== null ? (
+            <DisplayMessage
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+            />
+          ) : (
+            <DisplayChat
+              setSelectedChat={setSelectedChat}
+              selectedChat={selectedChat}
+            />
+          )}
+        </div>
+
+        {selectedChat === null ? null : (
+          <SendMessage
             selectedChat={selectedChat}
-            setSelectedChat={setSelectedChat}
-          />
-        ) : (
-          <DisplayChat
-            setSelectedChat={setSelectedChat}
-            selectedChat={selectedChat}
+            groupChatSocket={groupChatSocket!}
+            personalChatSocket={personalChatSocket!}
           />
         )}
       </div>
-
-      {selectedChat === null ? null : (
-        <SendMessage
-          selectedChat={selectedChat}
-          groupChatSocket={groupChatSocket!}
-          personalChatSocket={personalChatSocket!}
-        />
-      )}
     </div>
   );
 };

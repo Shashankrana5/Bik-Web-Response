@@ -39,6 +39,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
     fetchAllChats();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
+
   useEffect(() => {
     const fetchImages = async () => {
       if (chats && chats["AllChats"]) {
@@ -97,10 +98,11 @@ export const DisplayChat = (props: DisplayChatProps) => {
           return (
             <div
               id="display-chat-allchats"
-              className="border flex w-[75%] h-[4vh] rounded-lg border-orange-100 bg-white relative items-center p-3"
+              className="flex w-[75%] h-[4vh] rounded-lg bg-white relative items-center cursor-pointer"
               key={chats["AllChats"][Number(key)]._id}
+              onClick={() => handleClickAll(chats["AllChats"][Number(key)])}
             >
-              <div className="profile-picture-status-container h-[100%] maxh-h-[100%] flex items-center">
+              <div className="profile-picture-status-container h-[100%] maxh-h-[100%] flex items-center ml-3 ">
                 {chats["AllChats"][index].avatarId ? (
                   avatarPictures && avatarPictures[index] !== "" ? (
                     <img
@@ -112,7 +114,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
                   ) : (
                     <img
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAf9JREFUaEPtmP0xRTEQxc+rgBKoABWgAqMCVIAOqIAO0AEVoAJUQAlUwByTO/Pwkmx2D5k77s7cP95Mknd+2Y8kO8PIbTZy/ZgAenvwNzywBWAPwHr6yPiYvisAd0poJQAFnwEgQMkIcJyAwiwqAIq/BbBsVPQKYFsBoQBoFT8wSiAUANz5WtjkHMNwoifcFgWgcAJEjADuxI4CXKaKEwFgZdr3LhAFeJgrlV4NLLEb3slRgHfvH3+b59bhnpgEjB6A7l8LeuEpEoZRD4w+iUdfRhk9rOGbzjC6DxyCn38ZDSGuwasEIZYaId6SeOaR2xQAHgiJeJUHht2jJ84N4cSwOVLcRNUAAwgTm1cDAg0llqWSocKq5b73LIozVQi5Yzg6cQKI7mB0/r/3ABN1J9Vzvof522JMaD4pmdA3kYrk9QDbJicAVixqDWNeUqfi2jD2y5BWAAq+iB7/BZH0yAEAApmsBcDbfTAJmRvU1K2wAlA8n49/aXxmVu9JFgCGDcVbm1YqSHqCEMVwsgBE+j5RmGrfqAbAOw2TtqftAshWpxrAs7BUejeBIbSam1wC6JG4OZ3ZhC4B8G5/6N028bzTdHD+WLYEEHnrivUj+3YuASjahiqQbPuxBKDquqkgFmqdAFTba1in2QOGNfsPqR1k/RVWFEwAvV00eaC3Bz4ALkdQMYEpwEIAAAAASUVORK5CYII="
-                      // className="h-[100%] rounded-full shadow-lg"
+                      // className="h-[100%] rounded-full shadow-lg"z
                       className="avatar"
                       alt="Avatar"
                     />
@@ -139,7 +141,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
                       );
                     })}
               </div>
-              <button
+              <div
                 className="chat-button-indivisual"
                 onClick={() => handleClickAll(chats["AllChats"][Number(key)])}
               >
@@ -148,7 +150,7 @@ export const DisplayChat = (props: DisplayChatProps) => {
                     chats["AllChats"][Number(key)].groupName
                   : /*@ts-ignore */
                     chats["AllChats"][Number(key)].fullName}
-              </button>
+              </div>
             </div>
           );
         })}

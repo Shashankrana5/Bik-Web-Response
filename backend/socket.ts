@@ -17,7 +17,11 @@ export class ChatServerSocket {
         origin: [
           "http://3.19.150.105",
           "http://bik-web.com",
+          "http://bik-web.com:1912",
+          "https://bik-web.com:1912",
+          "https://bik-web.com",
           "http://localhost",
+          "http://localhost:1912",
         ],
         methods: ["GET", "POST"],
       },

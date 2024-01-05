@@ -218,7 +218,6 @@ function SortableTable() {
                         id={"row" + index}
                         key={ticketNumber}
                         className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-gray-100"
-                        // onClick={(e) => console.log(ticketNumber)}
                         onDoubleClick={() => handleDoubleClick(ticketNumber)}
                       >
                         <td className={classes}>

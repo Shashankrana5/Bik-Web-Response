@@ -1,28 +1,16 @@
-/* .icon-container {
-width: 50px;
-height: 50px;
-position: relative;
-}
-
-img {
-height: 100%;
-width: 100%;
-border-radius: 50%;
-} */
 .profile-picture-status-container {
   position: relative;
-  /* height:50px;
-    width:50px */
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-right: 0.1rem;
 }
 .profile-picture-img {
   border-radius: 50%;
 }
 
 .status-circle {
-  /* width: 15px; 
-    height: 15px; */
-  width: 40%;
-  height: 40%;
+  width: 0.75rem;
+  height: 0.75rem;
   border-radius: 50%;
   border: 2px solid white;
   bottom: 0;
@@ -36,41 +24,17 @@ border-radius: 50%;
 .status-circle.inactive {
   background-color: red;
 }
-
-/* 
-#display-message-navbar-back {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: #ddd;
-  }
-#display-message-navbar {
-    position: relative;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-  .display-message-navbar-right{
-    display: flex;
-    margin: 1px;
-    padding: 5px;
-    background: #aaa;
-  } */
-
 .avatar {
-  width: 3vh;
+  width: 100%;
   object-fit: cover;
-  height: 3vh;
+  height: 100%;
   position: relative;
   border-radius: 50%;
 }
 .avatar-sm {
-  width: 2vh;
+  width: 100%;
   object-fit: cover;
-  height: 2vh;
+  height: 100%;
   position: relative;
   border-radius: 50%;
 }

@@ -1,8 +1,11 @@
 import axios from "axios";
 import { TEInput, TERipple } from "tw-elements-react";
 import { host_ip } from "..";
+import { useState } from "react";
 
 const Login = () => {
+  const [showInvalidToolTip, setShowInvalidToolTip] = useState(false);
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
@@ -18,17 +21,17 @@ const Login = () => {
     const password = target.loginPasswordField.value;
 
     try {
+      setShowInvalidToolTip(false);
       const response = await axios.post(
         `${host_ip}/api/session`,
         { email, password },
         { withCredentials: true },
       );
       if (response.status === 200) {
-        console.log(response.data);
         window.location.href = "/";
       }
     } catch (error) {
-      console.log({ errorMessage: error });
+      setShowInvalidToolTip(true);
     }
   };
   return (
@@ -56,7 +59,16 @@ const Login = () => {
                     Sign in
                   </p>
                 </div>
-
+                {showInvalidToolTip === true && (
+                  <div
+                    className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                    role="alert"
+                  >
+                    <span className="font-medium">
+                      Invalid Credentials, please try again
+                    </span>
+                  </div>
+                )}
                 <TEInput
                   type="email"
                   label="Email address"
