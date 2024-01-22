@@ -1,7 +1,7 @@
 version: '3.8'
-name: bik-web-response
 services:
   backend:
+    container_name: bik-web-response-backend
     build: ./backend
     ports:
       - "1913:1913"
@@ -13,6 +13,7 @@ services:
     networks:
       - app-network
   frontend:
+    container_name: bik-web-response-frontend
     build: ./frontend
     ports:
       - "1912:1912"
