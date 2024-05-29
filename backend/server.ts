@@ -28,6 +28,7 @@ app.use(
     credentials: true,
     origin: [
       "http://3.19.150.105",
+      "http://localhost:4200",
       "http://bik-web.com",
       "http://localhost",
       "http://3.19.150.105:1912",

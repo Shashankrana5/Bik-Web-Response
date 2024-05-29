@@ -39,6 +39,22 @@ export async function createSessionHandler(req: Request, res: Response) {
   return res.send({ session, user });
 }
 
+export function verifySession(req: Request, res: Response){
+
+  console.log(req);
+  //@ts-ignore
+  const { token } = req.body;
+
+  console.log(token);
+
+  const verification = verifyJWT(token)
+
+  if (verification){
+    return res.status(200);
+  }
+  return res.status(400)
+}
+
 // get the session session
 export async function getSessionHandler(req: Request, res: Response) {
   //@ts-ignore
