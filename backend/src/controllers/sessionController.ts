@@ -22,37 +22,64 @@ export async function createSessionHandler(req: Request, res: Response) {
     "5s",
   );
 
-  const refreshToken = signJWT({ sessionId: session.sessionId }, "1y");
+  const refreshToken = signJWT({ email: user.email, sessionId: session.sessionId }, "1y");
 
   // set access token in cookie
   res.cookie("accessToken", accessToken, {
-    maxAge: 30000000, // 5 minutes
-    httpOnly: true,
+    maxAge: 3000000, // 5 minutes
+    // httpOnly: true,
+    httpOnly: false,
+    secure: false
   });
 
   res.cookie("refreshToken", refreshToken, {
     maxAge: 3.154e10, // 1 year
-    httpOnly: true,
+    // httpOnly: true,
+    httpOnly: false,
+    secure: false
   });
 
   // send user back
   return res.send({ session, user });
 }
 
-export function verifySession(req: Request, res: Response){
+export async function verifySession(req: Request, res: Response){
 
   console.log(req);
   //@ts-ignore
   const { token } = req.body;
 
-  console.log(token);
+  const {payload} = verifyJWT(token)
 
-  const verification = verifyJWT(token)
+  if (payload) {
+    const user: UserType | null = await User.findOne({
+      //@ts-ignore]
+      email: payload.email,
+    });
+    console.log(user);
+    if (!user) {
+      return res.status(401).send("Invalid email or password");
+    }
 
-  if (verification){
-    return res.status(200);
+    const session = createSession(user.email, user.fullName);
+
+    // create access token
+    const accessToken = signJWT(
+      { email: user.email, name: user.fullName, sessionId: session.sessionId },
+      "5s",
+    );
+
+    // set access token in cookie
+    res.cookie("accessToken", accessToken, {
+      maxAge: 3000000, // 5 minutes
+      // httpOnly: true,
+      httpOnly: false,
+      secure: false,
+    });
+
+    return res.status(200).json({ status: "success" });
   }
-  return res.status(400)
+  return res.status(400).json({status: "failure"})
 }
 
 // get the session session
