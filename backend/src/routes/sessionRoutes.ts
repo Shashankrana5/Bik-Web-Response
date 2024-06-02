@@ -4,6 +4,7 @@ import {
   getSessionHandler,
   deleteSessionHandler,
   verifySession,
+  getUserFromToken,
 } from "../controllers/sessionController";
 import { requireUser } from "../middlewares/requireUser";
 
@@ -17,6 +18,8 @@ function sessionRoutes(app: Express) {
   app.delete("/api/session", requireUser, deleteSessionHandler);
 
   app.post("/api/session/validate", verifySession);
+  app.get("/api/session/getuserbytoken/:token", getUserFromToken);
+
 }
 
 export default sessionRoutes;

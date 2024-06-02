@@ -45,7 +45,6 @@ export async function sendMessage(req: Request, res: Response) {
       throw Error("Invalid message type");
     }
   } catch (error) {
-    console.log(error);
     return res.status(400).json(error);
   }
 }
