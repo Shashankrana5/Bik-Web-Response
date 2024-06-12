@@ -6,8 +6,20 @@ export async function addUser(req: Request, res: Response) {
 
   try {
     const user = await User.create({ fullName, email, password });
-    return res.status(200).json(user);
+
+    const response = await fetch(`${process.env.PRODUCT_SERVICE_URI}/api/chat/adduser`, 
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: user._id, fullName: user.fullName, email: user.email}),
+      }
+    )
+
+    return res.status(200).json(response);
   } catch (error) {
+
     return res.status(400).json({ message: error });
   }
 }

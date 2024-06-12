@@ -14,7 +14,7 @@ export async function createSessionHandler(req: Request, res: Response) {
     return res.status(401).send("Invalid email or password");
   }
 
-  const session = createSession(email, user.fullName);
+  const session = createSession(user._id, email, user.fullName);
 
   // create access token
   const accessToken = signJWT(
@@ -22,7 +22,7 @@ export async function createSessionHandler(req: Request, res: Response) {
     "5s",
   );
 
-  const refreshToken = signJWT({ email: user.email, fullName: user.fullName, sessionId: session.sessionId }, "1y");
+  const refreshToken = signJWT({ id: user._id, email: user.email, fullName: user.fullName, sessionId: session.sessionId }, "1y");
 
   // set access token in cookie
   res.cookie("accessToken", accessToken, {
@@ -52,9 +52,10 @@ export async function getUserFromToken(req: Request, res: Response){
   }
 
   const decoded = verifyJWT(token);
+  console.log("decoded", decoded);
 
   //@ts-ignore
-  return res.status(200).send({fullName: decoded.payload.fullName, email: decoded.payload.email})
+  return res.status(200).send({ id: decoded.payload?.id, fullName: decoded.payload.fullName, email: decoded.payload.email})
 }
 
 export async function verifySession(req: Request, res: Response){
@@ -73,11 +74,11 @@ export async function verifySession(req: Request, res: Response){
       return res.status(401).send("Invalid email or password");
     }
 
-    const session = createSession(user.email, user.fullName);
+    const session = createSession(user._id, user.email, user.fullName);
 
     // create access token
     const accessToken = signJWT(
-      { email: user.email, name: user.fullName, sessionId: session.sessionId },
+      { id: user._id, email: user.email, name: user.fullName, sessionId: session.sessionId },
       "5s",
     );
 

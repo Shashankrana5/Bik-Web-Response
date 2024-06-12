@@ -19,10 +19,10 @@ export function invalidateSession(sessionId: string) {
   return sessions[sessionId];
 }
 
-export function createSession(email: string, name: string) {
+export function createSession(id: string, email: string, name: string) {
   const sessionId = String(Object.keys(sessions).length + 1);
 
-  const session = { sessionId, email, valid: true, name };
+  const session = { sessionId, email, valid: true, name, id };
 
   sessions[sessionId] = session;
 
