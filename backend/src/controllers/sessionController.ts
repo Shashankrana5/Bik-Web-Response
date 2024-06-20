@@ -9,7 +9,7 @@ export async function createSessionHandler(req: Request, res: Response) {
   const { email, password } = req.body;
 
   const user: UserType | null = await User.findOne({ email: email, password });
-
+  console.log(user);
   if (!user) {
     return res.status(401).send("Invalid email or password");
   }
@@ -18,15 +18,16 @@ export async function createSessionHandler(req: Request, res: Response) {
 
   // create access token
   const accessToken = signJWT(
-    { email: user.email, name: user.fullName, sessionId: session.sessionId },
-    "5s",
+    { id: user._id, email: user.email, fullName: user.fullName, sessionId: session.sessionId },
+    "5m",
   );
 
   const refreshToken = signJWT({ id: user._id, email: user.email, fullName: user.fullName, sessionId: session.sessionId }, "1y");
 
   // set access token in cookie
   res.cookie("accessToken", accessToken, {
-    maxAge: 3000000, // 5 minutes
+    maxAge: 30000000, // 5 minutes
+
     // httpOnly: true,
     httpOnly: false,
     secure: false
@@ -44,7 +45,7 @@ export async function createSessionHandler(req: Request, res: Response) {
 }
 
 export async function getUserFromToken(req: Request, res: Response){
-
+  
   const { token } = req.params;
 
   if (!token){
@@ -52,7 +53,6 @@ export async function getUserFromToken(req: Request, res: Response){
   }
 
   const decoded = verifyJWT(token);
-  console.log("decoded", decoded);
 
   //@ts-ignore
   return res.status(200).send({ id: decoded.payload?.id, fullName: decoded.payload.fullName, email: decoded.payload.email})

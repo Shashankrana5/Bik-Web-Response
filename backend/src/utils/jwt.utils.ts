@@ -8,6 +8,7 @@ export function signJWT(payload: object, expiresIn: string | number) {
 // verify jwt
 export function verifyJWT(token: string) {
   try {
+``
     const decoded = jwt.verify(token, process.env.AUTH_PUBLIC_KEY!);
     return { payload: decoded, expired: false };
   } catch (error) {
